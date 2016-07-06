@@ -68,7 +68,7 @@ Workflow {
 				
 				subProject={
 					enabled=true
-					root="${rootPath}/../boomslang_wfs/com.wireframesketcher.model"
+					root="${rootPath}/../boomslang-wireframesketcher/com.wireframesketcher.model"
 					name="com.wireframesketcher.model"
 					overwriteSrc=false
 				}
