@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <description name="Boomslang Test Generator" url="https://collab.adnovum.ch/stmpdev/p2/thirdparty/boomslang/">
+      Contains core plug-ins of the Boomslang Test Generator. Does not contain transitive dependencies to xtext &amp; Co. Use this update site to keep being up-to-date with the latest Boomslang version.
+   </description>
+   <feature url="features/org.boomslang.feature_0.1.0.qualifier.jar" id="org.boomslang.feature" version="0.1.0.qualifier">
+      <category name="org.boomslang.core"/>
+   </feature>
+   <category-def name="org.boomslang.core" label="Test Generator Core Bundles">
+      <description>
+         Contains core plug-ins of the Boomslang Test Generator. Does not contain transitive dependencies to xtext &amp; Co. Use this update site to keep being update with the latest Boomslang version.
+      </description>
+   </category-def>
+</site>

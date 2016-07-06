@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="org.boomslang.dsl.feature.Feature.WhenI" deleted="false" description="type sth into a text field" enabled="true" id="BTypeCommand" name="     type">when I type "${textToType}" into the ${SomeTextField:CrossReference(FeaturePackage.BTypeCommand.textInputSupport)}
+	</template><template autoinsert="true" context="org.boomslang.dsl.feature.Feature.BFeature" deleted="false" description="new Feature with description" enabled="true" id="Feature" name="Feature">Feature ${MyFeature}
+
+		As a ${myRole}
+		I want to ${doSomething}
+		In order to ${achieveSomething}
+	</template></templates>

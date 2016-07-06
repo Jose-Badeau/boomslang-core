@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.emf.ecore.generated_package">
+		<package 
+			uri = "http://www.esgroup.ch/boomslang/dsl/feature/Feature"
+			class = "org.boomslang.dsl.feature.feature.FeaturePackage"
+			genModel = "model/generated/Feature.genmodel" />
+	</extension>
+</plugin>

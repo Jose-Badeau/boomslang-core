@@ -1,0 +1,22 @@
+module org.boomslang.core
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe2.ecore.EcoreGenerator
+
+Workflow {
+     
+	bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
+		scanClassPath = true
+		platformUri = "./"
+		registerGenModelFile = "platform:/resource/org.boomslang.core/model/BCore.genmodel"
+	}
+	
+	// Models
+	component = org.eclipse.emf.mwe2.ecore.EcoreGenerator {
+		genModel = "platform:/resource/org.boomslang.core/model/BCore.genmodel"
+		srcPath = "platform:/resource/org.boomslang.core/src"
+		generateEdit = false
+		generateEditor = false
+	}
+     
+}

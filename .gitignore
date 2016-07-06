@@ -1,5 +1,11 @@
 *.class
 
+#Folder
+/src-gen/
+/xtend-gen/
+/target/
+
+
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 

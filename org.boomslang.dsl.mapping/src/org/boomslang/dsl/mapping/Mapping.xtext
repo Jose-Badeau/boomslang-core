@@ -1,0 +1,251 @@
+grammar org.boomslang.dsl.mapping.Mapping with org.eclipse.xtext.common.Terminals
+// with org.eclipse.xtext.xbase.Xbase
+// with org.eclipse.xtext.xbase.Xtype // error
+// public class AbstractMappingValidator extends org.eclipse.xtext.xbase.validation.XtypeValidator {
+// org.eclipse.xtext.xbase.validation.XtypeValidator cannot be resolved to a type   
+
+
+import "http://wireframesketcher.com/1.0/model.ecore" as uid
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as types
+generate mapping "http://www.esgroup.ch/boomslang/dsl/mapping/Mapping"
+
+import "org.boomslang.core" as bcore
+
+BPackage returns bcore::BPackage:
+    BMappingPackage
+;
+
+// TODO common core DSL with Package, Import and other common elements
+BMappingPackage:
+    'package' name=QualifiedName
+    bImports+=BImport*
+    bVariables+=BVariable*
+    bMapping=BMapping?;
+
+BImport returns bcore::BImport:
+    'import' ( importedNamespace=QualifiedNameWithWildcard | importedNamespace=QualifiedName )
+;
+
+BVariable:
+    '@' name=ID ':' expression=MExpression ';'
+;
+
+BMapping:
+    'Mapping' screen=[uid::Screen|QualifiedName]
+    ('navigator' ':' screenNavigator=QualifiedName)?
+    bUrl=BUrl
+    bLabel=BLabel
+    (bId=BId)?
+    (bWidgetMapping+=BWidgetMapping|TabItem+=BTabItemMapping)*
+;
+    
+    
+BUrl:
+{BUrl}
+    'url' '{'
+        ('path' ':' mPath=MExpression)?
+        ('fragment' ':' mFragment=MExpression)? 
+        ('query' ':' mQuery=MExpression)?
+    '}'
+;
+
+BLabel:
+    'label' '{' 
+        expression=MExpression
+    '}'  
+;
+
+BId:
+    'id' '{'
+        expression=MExpression
+       '}'
+;
+
+BTabItemMapping:
+    'tabItem' tabItem=[uid::Item|QualifiedName] '{'
+        'locator' ':' locator=MExpression
+        '}';
+
+BWidgetMapping:
+    {BWidgetMapping}
+    widget=[uid::Widget|QualifiedName] '{'
+        ('navigator' ':' widgetNavigator=QualifiedName)?
+        // customGenerator+=[types::JvmType|QualifiedName] 
+        // JvmParameterizedTypeReference
+        'locator' ':' locator=MExpression
+        (ComboButtonLocator comboButtonLocator=MExpression)?
+        (ComboTableLocator comboTableLocator=MExpression)?
+        ('screens' ':' screens+=[uid::Screen|QualifiedName] (',' screens+=[uid::Screen|QualifiedName])*)?
+    '}';
+
+MExpression:
+    BooleanExpression 
+    ;
+
+BooleanExpression returns MExpression:
+    ComparisonExpression
+    ({BooleanExpression.left=current} op=('||' | '&&') right=ComparisonExpression)*;
+
+ComparisonExpression returns MExpression:
+    EqualityExpression
+    (({ComparisonExpression.left=current}
+    op=(">=" | "<=" | "<" | ">" | "=>")) right=EqualityExpression)*;
+
+EqualityExpression returns MExpression:
+    NotExpression
+    (({EqualityExpression.left=current}
+    op=("==" | "!=")) right=NotExpression)*;
+    
+NotExpression returns MExpression:
+    {NotExpression} '!' notExpression=NotExpression |
+    Term 
+    ;
+    
+Term returns MExpression:
+    '(' MExpression ')' |
+    MVariableRef |
+    IfExpression |
+    MNlsExpression |
+    MLiteral
+;
+
+
+IfExpression returns MExpression:
+    'if' '(' condition=BooleanExpression ')'
+    '{'
+    then=MExpression
+    '}'
+    (=> 'else' '{' else=MExpression '}')?;
+
+MLiteral:
+    MStringLiteral |
+    MBuiltinLiteral;
+
+MVariableRef: 
+    '@' ref=[BVariable|QualifiedName]
+;
+
+MNlsExpression:
+    MNlsKeyExpr | MNlsMultiLangExpr 
+;
+
+MNlsKeyExpr: 
+    'nls' '{'
+        'key' ':' nlsKey=ID
+    '}'
+;
+
+MNlsMultiLangExpr:
+    'nls' '{'
+        langDecl+=BNlsLangDecl+
+    '}'
+;
+
+BNlsLangDecl:
+    lang=Language ':' expression=MExpression;
+
+enum LanguageEnum:
+    unspecified |
+    ch |
+    de |
+    en |
+    fr |
+    it;
+
+enum Language returns LanguageEnum:
+    ch |
+    de |
+    en |
+    fr |
+    it;
+
+    // TODO better use library approach and/or definition in DSL at runtime)
+enum MBuiltinVariablesEnum:
+    HTML_5 |
+    HTML5_HISTORY |
+    DEV_ENV |
+    LIVE_ENV;
+
+MStringLiteral:
+    value=STRING;
+
+MBuiltinLiteral:
+    value=MBuiltinVariablesEnum;
+
+// ============================================================================
+// Terminal Rules  
+// ============================================================================
+
+ComboButtonLocator:
+    'comboButtonLocator'  ':' 
+;
+
+ComboTableLocator:
+    'comboTableLocator' ':'   
+;
+
+
+// ============================================================================
+// Common datatype rules  
+// ============================================================================
+QualifiedName:
+    IdOrKeyword ('.' IdOrKeyword)*;
+
+QualifiedNameWithWildcard:
+//  QualifiedName  ('.' '*')?;
+    QualifiedName  '.' '*';
+//    QualifiedName '.*'?;
+
+IdOrKeyword:
+    ID |
+    Keyword;
+
+Keyword:
+//  '!' |
+//  '!=' |
+//  '&&' |
+//  '(' |
+//  ')' |
+//  '.' |
+//  '*' |
+//  ':' |
+//  ';' |
+//  '<' |
+//  '<=' |
+//  '==' |
+//  '=>' |
+//  '>' |
+//  '>=' |
+//  '@' |
+    'ch' |
+    'comboButtonLocator' |
+    'comboTableLocator' |
+    'de' |
+    'DEV_ENV' |
+    'else' |
+    'en' |
+    'fr' |
+    'fragment' |
+    'HTML5_HISTORY' |
+    'HTML_5' |
+    'if' |
+    'import' |
+    'it' |
+    'key' |
+    'label' |
+    'LIVE_ENV' |
+    'locator' |
+    'Mapping' |
+    'navigator' |
+    'nls' |
+    'package' |
+    'path' |
+    'query' |
+    'screens' |
+    'unspecified' |
+    'url'
+//  |
+//  '{' |
+//  '||' |
+//  '}'
+;

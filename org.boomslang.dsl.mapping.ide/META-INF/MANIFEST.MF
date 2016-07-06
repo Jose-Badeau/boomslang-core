@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Boomslang Mapping DSL  IDE
+Bundle-Vendor: ESGroup AG
+Bundle-Version: 0.1.0.qualifier
+Bundle-SymbolicName: org.boomslang.dsl.mapping.ide; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.boomslang.dsl.mapping,
+ org.eclipse.xtext.ide,
+ org.eclipse.xtext.xbase.ide
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.boomslang.dsl.mapping.ide.contentassist.antlr,
+ org.boomslang.dsl.mapping.ide.contentassist.antlr.internal
+Import-Package: org.boomslang.dsl.mapping.services
+

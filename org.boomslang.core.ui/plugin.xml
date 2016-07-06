@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<!-- 
+	       ============================================
+	       Root preference page for Boomslang languages
+	       ============================================
+	-->
+
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="Boomslang"
+            icon="icons/boomslang.gif"
+            class="org.boomslang.ui.perspectives.BoomslangPerspective"
+            id="org.boomslang">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            name="Boomslang"
+            class="org.boomslang.ui.preferences.BoomslangPreferencePage"
+            id="org.boomslang">
+            <keywordReference id="org.boomslang.keyword_root_pref"/>
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.boomslang.ui.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
+   
+	<!-- add keywords for the search in the preferences page --> 
+	<extension
+	point="org.eclipse.ui.keywords">
+	<keyword
+	    id="org.boomslang.keyword_root_pref"
+	    label="test mapping feature"/>
+	</extension>
+
+</plugin>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="1" x="80" y="32" width="1065" height="601" text="Boomslang" measuredWidth="1065" measuredHeight="601"/>
+  <widgets xsi:type="model:Menu" id="3" x="80" y="51" width="1065" text="&amp;File,&amp;Edit,&amp;View,~&amp;Window~,&amp;Help" measuredWidth="1065" measuredHeight="27">
+    <items x="5" y="0" width="31" height="27" text="&amp;File"/>
+    <items x="36" y="0" width="35" height="27" text="&amp;Edit"/>
+    <items x="71" y="0" width="40" height="27" text="&amp;View"/>
+    <items x="111" y="0" width="60" height="27" text="~&amp;Window~"/>
+    <items x="171" y="0" width="39" height="27" text="&amp;Help"/>
+  </widgets>
+  <widgets xsi:type="model:TabbedPane" id="5" x="920" y="112" width="225" height="497" text="Outline&#xA;" measuredWidth="225" measuredHeight="497" selection="0">
+    <items x="10" y="0" width="66" height="27" text="Outline"/>
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="7" x="80" y="112" width="265" height="497" measuredWidth="265" measuredHeight="497"/>
+  <widgets xsi:type="model:TabbedPane" id="2" x="80" y="112" width="265" height="289" text="Project Explorer, Navigator" measuredWidth="265" measuredHeight="289" selection="0">
+    <items x="10" y="0" width="120" height="27" text="Project Explorer"/>
+    <items x="130" y="0" width="82" height="27" text="Navigator"/>
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:TabbedPane" id="6" x="80" y="400" width="265" height="209" text="Project Repository" measuredWidth="265" measuredHeight="209" selection="0">
+    <items x="10" y="0" width="134" height="27" text="Project Repository"/>
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:TabbedPane" id="8" x="354" y="112" width="557" height="497" text="Login.feature,TimeEntry.feature,PrintTime.feature" measuredWidth="557" measuredHeight="497" selection="0">
+    <items x="10" y="0" width="105" height="27" text="Login.feature"/>
+    <items x="115" y="0" width="133" height="27" text="TimeEntry.feature"/>
+    <items x="248" y="0" width="130" height="27" text="PrintTime.feature"/>
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:VScrollbar" id="9" x="894" y="139" height="470" measuredWidth="17" measuredHeight="470"/>
+  <widgets xsi:type="model:VSplitter" id="10" x="344" y="112" height="497" measuredWidth="11" measuredHeight="497"/>
+  <widgets xsi:type="model:VSplitter" id="11" x="910" y="139" height="470" measuredWidth="11" measuredHeight="470"/>
+  <widgets xsi:type="model:TextArea" id="12" x="354" y="139" width="541" height="318" text="*import* org.aida&#xA;&#xA;*feature* GmailLoginFeature&#xA;&#xA;    *as a* registered gmail user&#xA;    *i want to* be able to authenticate with correct credentials&#xA;    *in order to* securely access my email&#xA;    &#xA;    *scenario* Authenticate : successfully authenticate with correct credentials&#xA;        *given* I am on the Login screen&#xA;        *and* I type &quot;jose.badeau&quot; in the Username input&#xA;        *and* I type &quot;123456&quot; in the Password input&#xA;        &#xA;        *when* I click the Login button&#xA;        &#xA;        *then* I am on the HomePage screen&#xA;        *and* the title equals &quot;Welcome&quot; &#xA;        *and* the Logout button is visible&#xA;    &#xA;    *@param* username&#xA;    *@param* password&#xA;    *scenario* WrongCredentials : can not authenticate with wrong credentials&#xA;        *given* I am on the Login screen&#xA;        *and* I type &quot;jose.badeau&quot; in the Username input &#xA;        *and* I type &quot;wrong&quot; in the Password input&#xA;        &#xA;        *when* I click the Login button&#xA;        &#xA;        *then* I am on the Login screen &#xA;        *and* the the Notification text is &quot;invalid username and/or password&quot;" measuredWidth="541" measuredHeight="318">
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Tree" id="13" x="80" y="168" width="265" height="233" text="TimeTracker \[2.1.0.alpha\]&#xA;-features&#xA;--Login.feature&#xA;--TimeEntry.feature&#xA;--PrintLog.feature&#xA;Aida \[1.0.1\]&#xA;-features&#xA;--Login.feature&#xA;--ExecuteTestSet.feature&#xA;--GenerateReport.feature&#xA;" measuredWidth="265" measuredHeight="233">
+    <items x="0" y="5" width="265" height="21" text="TimeTracker \[2.1.0.alpha\]"/>
+    <items x="0" y="26" width="265" height="21" text="-features"/>
+    <items x="0" y="47" width="265" height="21" text="--Login.feature"/>
+    <items x="0" y="68" width="265" height="21" text="--TimeEntry.feature"/>
+    <items x="0" y="89" width="265" height="21" text="--PrintLog.feature"/>
+    <items x="0" y="110" width="265" height="21" text="Aida \[1.0.1\]"/>
+    <items x="0" y="131" width="265" height="21" text="-features"/>
+    <items x="0" y="152" width="265" height="21" text="--Login.feature"/>
+    <items x="0" y="173" width="265" height="21" text="--ExecuteTestSet.feature"/>
+    <items x="0" y="194" width="265" height="21" text="--GenerateReport.feature"/>
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Tree" id="14" x="80" y="456" width="265" height="153" text="org&#xA;-aida&#xA;--LATEST&#xA;--1.0.0&#xA;--1.0.1&#xA;-TimeTracker&#xA;--LATEST&#xA;--2.1.0.alpha&#xA;--1.0.1" measuredWidth="265" measuredHeight="153">
+    <items x="0" y="5" width="265" height="21" text="org"/>
+    <items x="0" y="26" width="265" height="21" text="-aida"/>
+    <items x="0" y="47" width="265" height="21" text="--LATEST"/>
+    <items x="0" y="68" width="265" height="21" text="--1.0.0"/>
+    <items x="0" y="89" width="265" height="21" text="--1.0.1"/>
+    <items x="0" y="110" width="265" height="21" text="-TimeTracker"/>
+    <items x="0" y="131" width="265" height="21" text="--LATEST"/>
+    <items x="0" y="152" width="265" height="21" text="--2.1.0.alpha"/>
+    <items x="0" y="173" width="265" height="21" text="--1.0.1"/>
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="15" x="80" y="77" width="1065" height="36" measuredWidth="1065" measuredHeight="36"/>
+  <widgets xsi:type="model:Tree" id="16" x="920" y="168" width="225" height="441" text="[+] *feature* org.aida&#xA;-[+] *scenario* Authenticate&#xA;--[_] *given*&#xA;--[_] *and*&#xA;--[_] *and*&#xA;--[_] *when*&#xA;--[_] *then*&#xA;--[_] *given*&#xA;--[_] *given*&#xA;[-] *scenario* WrongCredentials" measuredWidth="225" measuredHeight="441">
+    <items x="0" y="5" width="225" height="21" text="[+] *feature* org.aida"/>
+    <items x="0" y="26" width="225" height="21" text="-[+] *scenario* Authenticate"/>
+    <items x="0" y="47" width="225" height="21" text="--[_] *given*"/>
+    <items x="0" y="68" width="225" height="21" text="--[_] *and*"/>
+    <items x="0" y="89" width="225" height="21" text="--[_] *and*"/>
+    <items x="0" y="110" width="225" height="21" text="--[_] *when*"/>
+    <items x="0" y="131" width="225" height="21" text="--[_] *then*"/>
+    <items x="0" y="152" width="225" height="21" text="--[_] *given*"/>
+    <items x="0" y="173" width="225" height="21" text="--[_] *given*"/>
+    <items x="0" y="194" width="225" height="21" text="[-] *scenario* WrongCredentials"/>
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="17" x="80" y="139" width="265" height="30" measuredWidth="265" measuredHeight="30"/>
+  <widgets xsi:type="model:Panel" id="18" x="80" y="427" width="265" height="30" measuredWidth="265" measuredHeight="30"/>
+  <widgets xsi:type="model:Panel" id="19" x="920" y="139" width="225" height="30" measuredWidth="225" measuredHeight="30"/>
+  <widgets xsi:type="model:TabbedPane" id="21" x="354" y="466" width="541" height="143" text="Properties" measuredWidth="541" measuredHeight="143" selection="0">
+    <items x="10" y="0" width="84" height="27" text="Properties"/>
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" id="22" x="354" y="499" width="541" height="30" measuredWidth="541" measuredHeight="30"/>
+  <widgets xsi:type="model:Label" id="23" x="376" y="502" text="Login" measuredWidth="40" measuredHeight="23">
+    <font size="12px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:HSplitter" id="24" x="354" y="456" width="541" measuredWidth="541" measuredHeight="11"/>
+  <hRuler/>
+  <vRuler>
+    <guides position="-133"/>
+    <guides position="-109"/>
+  </vRuler>
+  <font size="12px"/>
+</model:Screen>

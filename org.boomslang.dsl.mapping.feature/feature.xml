@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.boomslang.dsl.mapping.feature"
+      label="Boomslang Mapping Feature"
+      version="0.1.0.qualifier"
+      provider-name="ESGroup AG">
+
+   <plugin
+         id="org.boomslang.dsl.mapping"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.boomslang.dsl.mapping.ide"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.boomslang.dsl.mapping.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

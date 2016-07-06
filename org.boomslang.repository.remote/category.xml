@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.boomslang.feature_0.1.0.qualifier.jar" id="org.boomslang.feature" version="0.1.0.qualifier">
+      <category name="org.boomslang"/>
+   </feature>
+   <category-def name="org.boomslang" label="Boomslang Test Generator">
+      <description>
+         Contains core plug-ins of the Boomslang Test Generator. Does not contain transitive dependencies to xtext &amp; Co. Use this update site to keep being update with the latest Boomslang version.
+      </description>
+   </category-def>
+</site>

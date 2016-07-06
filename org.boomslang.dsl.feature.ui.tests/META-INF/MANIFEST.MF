@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.boomslang.dsl.feature.ui.tests
+Bundle-Vendor: %providerName
+Bundle-Version: 0.1.0.qualifier
+Bundle-SymbolicName: org.boomslang.dsl.feature.ui.tests; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.boomslang.dsl.feature.ui,
+ org.junit;bundle-version="4.7.0",
+ org.eclipse.xtext.junit4,
+ org.eclipse.xtext.xbase.junit,
+ org.eclipse.ui.workbench;resolution:=optional,
+ org.eclipse.core.runtime,
+ org.boomslang.dsl.feature;bundle-version="0.1.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.boomslang.dsl.feature.ui.tests
+Import-Package: org.boomslang.dsl.feature.ui.internal,
+ org.hamcrest.core,
+ org.junit;version="4.5.0",
+ org.junit.runner;version="4.5.0",
+ org.junit.runner.manipulation;version="4.5.0",
+ org.junit.runner.notification;version="4.5.0",
+ org.junit.runners;version="4.5.0",
+ org.junit.runners.model;version="4.5.0"

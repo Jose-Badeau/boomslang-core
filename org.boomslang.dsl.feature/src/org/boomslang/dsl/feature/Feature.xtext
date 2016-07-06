@@ -1,0 +1,668 @@
+grammar org.boomslang.dsl.feature.Feature hidden(WS, /* change for TextToEol NL,*/ ML_COMMENT, SL_COMMENT)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://wireframesketcher.com/1.0/model.ecore" as uid
+
+import "org.boomslang.core" as bcore
+
+generate feature "http://www.esgroup.ch/boomslang/dsl/feature/Feature"
+
+// ============================================================================
+// Main elements   
+// ============================================================================
+
+BPackage returns bcore::BPackage:
+	BFeaturePackage
+;
+
+BFeaturePackage:
+	'package' name=QualifiedName
+	bImports+=BImport*
+	bFeature+=BFeature
+;
+
+BImport returns bcore::BImport:
+	'import' importedNamespace=QualifiedNameWithWildCard
+;
+
+BNamedModelElement returns bcore::BNamedModelElement: 
+	BFeature | BParameter
+;
+
+BFeature:
+	(AtTagScreen tagScreenMode=TagMode? )?
+	'Feature' name=ID
+	background=BBackground
+	(scenarios+=BScenario)*
+;
+
+BBackground:
+	AsA  role=STRING
+	IwantTo effect=STRING 
+	InOrderTo benefit=STRING
+;
+
+BParameter:
+	AtParam name=ID
+;
+
+BScenario:
+	(comment=ML_DOCUMENTATION)?
+	((params+=BParameter+ 
+	 AtDataProvider dataProvider=QualifiedName)? &
+	(AtDependsOn preScenario=[BScenario|QualifiedName])? &
+	(AtTagScreen tagScreenMode=TagMode? )?)
+	'Scenario' name=StringOrId
+
+	GivenIamOnThe bToScreenSwitch=BToScreenSwitch 
+	codeStatements+=BCodeStatement*
+;
+
+BScreenContext:
+	BToScreenSwitch | BToFrameSwitch
+;
+
+BToScreenSwitch:
+	screen=[uid::Screen|QualifiedName] 'screen'
+;
+
+
+BToFrameSwitch:
+	// TODO reference to frame instead of ID
+	SwitchToThe frameID=ID 'frame'
+	ThenIAmOnThe screen=[uid::Screen|QualifiedName] 'screen'
+;
+
+BCodeStatement:
+	(AndI | WhenI ) BCommand | 
+	(AndThe | ThenThe | ThenIt ) BAssertion | 
+	(AndI | WhenI ) BToFrameSwitch |  
+	ThenIAmOnThe BToScreenSwitch |
+	{BCodeStatement} FinallyICloseIt
+;
+
+// ============================================================================
+// Commands   
+// ============================================================================
+
+BCommand:
+	BClickCommand | BTypeCommand | BListSelectCommand | BDoubleClickCommand | BTabPaneSelectTabCommand |BTreeCommand | BTableCommand | BContextMenuCommand | BImplementationCommand | BAccordionCommand | {BCommand} BCloseCommand
+;
+
+BListSelectCommand:
+	BListSelectNamesCommand | BListSelectValuesCommand | BListSelectIndicesCommand
+;
+
+BListSelectNamesCommand:
+	SelectThe 'names' names+=BStringOrParam ( ',' names+=BStringOrParam)* FromThe listWrapper=BComboWrapper
+;
+
+BListSelectValuesCommand:
+	SelectThe 'values' values+=BStringOrParam ( ',' values+=BStringOrParam)* FromThe listWrapper=BComboWrapper  
+;
+
+BListSelectIndicesCommand:
+	SelectThe 'indices' indices+=BIntOrParam ( ',' indices+=BIntOrParam)* FromThe listWrapper=BComboWrapper
+;
+
+BClickCommand:
+	(ClickThe clickSupport=[uid::ClickSupport|QualifiedName] clickSupportType=ID) | BItCommand
+;
+
+BItCommand:
+   {ClickIt} ClickIt |{DoubleClickIt} DoubleClickIt   
+;
+
+BDoubleClickCommand:
+	DoubleClick value=STRING InColumn (columnIndex=INT|columnName=BStringOrParam) FromThe table=BTableWrapper
+;
+
+BTableCommand:
+    {BTableCommand}
+    FromThe bTableWrapper=BTableWrapper ActivateTheCell (columnIndex=INT|columnName=BStringOrParam)','(row=INT|rowValue=BStringOrParam)
+;
+
+
+BTypeCommand:
+   'type'  stringOrParam=BStringOrParam IntoThe textInputSupport=[uid::TextInputSupport|QualifiedName] textInputSupportType=ID (AndPress actionCommand=ValidKeysToPress)? 
+;
+
+BTabPaneSelectTabCommand:
+    {BTabPaneSelectTabCommand}
+    FromThe tabPane=BTabbedPaneWrapper SelectThe tabItem=BTabItemWrapper
+;
+
+
+BTreeCommand:
+    FromThe bTreeWrapper=BTreeWrapper ActivateTheNode nodeQName=NodeQName   
+;
+
+BContextMenuCommand:
+    FromThe contextMenu=BStringOrParam 'contextMenu' SelectTheEntry nodeQName=NodeQName
+;
+
+
+BImplementationCommand:
+    freeText=STRING
+;
+
+BAccordionCommand:
+    {BAccordionCommand}
+    FromThe bAccordionWrapper=BAccordionWrapper ActivateTheArea (row=BIntOrStringOrParam)
+;
+
+BCloseCommand:
+    CloseIt
+;
+
+
+// ============================================================================
+// Rules that allow literals or references to parameters   
+// ============================================================================
+
+// either text or param may be set, but not both
+BStringOrParam :
+	(text=STRING | param=[BParameter|AtSignThenIdOrKeyword])
+;
+
+// either int or param may be set, but not both
+BIntOrParam:
+	(int=INT | param=[BParameter|AtSignThenIdOrKeyword])
+;
+
+BIntOrStringOrParam:
+	( int=INT | text=STRING | param=[BParameter|AtSignThenIdOrKeyword])
+;
+
+// ============================================================================
+// Postcondition assertions   
+// ============================================================================
+
+BAssertion :
+  	BGenericAssertion | BListAssertion | BTableAssertion | BScreenshotAssertion | BTreeAssertion | BTabAssertion | BImplementationAssertion
+;
+
+BScreenshotAssertion:
+  ScreenLooksLike id=ID 
+  (
+  	(isIncludeFilter?='including' |'excluding') 
+  	bwidgetWrapperList=BWidgetWrapperList
+  )?
+;
+
+BWidgetWrapperList:
+	bwidgetWrappers+=BWidgetWrapper ( ',' bwidgetWrappers+=BWidgetWrapper)*
+;
+  
+//  [BCaptureScreenCommand|QualifiedName] 
+
+
+// ============================================================================
+// List assertions   
+// ============================================================================
+
+BListAssertion:
+  	BListSelectionAssertion | BListContainsAssertion	
+;
+
+BListSelectionAssertion:
+	BListSelectionByNamesAssertion  |  BListSelectionByValuesAssertion | BListSelectionByIndicesAssertion
+;
+
+// TODO consolidate list assertions on the model level
+
+BListSelectionByNamesAssertion:
+	'names' names+=BStringOrParam ( ',' names+=BStringOrParam) FromThe listWrapper=BComboWrapper AreSelected
+;
+
+BListSelectionByValuesAssertion:
+	'values' values+=BStringOrParam ( ',' values+=BStringOrParam) FromThe listWrapper=BComboWrapper AreSelected
+;
+
+BListSelectionByIndicesAssertion:
+	'indices' indices+=BIntOrParam ( ',' indices+=BIntOrParam) FromThe listWrapper=BComboWrapper AreSelected
+;
+
+BListContainsAssertion:
+	BListContainsByNamesAssertion  |  BListContainsByValuesAssertion | BListContainsByIndicesAssertion	
+;
+
+BListContainsByNamesAssertion:
+	listWrapper=BComboWrapper ContainsThe 'names' names+=BStringOrParam ( ',' names+=BStringOrParam)
+;
+
+BListContainsByIndicesAssertion:
+	listWrapper=BComboWrapper ContainsThe 'values' values+=BStringOrParam ( ',' values+=BStringOrParam) 
+;
+
+BListContainsByValuesAssertion:
+	listWrapper=BComboWrapper ContainsThe 'indices' indices+=BIntOrParam ( ',' indices+=BIntOrParam) 
+;
+
+// ============================================================================
+// Table assertions   
+// ============================================================================
+
+BTableAssertion:
+	BTableRowColAssertion | BTableHeaderAssertion 
+;
+
+BTableRowColAssertion:
+	CellInRow row=INT AndColumn col=INT FromThe table=BTableWrapper (exactMatch?='is'|'contains') cellValue=BStringOrParam
+;
+
+BTableHeaderAssertion:
+    Header FromThe table=BTableWrapper Contains values+=BStringOrParam (','values+=BStringOrParam)*
+;
+
+// ============================================================================
+// Tree assertions   
+// ============================================================================
+
+BTreeAssertion:
+    //then the node from the whatever tree at path nodeQName is ="Name" | nameContains="CharactersInNodeName" | has Children (childName="NameOfChildren")*  | is decorated with
+	('is' expectedValue=IdOrStringOrInt | 'contains' nameContains=BStringOrParam| HasChildren childNames+=BStringOrParam (',' childNames+=BStringOrParam)* |IsDecoratedWith imageName=BStringOrParam 'image' )   
+;
+
+NodeQName:
+	segment+=BIntOrStringOrParam ('>' segment+=BIntOrStringOrParam)*
+;
+
+IdOrStringOrInt:
+	ID | 
+	INT |
+	STRING
+;
+
+// ============================================================================
+// Tab assertions   
+// ============================================================================
+
+BTabAssertion:
+    'tabItem' bTabItemWrapper=BTabItemWrapper 'is' booleanPropertyNotTrue?='not'?  booleanPropertyName=ID  
+;
+
+
+// ============================================================================
+// Generic assertions   
+// ============================================================================
+
+BGenericAssertion:
+	BPropertyEqualsAssertion | 
+	BBooleanPropertyAssertion |
+	BTextEqualsAssertion |
+	BTextContainsAsssertion
+;
+
+BBooleanPropertyAssertion:
+	assertionWidgetWrapper=BWidgetWrapper  'is' booleanPropertyNotTrue?='not'? booleanPropertyName=ID
+;
+
+BPropertyEqualsAssertion:
+	assertionWidgetWrapper=BWidgetWrapper propertyName=ID 'equals' equals=Word
+;
+
+BTextEqualsAssertion:
+	assertionWidgetWrapper=BWidgetWrapper 'equals' equals=BStringOrParam
+;
+
+BTextContainsAsssertion:
+	assertionWidgetWrapper=BWidgetWrapper 'contains' contains=BStringOrParam
+;
+
+// ============================================================================
+// Implemented assertions   
+// ============================================================================
+
+BImplementationAssertion:
+    freeText=STRING
+;
+
+// ============================================================================
+// Widget wrappers   
+// ============================================================================
+
+// TODO maybe consolidate the wrappers: only keep the widget wrapper and then narrow the scope?
+
+BAssertionWrapper:
+	BWidgetWrapper | BComboWrapper | BTableWrapper | BTreeWrapper | BTabItemWrapper
+;
+
+BWidgetWrapper: 
+	widget=[uid::Widget|QualifiedName] widgetType=IdOrKeyword
+;
+
+BComboWrapper:
+	list=[uid::Combo|QualifiedName] listType=IdOrKeyword
+;
+
+BTableWrapper:
+	table=[uid::Table|QualifiedName] tableType=IdOrKeyword
+;
+
+BTreeWrapper: 
+	tree=[uid::Tree|QualifiedName] treeType=IdOrKeyword
+;
+
+BTabbedPaneWrapper: 
+    tabbedPane=[uid::TabbedPane|QualifiedName] treeType=IdOrKeyword
+;
+
+BTabItemWrapper:
+    tabItem=[uid::Item|QualifiedName] tabItemType=StringOrId
+;
+
+BAccordionWrapper: 
+    accordion=[uid::Accordion|QualifiedName] accordionType=IdOrKeyword
+;
+
+QualifiedName:
+	IdOrKeyword ('.' IdOrKeyword)*
+;
+
+QualifiedNameWithWildCard:
+	QualifiedName '.*'?
+;
+
+// ============================================================================
+// Keyword sequences (datatype rules), content assist will be offered  
+// ============================================================================
+
+GivenIamOnThe:
+  'Given' 'I' 'am' 'on' 'the' 
+;
+
+AndI:
+  'and' 'I'	
+;
+
+WhenI:
+  'when' 'I'
+;
+
+ThenIAmOnThe:
+	'then' 'I'  'am' 'on' 'the' 
+;
+
+AndPress:
+    'and' 'press'
+;
+
+AndThe:
+	'and' 'the'
+;
+
+ThenIt:
+    'then' 'it'
+;
+
+
+ThenThe:
+	'then' 'the'
+;
+
+AsA:
+	'As' 'a' 
+;
+
+IwantTo:
+	'I' 'want' 'to' 
+;
+
+InOrderTo:
+	'In' 'order' 'to' 
+;
+
+FromThe:
+	'from' 'the'
+;
+
+SelectThe:
+	'select' 'the'
+;
+
+ClickThe:
+	'click' 'the' 
+;
+
+ClickIt:
+    'click' 'it' 
+;
+
+CloseIt:
+    'close' 'it'
+;
+
+DoubleClickIt:
+    'double' 'click' 'it' 
+;
+
+IntoThe:
+	'into' 'the' 
+;
+
+AreSelected:
+	'are' 'selected'
+;
+
+ContainsThe:
+	'contains' 'the'
+;
+
+CellInRow:
+	'cell' 'in' 'row'
+; 
+
+AndColumn:
+	'and' 'column'
+;
+
+ScreenLooksLike:
+	'screen' 'looks' 'like' 
+;
+
+SwitchToThe:
+	'switch' 'to' 'the'
+;
+
+InColumn:
+	'in' 'column'
+;
+
+ 
+DoubleClick:
+	'double' 'click'
+;
+
+FinallyICloseIt:
+    'finally' 'I' 'close' 'it'
+;
+Header:
+    'header' 
+;
+
+Contains:
+    'contains'
+;
+
+ActivateTheNode:
+    'activate' 'the' 'node'
+;
+ActivateTheCell:
+    'activate' 'the' 'cell'
+;
+
+ActivateTheArea:
+    'activate' 'the' 'area'
+;
+
+SelectTheEntry:
+    'select' 'the' 'entry'
+;
+
+AtPath:
+    'at' 'path'
+;
+
+HasChildren:
+    'has' 'children'
+;
+
+IsDecoratedWith:
+    'is' 'decorated' 'with' 'the'
+;
+
+
+// ============================================================================
+// Keyword rules and wiki text like rule (TextToEol)  
+// ============================================================================
+
+/**
+ * Xtext 'datatype' rule to parse text until the end of the line
+ * 
+ * this rule requires changes to the formatter
+ */
+//TextToEol hidden():
+//	(Word|WS)* NL
+//;
+
+/** 
+ * contains any keywords that are in the grammar and should be allowed in free text
+ */
+Word:
+ 	IdOrKeyword |
+	INT |
+	STRING |
+	ML_COMMENT |
+	SL_COMMENT |
+	ANY_OTHER
+;
+
+AtParam hidden():
+	'@' 'param'
+;
+
+AtDataProvider hidden():
+	'@' 'dataProvider'
+;
+
+AtDependsOn:
+	'@' 'dependsOn'
+;
+
+AtSignThenIdOrKeyword:
+ '@' IdOrKeyword
+;
+
+AtTagScreen:
+ '@' 'tagScreen'
+;
+
+enum ValidKeysToPress:
+    ENTER|
+    SPACE|
+    TAB
+;
+
+// rule for the generated Ecore model
+enum TagModeEnum:
+    unspecified | // first literal is the default
+    TRUE |
+    FALSE
+;
+
+// rule for the DSL editor
+enum TagMode returns TagModeEnum:
+    TRUE |
+    FALSE
+;
+
+IdOrKeyword :
+	ID |
+	Keyword
+;
+
+StringOrId:
+	ID | STRING
+;
+
+Keyword:
+	',' |
+	'a' |
+	'am' |
+	'and' |
+	'are' |
+	'As' |
+	'as' |
+	'capture' |
+	'cell' |
+	'click' |
+	'column' |
+	'contains' |
+	'dataProvider' |
+	'datatype' |
+	'dependsOn' |
+	'equals' |
+	'exclude' |
+	'false' |
+	'Feature' |
+	'file' |
+	'from' |
+	'Given' |
+	'I' |
+	'import' |
+	'In' |
+	'in' |
+	'include' |
+	'indices' |
+	'into' |
+	'is' |
+	'like' |
+	'looks' |
+	'names' |
+	'node' |
+	'not' |
+	'on' |
+	'order' |
+	'package' |
+	'param' |
+	'row' |
+	'Scenario' |
+	'screen' |
+	'screenshot' |
+	'select' |
+	'selected' |
+	'tagScreen' |
+	'tabbedPane' |
+	'the' |
+	'then' |
+	'to' |
+	'true' |
+	'type' |
+	'values' |
+	'want' |
+	'when'
+;
+
+
+// ============================================================================
+// From the Xtext builtin Terminals grammar, changed WS and NL rules  
+// ============================================================================
+
+terminal ID     : '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+terminal INT returns ecore::EInt: ('0'..'9')+;
+terminal STRING	: 
+			'"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+			"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"
+; 
+terminal ML_DOCUMENTATION: '/**' -> '*/' ;
+terminal ML_COMMENT : '/*' (!'*') -> '*/' ;
+terminal SL_COMMENT : '//' !('\n'|'\r')* ('\r'? '\n')?;
+
+// original:
+terminal WS			: (' '|'\t'|'\r'|'\n')+;
+// change for TextToEol:
+//terminal WS       : (' '|'\t')+;
+//terminal NL       : ('\r'|'\n')+;
+
+terminal ANY_OTHER: .;
