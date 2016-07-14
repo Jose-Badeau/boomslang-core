@@ -15,33 +15,7 @@
 
   <build>
     <plugins>
-      <plugin>
-          <groupId>com.google.code.maven-replacer-plugin</groupId>
-          <artifactId>replacer</artifactId>
-          <version>1.5.3</version>
-          <executions>
-              <execution>
-                  <phase>process-resources</phase>
-                  <goals>
-                      <goal>replace</goal>
-                  </goals>
-              </execution>
-          </executions>
-          <configuration>
-              <preserveDir>false</preserveDir>
-              <includes>
-                <include>${project.basedir}/etc/*.target</include>
-              </includes>
-              <replacements>
-                  <replacement>
-                      <!-- Used to access the locally built wireframesketcher patch repository -->
-                      <token>@@WORKSPACE@@</token>
-                      <value>${project.basedir}/..</value>
-                  </replacement>
-              </replacements>
-              <outputDir>${basedir}</outputDir>
-          </configuration>
-      </plugin>
+     
       <plugin>
           <groupId>org.eclipse.tycho</groupId>
           <artifactId>tycho-maven-plugin</artifactId>
