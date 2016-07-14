@@ -9,5 +9,4 @@
             class="org.boomslang.core.CorePackage"
             genModel="model/BCore.genmodel"/>
    </extension> 
-
 </plugin>
