@@ -8,6 +8,5 @@
             uri="org.boomslang.core"
             class="org.boomslang.core.CorePackage"
             genModel="model/BCore.genmodel"/>
-   </extension>
-
+   </extension> 
 </plugin>

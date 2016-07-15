@@ -12,7 +12,7 @@
 
     <!-- The base: eclipse core, modelling dependencies, maven integration -->
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="org.eclipse.rcp.feature.group" version="4.4.2.v20150204-1700"/>
+      <unit id="org.eclipse.rcp.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.jdt.feature.group" version="3.10.1.v20150204-1700"/>
       <unit id="org.eclipse.emf.ecore.feature.group" version="2.10.2.v20150123-0348"/>
       <unit id="org.eclipse.emf.ecore.xcore.sdk.feature.group" version="1.2.2.v20150202-0452"/>
@@ -64,10 +64,7 @@
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="com.wireframesketcher.model.patch.feature.group" version="0.0.0"/>
       <unit id="com.wireframesketcher.feature.group" version="0.0.0"/>
-      <!-- A local repository is used to allow testing wfs and boomslang together before commit+deploy
-           maven-replacer-plugin is responsible to fill the /home/dokaspar/projects/stmp/A00-testing/boomslang_core/org.boomslang.targetplatform.remote/.. placeholder in this template.
-           The final target definition will land next to the pom.xml and can be loaded in eclipse. -->
-      <repository location="file:///home/dokaspar/projects/stmp/A00-testing/boomslang_core/org.boomslang.targetplatform.remote/../../boomslang_wfs/com.wireframesketcher.model.repository.remote/target/repository/"/>
+      <repository location="http://boomslang.org/updates/boomslang-wfs/repository"/>
     </location>
 
   </locations>

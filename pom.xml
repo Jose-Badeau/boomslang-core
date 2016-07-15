@@ -15,7 +15,7 @@
         <!-- use build.mode to switch between internet and enterprise build setup:
              remote:  with internet access
              inhouse: enterprise setup     -->
-        <build.mode>inhouse</build.mode>
+        <build.mode>remote</build.mode>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
