@@ -25,6 +25,8 @@ Export-Package: org.boomslang.core,
  org.boomslang.core.container,
  org.boomslang.core.contentassist,
  org.boomslang.core.impl,
+ org.boomslang.core.mwe2.custom.directorycleaner,
+ org.boomslang.core.mwe2.custom.projectconfiguration,
  org.boomslang.core.services,
  org.boomslang.core.util,
  org.boomslang.core.validation
