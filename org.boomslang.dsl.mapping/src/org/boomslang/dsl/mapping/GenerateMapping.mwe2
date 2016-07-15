@@ -4,41 +4,26 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.xtext.generator.*
 import org.eclipse.xtext.xtext.generator.model.project.*
 import org.boomslang.core.*
+import org.boomslang.core.mwe2.custom.directorycleaner.*
+import org.boomslang.core.mwe2.custom.projectconfiguration.*
 
 var rootPath = ".."
 var projectName = "org.boomslang.dsl.mapping"
 var runtimeProject = "${rootPath}/${projectName}"
 Workflow {
 	
-	component = DirectoryCleaner {
-        directory = "${runtimeProject}/src-gen"
-    }
-    
-    	component = DirectoryCleaner {
-        directory = "${runtimeProject}/xtend-gen"
-    }
-    
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}/model"
-    }
-    
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}.ide/src-gen"
-    }
-    
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}.ide/xtend-gen"
-    }
-    
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}.ui/src-gen"
-    }
-    
-    component = DirectoryCleaner {
-        directory = "${runtimeProject}.tests/src-gen"
-    }
-	
 	component = XtextGenerator {
+		cleaner=CustomXtextDirectoryCleaner{
+			enabled=true
+			useDefaultExcludes=true
+			extraDirectory = "${runtimeProject}/src-gen"
+			extraDirectory = "${runtimeProject}/xtend-gen"
+			extraDirectory = "${runtimeProject}/model"
+			extraDirectory = "${runtimeProject}.ide/src-gen"
+			extraDirectory = "${runtimeProject}.ui/src-gen"
+			extraDirectory="${runtimeProject}.tests/src-gen"
+			exclude="${rootPath}/org.boomslang.core/src-gen"
+		}
 		configuration = {
 			project = CustomProjectConfig {
 				baseName = "${projectName}"
