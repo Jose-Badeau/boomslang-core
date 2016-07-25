@@ -1,8 +1,4 @@
 language: java
-before_script:
-- git clone https://github.com/Jose-Badeau/boomslang-wireframesketcher.git
-- cd boomslang-wireframesketcher
-- mvn clean install
 script:
 - mvn clean install
 

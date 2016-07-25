@@ -45,13 +45,6 @@ Workflow {
 					name="org.boomslang.core"
 					overwriteSrc=false
 				}
-				
-				subProject={
-					enabled=true
-					root="${rootPath}/../boomslang-wireframesketcher/com.wireframesketcher.model"
-					name="com.wireframesketcher.model"
-					overwriteSrc=false
-				}
 			}
 			code = {
 				encoding = "UTF-8"

@@ -12,10 +12,9 @@
 	<packaging>pom</packaging>
 
 	<properties>
-        <!-- use build.mode to switch between internet and enterprise build setup:
-             remote:  with internet access
-             inhouse: enterprise setup     -->
-        <build.mode>remote</build.mode>
+		<!-- use build.mode to switch between internet and enterprise build setup: 
+			remote: with internet access inhouse: enterprise setup -->
+		<build.mode>remote</build.mode>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
@@ -42,19 +41,23 @@
 		<module>org.boomslang.dsl.mapping.ide</module>
 		<module>org.boomslang.dsl.mapping.ui</module>
 		<module>org.boomslang.dsl.mapping.tests</module>
-		<module>org.boomslang.dsl.mapping.feature</module> 
+		<module>org.boomslang.dsl.mapping.feature</module>
 		<module>org.boomslang.generator.feature.extension</module>
-        <module>org.boomslang.feature</module>
-        <module>org.boomslang.repository.${build.mode}</module>
-<!-- 
-        Uncomment to build a repository containing all transitive dependencies (~280MB)
-        Dependencies are in remote build.mode by design. Use these modules to fetch deps.
-        <module>org.boomslang.dependencies</module>
-        <module>org.boomslang.dependencies.repository</module>
--->
-		
+		<module>org.boomslang.feature</module>
+		<module>org.boomslang.repository.${build.mode}</module>
+		<!-- Uncomment to build a repository containing all transitive dependencies 
+			(~280MB) Dependencies are in remote build.mode by design. Use these modules 
+			to fetch deps. <module>org.boomslang.dependencies</module> <module>org.boomslang.dependencies.repository</module> -->
+
 	</modules>
 
+	<repositories>
+		<repository>
+			<id>boomslang-wfs</id>
+			<url>http://boomslang.org/updates/boomslang-wfs/repository/</url>
+			<layout>p2</layout>
+		</repository>
+	</repositories>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -70,7 +73,7 @@
 					<version>2.6.1</version>
 					<configuration>
 						<filesets>
-							<fileset> 
+							<fileset>
 								<directory>${basedir}/src-gen/</directory>
 							</fileset>
 							<fileset>
@@ -196,8 +199,8 @@
 							<artifact>
 								<groupId>org.boomslang</groupId>
 								<artifactId>boomslang-${build.mode}</artifactId>
-	  							<version>${project.version}</version>
-	  						</artifact>
+								<version>${project.version}</version>
+							</artifact>
 						</target>
 						<resolver>p2</resolver>
 						<environments>
@@ -241,13 +244,13 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.eclipse.tycho</groupId>
-                <artifactId>tycho-maven-plugin</artifactId>
-                <extensions>true</extensions>
-            </plugin>
-        </plugins>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<extensions>true</extensions>
+			</plugin>
+		</plugins>
 	</build>
 
 	<dependencyManagement>
