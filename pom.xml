@@ -54,7 +54,7 @@
 	<repositories>
 		<repository>
 			<id>boomslang-wfs</id>
-			<url>http://boomslang.org/updates/boomslang-wfs/repository/</url>
+			<url>http://dl.bintray.com/jose-badeau/boomslang-wireframesketcher/</url>
 			<layout>p2</layout>
 		</repository>
 	</repositories>
