@@ -1,8 +1,7 @@
 package org.boomslang.dsl.feature.tests
 
-import org.boomslang.dsl.feature.tests.FeatureInjectorProvider
-import org.boomslang.dsl.feature.services.FeatureGrammarAccess
 import com.google.inject.Inject
+import org.boomslang.dsl.feature.services.FeatureGrammarAccess
 import org.eclipse.xtext.GrammarUtil
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
@@ -17,7 +16,7 @@ import org.junit.runner.RunWith
  * It could as well be written as a regular Java class, it just happened
  * to be written as JUnit test because of the convenient syntax.
  */
-@InjectWith(FeatureInjectorProvider)
+@InjectWith(FeatureInjectorProviderCustom)
 @RunWith(XtextRunner)
 class KeywordExtractor {
 	
