@@ -12,6 +12,7 @@ Require-Bundle: org.boomslang.dsl.feature,
  org.eclipse.xtext.xbase.lib,
  org.boomslang.dsl.feature.ui,
  org.eclipse.core.runtime,
+ org.xpect.xtext.lib,
  org.eclipse.ui.workbench;resolution:=optional,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

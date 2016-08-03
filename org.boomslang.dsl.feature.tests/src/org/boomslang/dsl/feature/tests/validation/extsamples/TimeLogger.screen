@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="ch.esgroup.timemanagment.screens.TimeLogger" theme="clean">
+  <widgets xsi:type="model:Label" id="1" x="310" y="104" text="Cost object" measuredWidth="77" measuredHeight="24" name="CostObjectLabel">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Combo" id="2" x="408" y="104" width="273" text="Select cost object..." measuredWidth="273" measuredHeight="24" name="CostObjects">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="3" x="696" y="103" text="Filtered" measuredWidth="68" measuredHeight="26" name="Filtered">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="4" x="773" y="103" text="All" measuredWidth="37" measuredHeight="26" name="All">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="5" x="352" y="177" text="Date" measuredWidth="35" measuredHeight="24" name="DateLabel">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="6" x="408" y="177" width="273" text="12-11-2013" measuredWidth="273" measuredHeight="24" name="Date">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="7" x="696" y="176" width="114" text="Advanced mode" measuredWidth="114" measuredHeight="26" name="Mode">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="8" x="327" y="224" text="Duration" measuredWidth="60" measuredHeight="24" name="DurationLabel">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="9" x="408" y="224" width="273" text="e.g. 8h 25m" measuredWidth="273" measuredHeight="24" name="Duration">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="10" x="320" y="272" text="Comment" measuredWidth="67" measuredHeight="24" name="CommentLabel">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:TextArea" id="11" x="408" y="272" width="273" height="112" measuredWidth="273" measuredHeight="112" name="Comment">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="12" x="408" y="408" text="Save" measuredWidth="49" measuredHeight="26" name="Save">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="13" x="327" y="224" measuredWidth="5" measuredHeight="24" name="Alert">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="13px"/>
+</model:Screen>

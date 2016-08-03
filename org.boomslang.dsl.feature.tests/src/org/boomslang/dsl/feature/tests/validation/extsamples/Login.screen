@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="ch.esgroup.timemanagment.screens.Login">
+  <widgets xsi:type="model:TextField" name="User" id="4" x="104" y="72" width="331" text="User" measuredWidth="331" measuredHeight="24">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:TextField" name="Password" id="5" x="104" y="120" width="331" text="Password" measuredWidth="331" measuredHeight="24">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Checkbox" name="RememberMe" id="6" x="104" y="160" text="Remember me" measuredWidth="113" measuredHeight="24">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Button" name="SignIn" id="7" x="104" y="216" text="SignIn" measuredWidth="59" measuredHeight="26">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Button" name="ForgotPassword" id="8" x="314" y="216" text="ForgotPassword" measuredWidth="121" measuredHeight="26">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <widgets xsi:type="model:Label" name="foo" id="9" x="496" y="72" text="incorrect username or password" measuredWidth="209" measuredHeight="24">
+    <font size="13px" bold="false" italic="false" underline="false"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="13px"/>
+</model:Screen>
