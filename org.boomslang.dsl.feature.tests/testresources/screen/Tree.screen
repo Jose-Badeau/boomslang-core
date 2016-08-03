@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen name="Tree" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" theme="clean">
+  <widgets name="Tree1" xsi:type="model:Tree" id="9" x="144" y="80" text="Folder One&#xA;-Folder Two&#xA;--File One&#xA;--File Two&#xA;v Collapse Arrow&#xA;-[>] Closed Folder&#xA;-[v] Open Folder&#xA;> Expand Arrow&#xA;[-] Collapse&#xA;-[+] Expand&#xA;[] You can have&#xA;[x] Checkboxes&#xA;() And even radio buttons&#xA;{attachment} Or just any other icon&#xA;[_] And no icon too" measuredWidth="184" measuredHeight="340">
+    <items x="0" y="5" width="184" height="22" text="Folder One"/>
+    <items x="0" y="27" width="184" height="22" text="-Folder Two"/>
+    <items x="0" y="49" width="184" height="22" text="--File One"/>
+    <items x="0" y="71" width="184" height="22" text="--File Two"/>
+    <items x="0" y="93" width="184" height="22" text="v Collapse Arrow"/>
+    <items x="0" y="115" width="184" height="22" text="-[>] Closed Folder"/>
+    <items x="0" y="137" width="184" height="22" text="-[v] Open Folder"/>
+    <items x="0" y="159" width="184" height="22" text="> Expand Arrow"/>
+    <items x="0" y="181" width="184" height="22" text="[-] Collapse"/>
+    <items x="0" y="203" width="184" height="22" text="-[+] Expand"/>
+    <items x="0" y="225" width="184" height="22" text="[] You can have"/>
+    <items x="0" y="247" width="184" height="22" text="[x] Checkboxes"/>
+    <items x="0" y="269" width="184" height="22" text="() And even radio buttons"/>
+    <items x="0" y="291" width="184" height="22" text="{attachment} Or just any other icon"/>
+    <items x="0" y="313" width="184" height="22" text="[_] And no icon too"/>
+    <font size="13px" italic="false" bold="false" underline="false" />
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="13px" italic="false" bold="false" />
+</model:Screen>

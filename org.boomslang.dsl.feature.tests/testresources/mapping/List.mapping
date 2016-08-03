@@ -1,0 +1,24 @@
+package mapping
+
+Mapping List
+
+	URL {
+		path:
+			if (LIVE_ENV) { "/login" } else { "/loginfoo" } 
+		fragment:
+			if (!HTML5_HISTORY) { "#/login" }
+		query:
+			""
+	}
+
+	Title { 
+		"foo"   
+	}
+	
+	List.Countries {
+		if (DEV_ENV) {
+			"input-dev:username"
+		} else {
+			"input:username"
+		}
+	}
