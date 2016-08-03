@@ -50,7 +50,7 @@
 			<artifactId>org.boomslang.dsl.feature</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>com.wireframesketcher</groupId>
 			<artifactId>com.wireframesketcher.model</artifactId>
 			<version>${wfs.version}</version>
@@ -59,7 +59,7 @@
 			<groupId>com.wireframesketcher</groupId>
 			<artifactId>com.wireframesketcher.model.xtext</artifactId>
 			<version>${wfs.version}</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>org.boomslang.dsl.mapping</artifactId>
