@@ -78,7 +78,8 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 	 */
 	def IScope allowElementsInItsBWidgetContainer(EObject dslObject, EReference ref) {
 		val originalScope = delegateGetScope(dslObject, ref)
-
+		
+		//TODO make the widgetContainerOfNearestContext method return a list. 
 		val allowedWidgetContainer = dslObject.widgetContainerOfNearestContext
 
 		if (allowedWidgetContainer == null) {

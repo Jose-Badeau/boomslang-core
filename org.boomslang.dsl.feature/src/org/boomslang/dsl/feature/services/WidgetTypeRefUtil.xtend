@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EcorePackage
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import com.wireframesketcher.model.Master
 
 class WidgetTypeRefUtil {
 
@@ -81,6 +82,7 @@ class WidgetTypeRefUtil {
 	}
 	
 	def ContextInfo getContextInfoOfNearestContext(EObject dslObject) {
+		
 		if (dslObject == null) {
 			return null
 		}
@@ -110,7 +112,12 @@ class WidgetTypeRefUtil {
 				i = i - 1
 			}
 		}
-
+		//TODO temporary solution. Only works for Screens that only have reference to a reused component
+		val screen = bScenario.BToScreenSwitch?.screen
+		val widget = screen.widgets.findFirst[it instanceof Master]
+		if(widget!=null){
+			return new ContextInfo((widget as Master).screen,null)
+		}
 		// no screen context found, use screen of BScenario
 		return new ContextInfo(bScenario.BToScreenSwitch?.screen, null)
 	}
