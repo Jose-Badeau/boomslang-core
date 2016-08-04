@@ -34,11 +34,11 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/Minimal.feature'.readFileIntoString().parse().assertNoErrors
 	}
 
-	@Test
-	def void testParseMaxSample() {
-		xtextResourceSet.loadLoginScreen()
-		'feature/samples/Login.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
-	}
+//	@Test
+//	def void testParseMaxSample() {
+//		xtextResourceSet.loadScreen("Login.screen")
+//		'feature/samples/Login.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+//	}
 
 	@Test
 	def void testInvalid() {
@@ -47,8 +47,17 @@ class FeatureParsingTest extends AbstractXtextTests{
 		assertTrue(issues.get(0).message.contains("mismatched input '<EOF>' expecting"))
 	}
 	
-	def loadLoginScreen(XtextResourceSet xtextResourceSet) {
-		xtextResourceSet.getResource(URI.createURI("classpath:/screen/Login.screen"), true).load(null)
+	@Test
+	def void testFormReferences(){
+		xtextResourceSet.loadScreen("Simple.screen")
+		'feature/samples/Simple.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
+	/**
+	 * Name with pending .screen
+	 */
+	def loadScreen(XtextResourceSet xtextResourceSet, String name) {
+		xtextResourceSet.getResource(URI.createURI("classpath:/screen/"+name), true).load(null)
 	}
 
 

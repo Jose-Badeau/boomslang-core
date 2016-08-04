@@ -3,11 +3,8 @@
  */
 package org.boomslang.dsl.feature.scoping
 
-import org.boomslang.dsl.feature.feature.BClickCommand
 import org.boomslang.dsl.feature.feature.BComboWrapper
-import org.boomslang.dsl.feature.feature.BListSelectCommand
 import org.boomslang.dsl.feature.feature.BScenario
-import org.boomslang.dsl.feature.feature.BTypeCommand
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.boomslang.dsl.feature.feature.FeaturePackage
 import org.boomslang.dsl.feature.services.WidgetTypeRefUtil
@@ -44,23 +41,11 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 		allowParamOfParentScenario(ctx, ref)
 	}
 
-	def IScope scope_BClickCommand_clickSupport(BClickCommand ctx, EReference ref) {
-		allowElementsInItsBWidgetContainer(ctx, ref)
-	}
-
-	def IScope scope_BTypeCommand_textInputSupport(BTypeCommand ctx, EReference ref) {
-		allowElementsInItsBWidgetContainer(ctx, ref)
-	}
-
 	def IScope scope_BWidgetWrapper_widget(BWidgetWrapper ctx, EReference ref) {
 		allowElementsInItsBWidgetContainer(ctx, ref)
 	}
 
 	def IScope scope_BWidgetWrapper_widget(EObject ctx, EReference ref) {
-		allowElementsInItsBWidgetContainer(ctx, ref)
-	}
-
-	def IScope scope_BListSelectCommand_listSupport(BListSelectCommand ctx, EReference ref) {
 		allowElementsInItsBWidgetContainer(ctx, ref)
 	}
 

@@ -1,17 +1,17 @@
 package org.boomslang.dsl.feature.services
 
+import com.google.inject.Inject
+import java.util.List
 import org.boomslang.core.BPackage
 import org.boomslang.dsl.feature.feature.BComboWrapper
-import org.boomslang.dsl.feature.feature.BCommand
+import org.boomslang.dsl.feature.feature.BComponentActionParameter
+import org.boomslang.dsl.feature.feature.BTabItemWrapper
 import org.boomslang.dsl.feature.feature.BTableWrapper
 import org.boomslang.dsl.feature.feature.BTreeWrapper
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
-import com.google.inject.Inject
-import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.scoping.impl.ImportNormalizer
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider
-import org.boomslang.dsl.feature.feature.BTabItemWrapper
 
 /**
  * This customizes imports so that  
@@ -31,7 +31,7 @@ class ImportedNamespaceAwareLocalScopeProviderCustom extends ImportedNamespaceAw
 		switch context {
 			BPackage:
 				addWildcardImportFromSameNamespace(context, importedNamespaceResolvers, ignoreCase)
-			BCommand:
+			BComponentActionParameter:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
 			BWidgetWrapper:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)

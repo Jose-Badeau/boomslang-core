@@ -2,8 +2,7 @@ package org.boomslang.generator.util
 
 import org.boomslang.dsl.feature.feature.BAssertion
 import org.boomslang.dsl.feature.feature.BCodeStatement
-import org.boomslang.dsl.feature.feature.BCommand
-import org.boomslang.dsl.feature.feature.BItCommand
+import org.boomslang.dsl.feature.feature.BComponentActionParameter
 import org.boomslang.dsl.feature.feature.BToFrameSwitch
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
 import org.eclipse.xtend.lib.Property
@@ -40,7 +39,7 @@ class CodeSectionStatemachine {
 					case ASSERTION_SECTION_TAIL: state = ASSERTION_SECTION_TAIL
 				}
 			}
-			BCommand: {
+			BComponentActionParameter: {
 				switch (getState) {
 					case COMMAND_SECTION_HEAD: state = COMMAND_SECTION_TAIL
 					case COMMAND_SECTION_TAIL: state = COMMAND_SECTION_TAIL
@@ -67,7 +66,6 @@ class CodeSectionStatemachine {
 			}
 		}
 		switch (currentStatement){
-		BItCommand:{}
 		default:{
         		switch (getState) {
         			case COMMAND_SECTION_HEAD:   return '''

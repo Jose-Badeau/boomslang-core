@@ -74,85 +74,101 @@ BToFrameSwitch:
 ;
 
 BCodeStatement:
-	(AndI | WhenI ) BCommand | 
+	(AndI | WhenI ) BComponentActionParameter | 
 	(AndThe | ThenThe | ThenIt ) BAssertion | 
 	(AndI | WhenI ) BToFrameSwitch |  
 	ThenIAmOnThe BToScreenSwitch |
 	{BCodeStatement} FinallyICloseIt
 ;
 
+
+BComponentActionParameter:
+	BComponent|BImplementationCommand
+;
+
+
+
 // ============================================================================
-// Commands   
+// Component   
 // ============================================================================
 
-BCommand:
-	BClickCommand | BTypeCommand | BListSelectCommand | BDoubleClickCommand | BTabPaneSelectTabCommand |BTreeCommand | BTableCommand | BContextMenuCommand | BImplementationCommand | BAccordionCommand | {BCommand} BCloseCommand
+BComponent:
+	FromThe widget=BWidgetWrapper action=BAction
 ;
 
-BListSelectCommand:
-	BListSelectNamesCommand | BListSelectValuesCommand | BListSelectIndicesCommand
+// ============================================================================
+// Action   
+// ============================================================================
+
+
+BAction:
+	BClickAction | BSelectAction | BTypeAction
 ;
 
-BListSelectNamesCommand:
-	SelectThe 'names' names+=BStringOrParam ( ',' names+=BStringOrParam)* FromThe listWrapper=BComboWrapper
+BClickAction:
+	{BClickAction}
+	IClick
 ;
 
-BListSelectValuesCommand:
-	SelectThe 'values' values+=BStringOrParam ( ',' values+=BStringOrParam)* FromThe listWrapper=BComboWrapper  
+BSelectAction:
+	ISelect selectParameter=BSelectParameter
 ;
 
-BListSelectIndicesCommand:
-	SelectThe 'indices' indices+=BIntOrParam ( ',' indices+=BIntOrParam)* FromThe listWrapper=BComboWrapper
+BTypeAction:
+	IType value=BStringOrParam 
 ;
 
-BClickCommand:
-	(ClickThe clickSupport=[uid::ClickSupport|QualifiedName] clickSupportType=ID) | BItCommand
+// ============================================================================
+// Parameter   
+// ============================================================================
+
+
+
+//SelectParameter for List widget (Combo, List)
+BSelectParameter:
+	BListSelectParameter //|BTableSelectParameters
+;
+BListSelectParameter:
+	BSelectNamesParameter|BSelectValuesParameter|BSelectIndicesParameter
 ;
 
-BItCommand:
-   {ClickIt} ClickIt |{DoubleClickIt} DoubleClickIt   
-;
-
-BDoubleClickCommand:
-	DoubleClick value=STRING InColumn (columnIndex=INT|columnName=BStringOrParam) FromThe table=BTableWrapper
-;
-
-BTableCommand:
-    {BTableCommand}
-    FromThe bTableWrapper=BTableWrapper ActivateTheCell (columnIndex=INT|columnName=BStringOrParam)','(row=INT|rowValue=BStringOrParam)
-;
-
-
-BTypeCommand:
-   'type'  stringOrParam=BStringOrParam IntoThe textInputSupport=[uid::TextInputSupport|QualifiedName] textInputSupportType=ID (AndPress actionCommand=ValidKeysToPress)? 
-;
-
-BTabPaneSelectTabCommand:
-    {BTabPaneSelectTabCommand}
-    FromThe tabPane=BTabbedPaneWrapper SelectThe tabItem=BTabItemWrapper
+BSelectNamesParameter:
+	'names' parameters+=BIntOrStringOrParam (',' parameters+=BIntOrStringOrParam)*
 ;
 
 
-BTreeCommand:
-    FromThe bTreeWrapper=BTreeWrapper ActivateTheNode nodeQName=NodeQName   
+BSelectValuesParameter:
+	'values' parameters+=BIntOrStringOrParam (',' parameters+=BIntOrStringOrParam)*
 ;
 
-BContextMenuCommand:
-    FromThe contextMenu=BStringOrParam 'contextMenu' SelectTheEntry nodeQName=NodeQName
+
+BSelectIndicesParameter:
+	'indices' parameters+=BIntOrParam (',' parameters+=BIntOrStringOrParam)*
+;
+
+// ============================================================================
+// Table Parameter   
+// ============================================================================
+
+
+
+//SelectParameter for Tables
+BTableSelectParameters:
+	'cells' 'where' tableCriteria+=BTableCriteria (',' 'and' tableCriteria+=BTableCriteria)*
+;
+
+
+BTableCriteria:
+	('Column' | 'Row') operator=BCompareOperator value=BIntOrStringOrParam
+;
+
+BCompareOperator:
+	Equals|NotEquals|Matches|Contains|IndexEquals
 ;
 
 
 BImplementationCommand:
     freeText=STRING
-;
-
-BAccordionCommand:
-    {BAccordionCommand}
-    FromThe bAccordionWrapper=BAccordionWrapper ActivateTheArea (row=BIntOrStringOrParam)
-;
-
-BCloseCommand:
-    CloseIt
 ;
 
 
@@ -512,6 +528,33 @@ IsDecoratedWith:
     'is' 'decorated' 'with' 'the'
 ;
 
+Matches:
+	'matches'
+;
+
+Equals:
+	'equals'
+;
+
+NotEquals:
+	'not' 'equals'
+;
+
+IndexEquals:
+	'index' 'equals'
+;
+
+IClick:
+	'I' 'click'
+;
+
+ISelect:
+	'I' 'select'
+;
+
+IType:
+	'I' 'type'
+;
 
 // ============================================================================
 // Keyword rules and wiki text like rule (TextToEol)  

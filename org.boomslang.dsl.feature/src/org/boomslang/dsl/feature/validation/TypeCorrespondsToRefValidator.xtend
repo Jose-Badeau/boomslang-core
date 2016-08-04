@@ -1,10 +1,8 @@
 package org.boomslang.dsl.feature.validation
 
-import org.boomslang.dsl.feature.feature.BClickCommand
-import org.boomslang.dsl.feature.feature.BTypeCommand
+import com.google.inject.Inject
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.boomslang.dsl.feature.services.WidgetTypeRefUtil
-import com.google.inject.Inject
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
@@ -13,8 +11,6 @@ import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.EValidatorRegistrar
 
 import static org.boomslang.dsl.feature.feature.FeaturePackage.Literals.*
-
-import static extension com.google.common.base.Strings.*
 
 class TypeCorrespondsToRefValidator extends AbstractDeclarativeValidator {
 	
@@ -37,28 +33,6 @@ class TypeCorrespondsToRefValidator extends AbstractDeclarativeValidator {
 	 * to the actual type of the reference.
 	 */
 	public static val WRONG_TYPENAME = "WRONG_TYPENAME"
-// FIXME
-
-//	@Check
-//	def checkTypeCorrespondsToRef(BTestcode it) {
-//		it.checkTypeCorrespondsToRef(BWIDGET_CONTAINER__WIDGET_CONTAINER, BWIDGET_CONTAINER__WIDGET_CONTAINER_TYPE)
-//	}
-
-	@Check
-	def checkTypeCorrespondsToRef(BClickCommand it) {
-		it.checkTypeCorrespondsToRef(BCLICK_COMMAND__CLICK_SUPPORT, BCLICK_COMMAND__CLICK_SUPPORT_TYPE)
-	}
-
-	@Check
-	def checkTypeCorrespondsToRef(BTypeCommand it) {
-		it.checkTypeCorrespondsToRef(BTYPE_COMMAND__TEXT_INPUT_SUPPORT, BTYPE_COMMAND__TEXT_INPUT_SUPPORT_TYPE)
-	}
-
-// FIXME
-//	@Check
-//	def checkTypeCorrespondsToRef(BPostcondition it) {
-//		it.checkTypeCorrespondsToRef(BWIDGET_CONTAINER__WIDGET_CONTAINER, BWIDGET_CONTAINER__WIDGET_CONTAINER_TYPE)
-//	}
 
 	@Check
 	def checkTypeCorrespondsToRef(BWidgetWrapper it) {
@@ -90,8 +64,8 @@ class TypeCorrespondsToRefValidator extends AbstractDeclarativeValidator {
 		val typeNameInDsl = dslObject.getStringAttribute(widgetTypeNameERef)
 		if (typeNameInDsl != wireframeElementTypeName) {
 			error(
-				'''«wireframeElementName» is a '«wireframeElementTypeName»', but the text says it is a '«typeNameInDsl.
-					nullToEmpty»'«»''', widgetTypeNameERef, WRONG_TYPENAME, wireframeElementTypeName)
+				'''ï¿½wireframeElementNameï¿½ is a 'ï¿½wireframeElementTypeNameï¿½', but the text says it is a 'ï¿½typeNameInDsl.
+					nullToEmptyï¿½'ï¿½ï¿½''', widgetTypeNameERef, WRONG_TYPENAME, wireframeElementTypeName)
 		}
 	}
 }

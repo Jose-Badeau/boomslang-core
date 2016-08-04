@@ -3,35 +3,31 @@
  */
 package org.boomslang.dsl.feature.ui.quickfix
 
+import com.google.inject.Inject
+import com.wireframesketcher.model.Screen
 import org.boomslang.core.validation.PackageFolderStructureValidator
-import org.boomslang.dsl.feature.feature.BClickCommand
+import org.boomslang.dsl.feature.feature.BBooleanPropertyAssertion
 import org.boomslang.dsl.feature.feature.BFeature
-import org.boomslang.dsl.feature.feature.BTypeCommand
+import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.boomslang.dsl.feature.validation.AssertionValidator
+import org.boomslang.dsl.feature.validation.FeatureValidator
 import org.boomslang.dsl.feature.validation.FilenameValidator
-import org.boomslang.dsl.feature.validation.TypeCorrespondsToRefValidator
+import org.boomslang.dsl.mapping.mapping.BMappingPackage
+import org.boomslang.dsl.mapping.mapping.BWidgetMapping
+import org.boomslang.dsl.mapping.mapping.MappingFactory
+import org.boomslang.dsl.mapping.mapping.MappingPackage
 import org.boomslang.ui.quickfix.PackageFolderStructureQuickfix
-import com.google.inject.Inject
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.IContainer
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 import org.eclipse.xtext.ui.editor.model.edit.IModificationContext
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 import org.eclipse.xtext.validation.Issue
-import org.boomslang.dsl.feature.feature.BBooleanPropertyAssertion
-import org.boomslang.dsl.feature.validation.FeatureValidator
-
-import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
-import org.eclipse.xtext.resource.IContainer
-import org.eclipse.xtext.resource.IEObjectDescription
-import org.boomslang.dsl.mapping.mapping.MappingPackage
-import org.boomslang.dsl.mapping.mapping.BMappingPackage
-import com.wireframesketcher.model.Screen
-import org.boomslang.dsl.mapping.mapping.MappingFactory
-import org.boomslang.dsl.mapping.mapping.BWidgetMapping
-import org.boomslang.dsl.feature.feature.BScenario 
 
 /**
  * Custom quickfixes.
@@ -46,21 +42,7 @@ class FeatureQuickfixProvider extends DefaultQuickfixProvider {
 
     @Inject IContainer.Manager containerManager;
 
-	@Fix(TypeCorrespondsToRefValidator::WRONG_TYPENAME)
-	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
-		val expected = issue.data.head
-		if (expected.nullOrEmpty) {
-			return
-		}
-		val msg = "Change to '" + expected + "'"
-		acceptor.accept(issue, msg, msg, null) [ EObject element, IModificationContext context |
-			switch (element) {
-				BClickCommand: element.clickSupportType = expected
-				BTypeCommand: element.textInputSupportType = expected
-				BWidgetWrapper: element.widgetType = expected
-			}
-		]
-	}
+	
 
 	/**
 	 * Renames the package declaration so it matches the name of the project it is in,
