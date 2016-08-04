@@ -34,12 +34,6 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/Minimal.feature'.readFileIntoString().parse().assertNoErrors
 	}
 
-//	@Test
-//	def void testParseMaxSample() {
-//		xtextResourceSet.loadScreen("Login.screen")
-//		'feature/samples/Login.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
-//	}
-
 	@Test
 	def void testInvalid() {
 		val issues = 'feature/samples/Invalid.feature'.readFileIntoString.parse.validate
@@ -48,16 +42,22 @@ class FeatureParsingTest extends AbstractXtextTests{
 	}
 	
 	@Test
-	def void testFormReferences(){
-		xtextResourceSet.loadScreen("Simple.screen")
+	def void testFormSimpleReferences(){
+		xtextResourceSet.loadScreen("screen/Simple.screen")
 		'feature/samples/Simple.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
+	@Test
+	def void testFormInComponentReferences(){
+		xtextResourceSet.loadScreen("SimpleComponent.screen")
+		'feature/samples/SimpleComponent.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
 	/**
 	 * Name with pending .screen
 	 */
 	def loadScreen(XtextResourceSet xtextResourceSet, String name) {
-		xtextResourceSet.getResource(URI.createURI("classpath:/screen/"+name), true).load(null)
+		xtextResourceSet.getResource(URI.createURI("classpath:/"+name), true).load(null)
 	}
 
 

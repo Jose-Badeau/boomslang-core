@@ -4,14 +4,15 @@
 package org.boomslang.dsl.feature.ui.contentassist
 
 import com.google.inject.Inject
-import com.wireframesketcher.model.Accordion
+import com.wireframesketcher.model.ClickSupport
 import com.wireframesketcher.model.Screen
-import com.wireframesketcher.model.Table
-import com.wireframesketcher.model.Tree
+import com.wireframesketcher.model.SelectionSupport
+import com.wireframesketcher.model.TextInputSupport
 import java.util.List
 import org.apache.commons.lang.StringUtils
 import org.boomslang.core.contentassist.CoreProposalProvider
 import org.boomslang.dsl.feature.feature.BBooleanPropertyAssertion
+import org.boomslang.dsl.feature.feature.BComponent
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BTabAssertion
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
@@ -41,11 +42,6 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import static org.boomslang.dsl.feature.feature.FeaturePackage.Literals.*
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.boomslang.dsl.feature.feature.BComponent
-import com.wireframesketcher.model.ClickSupport
-import org.eclipse.emf.ecore.EClass
-import com.wireframesketcher.model.SelectionSupport
-import com.wireframesketcher.model.TextInputSupport
 
 /**
  * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
@@ -261,9 +257,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 
 	override complete_FromThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		if (model.fromThePossible(context)) {
-			fromTheAccess.group.createKeywordProposal(context, acceptor)
-		}
+		fromTheAccess.group.createKeywordProposal(context, acceptor)
 	}
 
 	override complete_CellInRow(EObject model, RuleCall ruleCall, ContentAssistContext context,
@@ -485,11 +479,12 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	 * Returns true if the last screen before the offset has a table
 	 */
 	def fromThePossible(EObject model, ContentAssistContext context) {
-		switch model {
-			BScenario: if(model.getScreenBeforeOffset(context)?.widgets.filter(Table).size > 0 ||
-				model.getScreenBeforeOffset(context)?.widgets.filter(Tree).size > 0 ||
-				model.getScreenBeforeOffset(context)?.widgets.filter(Accordion).size > 0) return true
-		}
+		return true
+//		switch model {
+//			BScenario: if(model.getScreenBeforeOffset(context)?.widgets.filter(Table).size > 0 ||
+//				model.getScreenBeforeOffset(context)?.widgets.filter(Tree).size > 0 ||
+//				model.getScreenBeforeOffset(context)?.widgets.filter(Accordion).size > 0) return true
+//		}
 	}
 
 	/**

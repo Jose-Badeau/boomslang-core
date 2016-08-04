@@ -17,6 +17,7 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.FilteringScope
+import com.wireframesketcher.model.Screen
 
 /**
  * This class contains custom scoping description.
@@ -92,7 +93,7 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 					} else {
 						objectOrProxy
 					}
-				val candidateContainer = EcoreUtil2.getContainerOfType(candidateEObject, WidgetContainer)
+				val candidateContainer = EcoreUtil2.getContainerOfType(candidateEObject, Screen)
 				return candidateContainer == allowedWidgetContainer
 			])
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="SimpleComponent">
   <widgets xsi:type="model:WidgetGroup" id="1" x="115" y="216" measuredWidth="456" measuredHeight="313">
-    <widgets xsi:type="model:Button" id="2" y="280" text="Submit" measuredWidth="74" measuredHeight="33">
+    <widgets xsi:type="model:Button" name="Submit" id="2" y="280" text="Submit" measuredWidth="74" measuredHeight="33">
       <font/>
     </widgets>
     <widgets xsi:type="model:Combo" name="Title" id="3" text="Title" measuredWidth="59" measuredHeight="31">

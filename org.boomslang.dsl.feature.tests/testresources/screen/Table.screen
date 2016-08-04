@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<model:Screen name="Table" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" theme="clean">
-  <widgets name="Worklog" xsi:type="model:Table" id="8" x="48" y="48" width="569" height="297" text="Name,Last\nName,=. Age v,(w:30). Kids,Likes,(align:center). Actions&#xA;Peter,Severin,36,[x],{computer},[Edit] [View]&#xA;Henri,Severin,(bg:lightGreen).6,[],{train},[Edit] [View]&#xA;Olga,Severin,61,[x],{note},[Edit] [View]&#xA;[-] You can even&#xA;  [+] Make a&#xA;  [+] Tree table" measuredWidth="569" measuredHeight="297" alternative="#eeeeee">
-    <font size="13px" italic="false" bold="false" underline="false" />
-  </widgets>
-  <hRuler/>
-  <vRuler/>
-  <font size="13px" italic="false" bold="false" />
-</model:Screen>
