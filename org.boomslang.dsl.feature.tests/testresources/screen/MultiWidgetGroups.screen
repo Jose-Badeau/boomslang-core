@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="MultiWidgetGroups" theme="clean">
+  <widgets xsi:type="model:WidgetGroup" id="4" x="243" y="140" measuredWidth="83" measuredHeight="157">
+    <widgets xsi:type="model:TextField" name="Login" id="1" text="Login" measuredWidth="53" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:TextField" name="Password" id="2" x="1" y="61" text="Password" measuredWidth="82" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Button" id="3" x="1" y="124" text="Submit" measuredWidth="74" measuredHeight="33">
+      <font/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" id="8" x="243" y="352" measuredWidth="181" measuredHeight="129">
+    <widgets xsi:type="model:Button" name="Register" id="5" y="40" text="Register" measuredWidth="81" measuredHeight="33">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Button" name="PasswordForgotten" id="6" y="96" text="Password forgotten" measuredWidth="168" measuredHeight="33">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="7" text="Problems with Login?..." measuredWidth="181" measuredHeight="31">
+      <font size="17px"/>
+    </widgets>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
