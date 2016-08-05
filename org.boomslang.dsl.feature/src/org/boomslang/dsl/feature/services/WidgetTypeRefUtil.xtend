@@ -6,13 +6,11 @@ import com.wireframesketcher.model.NameSupport
 import com.wireframesketcher.model.WidgetContainer
 import org.boomslang.dsl.feature.feature.BCodeStatement
 import org.boomslang.dsl.feature.feature.BScenario
-import org.boomslang.dsl.feature.feature.BToFrameSwitch
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EcorePackage
-
 import org.eclipse.xtend.lib.annotations.Data
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
@@ -119,14 +117,13 @@ class WidgetTypeRefUtil {
 			while (i > 0) {
 				val candidate = bScenario.codeStatements.get(i)
 				switch (candidate) {
-					BToFrameSwitch: return new ContextInfo(candidate.screen, candidate.frameID)
-					BToScreenSwitch: return new ContextInfo(candidate.screen, null)
+					BToScreenSwitch: return new ContextInfo(candidate.screen)
 				}
 				i = i - 1
 			}
 		}
 		// no screen context found, use screen of BScenario
-		return new ContextInfo(bScenario.BToScreenSwitch?.screen, null)
+		return new ContextInfo(bScenario.BToScreenSwitch?.screen)
 	}
 
 }
@@ -140,6 +137,4 @@ class WidgetTypeRefUtil {
 @Data
 class ContextInfo {
 	WidgetContainer widgetContainer
-	// null if not in a frame
-	String frameName
 }
