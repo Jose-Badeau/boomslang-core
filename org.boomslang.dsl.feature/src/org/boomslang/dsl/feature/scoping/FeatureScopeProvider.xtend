@@ -3,13 +3,13 @@
  */
 package org.boomslang.dsl.feature.scoping
 
+import com.google.inject.Inject
+import com.wireframesketcher.model.Screen
 import org.boomslang.dsl.feature.feature.BComboWrapper
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.boomslang.dsl.feature.feature.FeaturePackage
 import org.boomslang.dsl.feature.services.WidgetTypeRefUtil
-import com.google.inject.Inject
-import com.wireframesketcher.model.WidgetContainer
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.util.EcoreUtil
@@ -17,7 +17,6 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import com.wireframesketcher.model.Screen
 
 /**
  * This class contains custom scoping description.

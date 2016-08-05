@@ -9,14 +9,12 @@ import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.SelectionSupport
 import com.wireframesketcher.model.TextInputSupport
 import java.util.List
-import org.apache.commons.lang.StringUtils
 import org.boomslang.core.contentassist.CoreProposalProvider
 import org.boomslang.dsl.feature.feature.BBooleanPropertyAssertion
 import org.boomslang.dsl.feature.feature.BComponent
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BTabAssertion
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
-import org.boomslang.dsl.feature.feature.NodeQName
 import org.boomslang.dsl.feature.services.BWidgetUtil
 import org.boomslang.dsl.feature.services.FeatureGrammarAccess
 import org.boomslang.dsl.feature.services.WidgetTypeRefUtil
@@ -125,17 +123,6 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		}
 	}
 
-	override completeBComponent_Action(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		println((assignment.getTerminal as RuleCall).class)
-		println("asd")
-	}
-
-	override complete_BAction(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		println(model)
-	}
-
 	override complete_AtParam(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		atParamAccess.group.createKeywordProposal(context, acceptor, false)
@@ -223,7 +210,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 			}
 		}
 	}
-	
+
 	override complete_IType(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		switch (model) {
@@ -237,17 +224,13 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 
 	override complete_DoubleClick(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		if (model.fromThePossible(context)) {
-			doubleClickAccess.group.createKeywordProposal(context, acceptor)
-		}
+		doubleClickAccess.group.createKeywordProposal(context, acceptor)
 
 	}
 
 	override complete_DoubleClickIt(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		if (model.fromThePossible(context)) {
-			doubleClickItAccess.group.createKeywordProposal(context, acceptor)
-		}
+		doubleClickItAccess.group.createKeywordProposal(context, acceptor)
 	}
 
 	override complete_InColumn(EObject model, RuleCall ruleCall, ContentAssistContext context,
@@ -425,9 +408,9 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 			}
 		}
 	}
-	
-	def qNameInPrefixNames(QualifiedName qname,List<QualifiedName> prefixNames){
-		prefixNames.filter[qname.startsWith(it)].size>0
+
+	def qNameInPrefixNames(QualifiedName qname, List<QualifiedName> prefixNames) {
+		prefixNames.filter[qname.startsWith(it)].size > 0
 	}
 
 	/**
@@ -447,7 +430,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	 */
 	def getPrefixQName(EObject model, ContentAssistContext context) {
 		// Based on the available screen switches within the scenario the scope is determined.
-		val retList=newArrayList
+		val retList = newArrayList
 		val screenBeforeOffset = model.getScreenBeforeOffset(context)
 		if (model.isSingleScreenSwitch || screenBeforeOffset == null) {
 			model.widgetContainerOfNearestContext?.forEach[retList.add(it.fullyQualifiedName)]
@@ -479,18 +462,6 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 			}
 		}
 		return screen
-	}
-
-	/**
-	 * Returns true if the last screen before the offset has a table
-	 */
-	def fromThePossible(EObject model, ContentAssistContext context) {
-		return true
-//		switch model {
-//			BScenario: if(model.getScreenBeforeOffset(context)?.widgets.filter(Table).size > 0 ||
-//				model.getScreenBeforeOffset(context)?.widgets.filter(Tree).size > 0 ||
-//				model.getScreenBeforeOffset(context)?.widgets.filter(Accordion).size > 0) return true
-//		}
 	}
 
 	/**
@@ -544,100 +515,6 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		val packageName = model.completeBPackage_Name()
 		acceptor.accept(createCompletionProposal(packageName, packageName, null, context))
 
-	}
-
-	/**
-	 * Proposes the root node of a tree widget
-	 */
-	def proposeTreeRoot(String rawProposal, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		val proposal = if (rawProposal.indexOf("}") > 0) {
-				rawProposal.substring(rawProposal.indexOf("}") + 1)
-			} else {
-				rawProposal
-			}
-		acceptor.accept(createCompletionProposal('"' + proposal.trim + '"', proposal, null, context))
-	}
-
-	/**
-	 * Propose all treenodes underneath the given path in the tree
-	 * Consider the following tree where the number of '-' determines the level in the tree.
-	 * <br>
-	 * <br>Root A
-	 * <br>-Node B
-	 * <br>-Node C
-	 * <br>--Node D
-	 * <br>--Node E
-	 * <br>---Node F
-	 * <br>--Node G
-	 * <br>-Node H
-	 * <br>
-	 * 
-	 * <br>If the model is a NodeQName like '"Root A"'  then Node B, C, and H will be proposed
-	 * <br>If the model is a NodeQName like '"Root A" > "Node C"' then Node D, E, and G will be proposed
-	 * <br>If the model is a NodeQName like '"Root A" > "Node C > "Node E"' then Node F will be proposed
-	 * <br>If the model is a NodeQName like '"Root A" > "Node C > "Node E"> "Node F"' then no node will be proposed
-	 */
-	def proposeTreeNode(EObject model, String treeStructure, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		switch (model) {
-			NodeQName: {
-				val remainingText = newArrayList(treeStructure)
-				model.findCurrentPositionInTree(remainingText)
-				if (model.segment.size() > 0) {
-					model.proposeChildren(remainingText, context, acceptor)
-				}
-			}
-		}
-	}
-
-	/**
-	 * Based on the path included in the DSL the position in the underlying tree is retrieved.
-	 * This position is the basis for the context specific proposals
-	 */
-	def findCurrentPositionInTree(NodeQName model, List<String> remainingText) {
-		model.segment.forEach [
-			val value = if (it.getText != null && !it.getText.equals("")) {
-					it.getText
-				} else if (it.param != null && !it.getParam.equals("")) {
-					it.param.name
-				} else {
-					it.int
-				}
-			switch value {
-				String: {
-					// Always written at the first position of the array
-					remainingText.add(0,
-						remainingText.get(0).substring(remainingText.get(0).indexOf(value) + value.length + 1))
-				}
-			}
-		]
-	}
-
-	/**
-	 * Create a proposal for all children of the current Node
-	 */
-	def proposeChildren(NodeQName model, List<String> remainingText, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		var pattern = StringUtils.repeat("-", model.segment.size)
-		val wrongpattern = pattern + "-"
-		for (String s : remainingText.get(0).split("\\n")) {
-			if (s.startsWith(wrongpattern)) {
-				// To deep in tree
-				println("ignore: " + s)
-			} else if (s.startsWith(pattern)) {
-				// The one we are looking for
-				var proposal = s
-				proposal = if (proposal.indexOf("}") > 0) {
-					proposal.substring(proposal.indexOf("}") + 1)
-				} else {
-					proposal.substring(proposal.indexOf(pattern) + pattern.length + 1)
-				}
-				acceptor.accept(createCompletionProposal('"' + proposal.trim + '"', proposal, null, context))
-			} else if (pattern.length > 1 && s.startsWith(pattern.substring(0, pattern.length - 1))) {
-				// Higher level one, so now we got all children visited
-				return
-			}
-		}
 	}
 
 }
