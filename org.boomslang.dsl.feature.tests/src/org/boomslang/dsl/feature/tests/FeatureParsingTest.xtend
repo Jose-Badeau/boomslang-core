@@ -82,6 +82,12 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/MultiWidgetGroups.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
+	@Test
+	def void testFormsInRecursiveWidgetGroups(){
+		xtextResourceSet.loadScreen("screen/WidgetGroupInWidgetGroup.screen")
+		'feature/samples/WidgetGroupInWidgetGroup.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
 	/**
 	 * Name with pending .screen
 	 */
