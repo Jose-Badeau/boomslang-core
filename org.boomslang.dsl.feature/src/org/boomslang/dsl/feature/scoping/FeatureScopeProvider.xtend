@@ -95,7 +95,7 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 						objectOrProxy
 					}
 				val candidateContainer = EcoreUtil2.getContainerOfType(candidateEObject, Screen)
-				return candidateContainer == allowedWidgetContainer
+				return  allowedWidgetContainer.contains(candidateContainer)
 			])
 	}
 

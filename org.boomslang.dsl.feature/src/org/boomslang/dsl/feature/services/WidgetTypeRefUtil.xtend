@@ -1,19 +1,21 @@
 package org.boomslang.dsl.feature.services
 
+import com.wireframesketcher.model.Master
+import com.wireframesketcher.model.ModelPackage
+import com.wireframesketcher.model.NameSupport
+import com.wireframesketcher.model.WidgetContainer
 import org.boomslang.dsl.feature.feature.BCodeStatement
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BToFrameSwitch
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
-import com.wireframesketcher.model.ModelPackage
-import com.wireframesketcher.model.NameSupport
-import com.wireframesketcher.model.WidgetContainer
 import org.eclipse.emf.ecore.EAttribute
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.emf.ecore.EcorePackage
 
+import org.eclipse.xtend.lib.annotations.Data
+
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import com.wireframesketcher.model.Master
 
 class WidgetTypeRefUtil {
 
@@ -77,8 +79,19 @@ class WidgetTypeRefUtil {
 	 * @return 1) if dslObject is contained in a BCodeStatement and there is a preceding BCodeStatement with a screen reference, said screen
 	 * 2) otherwise the screen of the BScenario
 	 */
-	def WidgetContainer getWidgetContainerOfNearestContext(EObject dslObject) {
-		dslObject.getContextInfoOfNearestContext.widgetContainer
+	def  getWidgetContainerOfNearestContext(EObject dslObject) {
+ 		dslObject.getContextInfoOfNearestContext.widgetContainer?.allReferencedScreens
+		
+	}
+	
+	/**
+	 * Since a screen can refer to multiple different component screens. This method adds all screens to
+	 * the return set that are used by the referenced screen
+	 */
+	def getAllReferencedScreens(WidgetContainer container){
+		val retList= newArrayList(container);
+		container.widgets.filter[it instanceof Master].forEach[retList.add((it as Master).screen)]
+		return retList
 	}
 	
 	def ContextInfo getContextInfoOfNearestContext(EObject dslObject) {
@@ -111,12 +124,6 @@ class WidgetTypeRefUtil {
 				}
 				i = i - 1
 			}
-		}
-		//TODO temporary solution. Only works for Screens that only have reference to a reused component
-		val screen = bScenario.BToScreenSwitch?.screen
-		val widget = screen.widgets.findFirst[it instanceof Master]
-		if(widget!=null){
-			return new ContextInfo((widget as Master).screen,null)
 		}
 		// no screen context found, use screen of BScenario
 		return new ContextInfo(bScenario.BToScreenSwitch?.screen, null)

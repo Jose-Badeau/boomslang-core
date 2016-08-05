@@ -41,8 +41,8 @@ class ImportedNamespaceAwareLocalScopeProviderCustom extends ImportedNamespaceAw
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
 			BTreeWrapper:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
-		    BTabItemWrapper:
-                addNamespace(context, importedNamespaceResolvers, ignoreCase)
+			BTabItemWrapper:
+				addNamespace(context, importedNamespaceResolvers, ignoreCase)
 		}
 		return importedNamespaceResolvers
 	}
@@ -54,14 +54,15 @@ class ImportedNamespaceAwareLocalScopeProviderCustom extends ImportedNamespaceAw
 	}
 
 	def void addNamespace(EObject dslObject, List<ImportNormalizer> importedNamespaceResolvers, boolean ignoreCase) {
-		val namespaceWidgetContainer = dslObject.getWidgetContainerOfNearestContext
-
-		if (namespaceWidgetContainer != null) {
-			val qnameToAddImplicitly = qualifiedNameProvider.getFullyQualifiedName(namespaceWidgetContainer)
-			if (qnameToAddImplicitly != null) {
-				importedNamespaceResolvers.add(new ImportNormalizer(qnameToAddImplicitly, true, ignoreCase))
+		val namespaceWidgetContainers = dslObject.getWidgetContainerOfNearestContext
+		namespaceWidgetContainers.forEach [
+			if (it != null) {
+				val qnameToAddImplicitly = qualifiedNameProvider.getFullyQualifiedName(it)
+				if (qnameToAddImplicitly != null) {
+					importedNamespaceResolvers.add(new ImportNormalizer(qnameToAddImplicitly, true, ignoreCase))
+				}
 			}
-		}
+		]
 	}
 
 }

@@ -404,7 +404,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		// Definition of variables for getting the initial scope and Qualified Name
 		val widgetTypeERef = GrammarUtil.getReference(assignment.getTerminal() as CrossReference)
-		val QualifiedName prefixQName = model.getPrefixQName(context)
+		val List<QualifiedName> prefixQNames = model.getPrefixQName(context)
 		val IScope scope = model.getScope(widgetTypeERef, context)
 		// Filtering the scope to only propose widget types valid in the current context
 		for (IEObjectDescription description : scope.allElements) {
@@ -414,7 +414,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 				} else {
 					description.EClass.name.toLowerCase
 				}
-			if (!(prefixQName != null && !qname.startsWith(prefixQName) && !typeName.equals("screen"))) {
+			if (!(!prefixQNames.nullOrEmpty && !qname.qNameInPrefixNames(prefixQNames) && !typeName.equals("screen"))) {
 				val displayString = qualifiedNameConverter.toString(qname.skipFirst(qname.segmentCount - 1))
 				val proposal = (createCompletionProposal(displayString + " " + typeName, displayString + " " + typeName,
 					null, context) as ConfigurableCompletionProposal)
@@ -424,6 +424,10 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 				acceptor.accept(proposal)
 			}
 		}
+	}
+	
+	def qNameInPrefixNames(QualifiedName qname,List<QualifiedName> prefixNames){
+		prefixNames.filter[qname.startsWith(it)].size>0
 	}
 
 	/**
@@ -443,12 +447,14 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	 */
 	def getPrefixQName(EObject model, ContentAssistContext context) {
 		// Based on the available screen switches within the scenario the scope is determined.
+		val retList=newArrayList
 		val screenBeforeOffset = model.getScreenBeforeOffset(context)
 		if (model.isSingleScreenSwitch || screenBeforeOffset == null) {
-			model.widgetContainerOfNearestContext?.fullyQualifiedName
+			model.widgetContainerOfNearestContext?.forEach[retList.add(it.fullyQualifiedName)]
 		} else {
-			screenBeforeOffset.fullyQualifiedName
+			screenBeforeOffset.allReferencedScreens.forEach[retList.add(it.fullyQualifiedName)]
 		}
+		return retList
 	}
 
 	/**

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="MultiComponent" theme="clean">
+  <widgets xsi:type="model:Master" id="3" x="304" y="272" measuredWidth="332" measuredHeight="305">
+    <screen xsi:type="model:Screen" href="../../assets/SimpleComponent.screen#/"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="4" x="304" y="80" measuredWidth="212" measuredHeight="152">
+    <screen xsi:type="model:Screen" href="../../assets/SimpleContactComponent.screen#/"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

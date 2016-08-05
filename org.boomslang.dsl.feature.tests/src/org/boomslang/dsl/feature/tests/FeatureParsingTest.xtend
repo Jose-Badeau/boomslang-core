@@ -60,6 +60,14 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/UseSimpleComponent.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
+	@Test
+	def void testFormInMultipleReusedComponentsReferences(){
+		xtextResourceSet.loadScreen("SimpleComponent.screen")
+		xtextResourceSet.loadScreen("SimpleContactComponent.screen")
+		xtextResourceSet.loadScreen("screen/MultiComponent.screen")
+		'feature/samples/MultiComponent.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
 	/**
 	 * Name with pending .screen
 	 */
