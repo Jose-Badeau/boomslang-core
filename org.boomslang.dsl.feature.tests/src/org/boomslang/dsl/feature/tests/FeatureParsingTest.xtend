@@ -42,30 +42,38 @@ class FeatureParsingTest extends AbstractXtextTests{
 	}
 	
 	@Test
-	def void testFormSimpleReferences(){
+	def void testFormsSimpleReferences(){
 		xtextResourceSet.loadScreen("screen/Simple.screen")
 		'feature/samples/Simple.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
 	@Test
-	def void testFormInComponentReferences(){
+	def void testFormsInComponentReferences(){
 		xtextResourceSet.loadScreen("SimpleComponent.screen")
 		'feature/samples/SimpleComponent.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
 	@Test
-	def void testFormInReusedComponentReferences(){
+	def void testFormsInReusedComponentReferences(){
 		xtextResourceSet.loadScreen("SimpleComponent.screen")
 		xtextResourceSet.loadScreen("screen/UseSimpleComponent.screen")
 		'feature/samples/UseSimpleComponent.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
 	@Test
-	def void testFormInMultipleReusedComponentsReferences(){
+	def void testFormsInMultipleReusedComponentsReferences(){
 		xtextResourceSet.loadScreen("SimpleComponent.screen")
 		xtextResourceSet.loadScreen("SimpleContactComponent.screen")
 		xtextResourceSet.loadScreen("screen/MultiComponent.screen")
 		'feature/samples/MultiComponent.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
+	@Test
+	def void testFormsInMultipleReusedComponentsWithOwnWidgetsReferences(){
+		xtextResourceSet.loadScreen("SimpleComponent.screen")
+		xtextResourceSet.loadScreen("SimpleContactComponent.screen")
+		xtextResourceSet.loadScreen("screen/MultiComponentWithOwnWidgets.screen")
+		'feature/samples/MultiComponentWithOwnWidgets.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
 	/**
