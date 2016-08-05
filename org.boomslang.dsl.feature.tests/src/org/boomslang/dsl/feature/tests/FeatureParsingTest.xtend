@@ -88,6 +88,16 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/WidgetGroupInWidgetGroup.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
+	@Test
+	def void testThenIAmOnTheSwitch(){
+		xtextResourceSet.loadScreen("screen/WidgetGroupInWidgetGroup.screen")
+		xtextResourceSet.loadScreen("SimpleComponent.screen")
+		xtextResourceSet.loadScreen("screen/MultiComponent.screen")
+		xtextResourceSet.loadScreen("screen/Simple.screen")
+		xtextResourceSet.loadScreen("SimpleContactComponent.screen")
+		'feature/samples/ScreenSwitch.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
 	/**
 	 * Name with pending .screen
 	 */
