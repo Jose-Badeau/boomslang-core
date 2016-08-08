@@ -36,7 +36,7 @@
 
     <!-- SVN support is provided to allow one-click installation based on a bare Eclipse Luna -->
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="org.eclipse.team.svn.feature.group" version="3.0.4.I20160131-1700"/>
+      <unit id="org.eclipse.team.svn.feature.group" version="3.0.5.I20160701-1700"/>
       <unit id="org.eclipse.team.svn.m2e.feature.group" version="3.0.0.I20150529-1700"/>
       <repository location="http://download.eclipse.org/technology/subversive/3.0/update-site/"/>
     </location>
@@ -47,8 +47,8 @@
     </location>
 
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-      <unit id="org.polarion.eclipse.team.svn.connector.feature.group" version="5.0.2.I20151228-1700"/>
-      <unit id="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group" version="5.0.2.I20151228-1700"/>
+      <unit id="org.polarion.eclipse.team.svn.connector.feature.group" version="5.0.3.I20160701-1700"/>
+      <unit id="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group" version="5.0.3.I20160701-1700"/>
       <repository location="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
     </location>
 
