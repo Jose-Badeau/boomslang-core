@@ -14,6 +14,8 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.xtend.lib.annotations.Data
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.boomslang.dsl.feature.feature.BAction
+import org.boomslang.dsl.feature.feature.BComponent
 
 class WidgetTypeRefUtil {
 
@@ -124,6 +126,11 @@ class WidgetTypeRefUtil {
 		}
 		// no screen context found, use screen of BScenario
 		return new ContextInfo(bScenario.BToScreenSwitch?.screen)
+	}
+	
+	def getWidgetBeforeOffset(BAction action){
+		action.getContainerOfType(BComponent).widget.widget
+		
 	}
 
 }

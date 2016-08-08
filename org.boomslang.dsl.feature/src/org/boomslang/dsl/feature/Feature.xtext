@@ -102,20 +102,28 @@ BComponent:
 
 
 BAction:
-	BClickAction | BSelectAction | BTypeAction
+	BClickAction | BSelectAction | BTypeAction | BDoubleClickAction | BCheckAction
 ;
 
 BClickAction:
 	{BClickAction}
-	IClick
+	IClick (bTableSelectParameter=BTableSelectParameter)?
 ;
 
 BSelectAction:
-	ISelect selectParameter=BSelectParameter
+	ISelect (selectParameter=BSelectParameter | bTableSelectParameter=BTableSelectParameter)
 ;
 
 BTypeAction:
-	IType value=BStringOrParam 
+	IType value=BStringOrParam (InThe bTableSelectParameter=BTableSelectParameter)? 
+;
+
+BDoubleClickAction:
+	IDoubleClick bTableSelectParameter=BTableSelectParameter
+;
+
+BCheckAction:
+	ICheck bTableSelectParameter=BTableSelectParameter
 ;
 
 // ============================================================================
@@ -131,7 +139,7 @@ BSelectParameter:
 BListSelectParameter:
 	BSelectNamesParameter|BSelectValuesParameter|BSelectIndicesParameter
 ;
-
+//TODO Convert names, values, indices to parser rules
 BSelectNamesParameter:
 	'names' parameters+=BIntOrStringOrParam (',' parameters+=BIntOrStringOrParam)*
 ;
@@ -153,13 +161,13 @@ BSelectIndicesParameter:
 
 
 //SelectParameter for Tables
-BTableSelectParameters:
-	'cells' 'where' tableCriteria+=BTableCriteria (',' 'and' tableCriteria+=BTableCriteria)*
+BTableSelectParameter:
+	CellWhere tableCriteria+=BTableCriteria (',' 'and' tableCriteria+=BTableCriteria)*
 ;
 
 
 BTableCriteria:
-	('Column' | 'Row') operator=BCompareOperator value=BIntOrStringOrParam
+	(Column| Row) operator=BCompareOperator value=BIntOrStringOrParam
 ;
 
 BCompareOperator:
@@ -554,6 +562,30 @@ ISelect:
 
 IType:
 	'I' 'type'
+;
+
+CellWhere:
+	'cell' 'where'
+;
+
+Column:
+	'column'
+;
+
+Row:
+	'row'
+;
+
+InThe:
+ 'in' 'the'	
+;
+
+IDoubleClick:
+	'I' 'double' 'click'
+;
+
+ICheck:
+	'I' 'check'
 ;
 
 // ============================================================================

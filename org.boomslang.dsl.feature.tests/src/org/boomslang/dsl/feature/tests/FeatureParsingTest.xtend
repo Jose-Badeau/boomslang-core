@@ -98,6 +98,12 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/ScreenSwitch.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
+	@Test
+	def void testTableActionsWithParameter(){
+		xtextResourceSet.loadScreen("screen/Simple.screen")
+		'feature/samples/Table.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
 	/**
 	 * Name with pending .screen
 	 */

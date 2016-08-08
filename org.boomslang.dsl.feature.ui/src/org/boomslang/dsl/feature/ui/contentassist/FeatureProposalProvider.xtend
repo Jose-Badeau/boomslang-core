@@ -40,6 +40,10 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import static org.boomslang.dsl.feature.feature.FeaturePackage.Literals.*
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import org.boomslang.dsl.feature.feature.BAction
+import com.wireframesketcher.model.Table
+import com.wireframesketcher.model.BooleanSelectionSupport
+import com.wireframesketcher.model.DoubleClickSupport
 
 /**
  * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
@@ -188,6 +192,52 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		thenTheAccess.group.createKeywordProposal(context, acceptor)
 	}
+	
+	override complete_CellWhere(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		if((model as BAction).widgetBeforeOffset instanceof Table){
+			cellWhereAccess.group.createKeywordProposal(context, acceptor)
+		}
+	}
+	
+	override complete_InThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		inTheAccess.group.createKeywordProposal(context, acceptor)
+	}
+	
+	override complete_IDoubleClick(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		if((model as BAction).widgetBeforeOffset instanceof DoubleClickSupport){
+			IDoubleClickAccess.group.createKeywordProposal(context, acceptor)
+			}
+	}
+	
+	override complete_ICheck(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+			if((model as BAction).widgetBeforeOffset instanceof BooleanSelectionSupport){
+		ICheckAccess.group.createKeywordProposal(context, acceptor)
+		
+		}
+	}
+	
+	override complete_Row(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("row ", "row", null, context))
+	}
+	
+	override complete_Column(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("column ", "column", null, context))
+	}
+	
+	
+	override complete_BCompareOperator(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("equals ", "equals", null, context))
+		acceptor.accept(createCompletionProposal("not equals ", "not equals", null, context))
+		acceptor.accept(createCompletionProposal("matches ", "matches", null, context))
+		acceptor.accept(createCompletionProposal("contains ", "contains", null, context))
+		acceptor.accept(createCompletionProposal("index equals ", "index equals", null, context))
+	}	
 
 	override complete_IClick(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
