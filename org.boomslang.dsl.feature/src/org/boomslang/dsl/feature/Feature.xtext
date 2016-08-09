@@ -96,12 +96,17 @@ BComponent:
 	FromThe widget=BWidgetWrapper action=BAction
 ;
 
-// ============================================================================
-// Action   
-// ============================================================================
-
-
 BAction:
+	BCommandAction | BAssertionAction
+;
+
+// ============================================================================
+// Command Actions   
+// ============================================================================
+
+
+
+BCommandAction:
 	BClickAction | BSelectAction | BTypeAction | BDoubleClickAction | BCheckAction
 ;
 
@@ -124,6 +129,27 @@ BDoubleClickAction:
 
 BCheckAction:
 	ICheck bTableSelectParameter=BTableSelectParameter
+;
+
+// ============================================================================
+// Assertion Actions   
+// ============================================================================
+
+BAssertionAction:
+	 BPropertyAssertionAction|BBooleanAssertionAction |BSelectionAssertionAction
+;
+
+BPropertyAssertionAction:
+	propertyName=ID operator=BCompareOperator value=BIntOrStringOrParam
+;
+
+BBooleanAssertionAction:
+	'is' booleanPropertyNotTrue?='not'? booleanPropertyName=ID 
+;
+
+BSelectionAssertionAction:
+	{BSelectionAssertionAction} 	
+	Contains | SelectedEntryIs | SelectedIndexIs operator=BCompareOperator value =BIntOrStringOrParam
 ;
 
 // ============================================================================
@@ -158,9 +184,6 @@ BSelectIndicesParameter:
 // Table Parameter   
 // ============================================================================
 
-
-
-//SelectParameter for Tables
 BTableSelectParameter:
 	CellWhere tableCriteria+=BTableCriteria (',' 'and' tableCriteria+=BTableCriteria)*
 ;
@@ -178,6 +201,11 @@ BCompareOperator:
 BImplementationCommand:
     freeText=STRING
 ;
+
+
+// ============================================================================
+// Assertion Parameter   
+// ============================================================================
 
 
 // ============================================================================
@@ -206,6 +234,7 @@ BAssertion :
   	BGenericAssertion | BListAssertion | BTableAssertion | BScreenshotAssertion | BTreeAssertion | BTabAssertion | BImplementationAssertion
 ;
 
+//TODO remove
 BScreenshotAssertion:
   ScreenLooksLike id=ID 
   (
@@ -522,6 +551,14 @@ ActivateTheArea:
 
 SelectTheEntry:
     'select' 'the' 'entry'
+;
+
+SelectedEntryIs:
+	'selected' 'entry' 'is'
+;
+
+SelectedIndexIs:
+	'selected' 'index' 'is'
 ;
 
 AtPath:
