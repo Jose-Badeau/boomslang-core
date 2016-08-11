@@ -4,19 +4,11 @@
 package org.boomslang.dsl.feature.ui.contentassist
 
 import com.google.inject.Inject
-import com.wireframesketcher.model.BooleanSelectionSupport
-import com.wireframesketcher.model.ClickSupport
-import com.wireframesketcher.model.DoubleClickSupport
 import com.wireframesketcher.model.Screen
-import com.wireframesketcher.model.SelectionSupport
 import com.wireframesketcher.model.Table
-import com.wireframesketcher.model.TextInputSupport
 import java.util.List
 import org.boomslang.core.contentassist.CoreProposalProvider
-import org.boomslang.dsl.feature.feature.BBooleanPropertyAssertion
-import org.boomslang.dsl.feature.feature.BCommandComponent
 import org.boomslang.dsl.feature.feature.BScenario
-import org.boomslang.dsl.feature.feature.BTabAssertion
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
 import org.boomslang.dsl.feature.services.BActionUtil
 import org.boomslang.dsl.feature.services.BWidgetUtil
@@ -65,29 +57,6 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	@Inject ImportReplacementTextApplier importReplacementTextApplier
 
 	@Inject extension CoreProposalProvider
-
-	override completeBBooleanPropertyAssertion_BooleanPropertyName(EObject model, Assignment assignment,
-		ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		switch (model) {
-			BBooleanPropertyAssertion: {
-				for (suggestion : model.assertionWidgetWrapper.widget.namesOfBooleanAttributes) {
-					acceptor.accept(createCompletionProposal(suggestion, suggestion, null, context))
-				}
-			}
-		}
-	}
-	
-
-	override completeBTabAssertion_BooleanPropertyName(EObject model, Assignment assignment,
-		ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		switch (model) {
-			BTabAssertion: {
-				for (suggestion : model.BTabItemWrapper.tabItem.namesOfBooleanAttributes) {
-					acceptor.accept(createCompletionProposal(suggestion, suggestion, null, context))
-				}
-			}
-		}
-	}
 	
 	override completeBPropertyAssertionAction_PropertyName(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
@@ -195,16 +164,6 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		andTheAccess.group.createKeywordProposal(context, acceptor)
 	}
 
-	override complete_ClickThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		clickTheAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_IntoThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		intoTheAccess.group.createKeywordProposal(context, acceptor)
-	}
-
 	override complete_ThenThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		thenTheAccess.group.createKeywordProposal(context, acceptor)
@@ -291,91 +250,12 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		}
 	}
 
-	override complete_DoubleClick(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		doubleClickAccess.group.createKeywordProposal(context, acceptor)
-
-	}
-
-	override complete_DoubleClickIt(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		doubleClickItAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_InColumn(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		inColumnAccess.group.createKeywordProposal(context, acceptor)
-	}
 
 	override complete_FromThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		fromTheAccess.group.createKeywordProposal(context, acceptor)
 	}
 
-	override complete_CellInRow(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		cellInRowAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_AndColumn(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		andColumnAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_SelectThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		selectTheAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_SelectTheEntry(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		selectTheEntryAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_AndPress(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		andPressAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_ActivateTheNode(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		activateTheNodeAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_ActivateTheCell(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		activateTheCellAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_AtPath(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		atPathAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_HasChildren(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		hasChildrenAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_IsDecoratedWith(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		isDecoratedWithAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override complete_ActivateTheArea(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		activateTheAreaAccess.group.createKeywordProposal(context, acceptor)
-	}
-
-	override completeBTreeAssertion_ImageName(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		acceptor.accept(createCompletionProposal("\"\" image", "image", null, context))
-	}
-
-	override complete_Header(EObject model, RuleCall ruleCall, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		acceptor.accept(createCompletionProposal("header from the ", "header", null, context))
-	}
 	
 	override complete_Equals(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
@@ -417,42 +297,8 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		createTypeNameProposal(model, assignment, context, acceptor, BWIDGET_WRAPPER__WIDGET)
 	}
 
-	override completeBTreeWrapper_Tree(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		createTypeProposal(model, assignment, context, acceptor)
-	}
-
-	override completeBTreeWrapper_TreeType(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		createTypeNameProposal(model, assignment, context, acceptor, BTREE_WRAPPER__TREE)
-	}
 
 	override completeBToScreenSwitch_Screen(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		createTypeProposal(model, assignment, context, acceptor)
-	}
-
-	override completeBTableWrapper_Table(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		createTypeProposal(model, assignment, context, acceptor)
-	}
-
-	override completeBTabItemWrapper_TabItem(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		createTypeProposal(model, assignment, context, acceptor)
-	}
-
-	override completeBComboWrapper_List(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		createTypeProposal(model, assignment, context, acceptor)
-	}
-
-	override completeBTabbedPaneWrapper_TabbedPane(EObject model, Assignment assignment, ContentAssistContext context,
-		ICompletionProposalAcceptor acceptor) {
-		createTypeProposal(model, assignment, context, acceptor)
-	}
-
-	override completeBAccordionWrapper_Accordion(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		createTypeProposal(model, assignment, context, acceptor)
 	}

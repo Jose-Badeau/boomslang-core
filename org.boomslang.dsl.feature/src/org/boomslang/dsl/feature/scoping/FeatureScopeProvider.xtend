@@ -5,7 +5,6 @@ package org.boomslang.dsl.feature.scoping
 
 import com.google.inject.Inject
 import com.wireframesketcher.model.Screen
-import org.boomslang.dsl.feature.feature.BComboWrapper
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.boomslang.dsl.feature.feature.FeaturePackage
@@ -49,9 +48,6 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 		allowElementsInItsBWidgetContainer(ctx, ref)
 	}
 
-	def IScope scope_BComboWrapper_list(BComboWrapper ctx, EReference ref) {
-		allowElementsInItsBWidgetContainer(ctx, ref)
-	}
 
 	def IScope scope_BComboWrapper_list(EObject ctx, EReference ref) {
 		allowElementsInItsBWidgetContainer(ctx, ref)

@@ -6,7 +6,7 @@ package org.boomslang.dsl.feature.ui.quickfix
 import com.google.inject.Inject
 import com.wireframesketcher.model.Screen
 import org.boomslang.core.validation.PackageFolderStructureValidator
-import org.boomslang.dsl.feature.feature.BBooleanPropertyAssertion
+import org.boomslang.dsl.feature.feature.BBooleanAssertionAction
 import org.boomslang.dsl.feature.feature.BFeature
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
@@ -91,7 +91,7 @@ class FeatureQuickfixProvider extends DefaultQuickfixProvider {
 			acceptor.accept(issue, suggestion, suggestion, null,
 				[ EObject element, IModificationContext context |
 					switch (element) {
-						BBooleanPropertyAssertion: {
+						BBooleanAssertionAction: {
 							element.booleanPropertyName = name
 						}
 					}

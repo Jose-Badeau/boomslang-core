@@ -4,11 +4,7 @@ import com.google.inject.Inject
 import java.util.List
 import org.boomslang.core.BPackage
 import org.boomslang.dsl.feature.feature.BAssertionComponentActionParameter
-import org.boomslang.dsl.feature.feature.BComboWrapper
 import org.boomslang.dsl.feature.feature.BCommandComponentActionParameter
-import org.boomslang.dsl.feature.feature.BTabItemWrapper
-import org.boomslang.dsl.feature.feature.BTableWrapper
-import org.boomslang.dsl.feature.feature.BTreeWrapper
 import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.scoping.impl.ImportNormalizer
@@ -37,14 +33,6 @@ class ImportedNamespaceAwareLocalScopeProviderCustom extends ImportedNamespaceAw
 			BAssertionComponentActionParameter:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
 			BWidgetWrapper:
-				addNamespace(context, importedNamespaceResolvers, ignoreCase)
-			BComboWrapper:
-				addNamespace(context, importedNamespaceResolvers, ignoreCase)
-			BTableWrapper:
-				addNamespace(context, importedNamespaceResolvers, ignoreCase)
-			BTreeWrapper:
-				addNamespace(context, importedNamespaceResolvers, ignoreCase)
-			BTabItemWrapper:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
 		}
 		return importedNamespaceResolvers
