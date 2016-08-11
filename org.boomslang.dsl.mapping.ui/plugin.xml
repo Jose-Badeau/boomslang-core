@@ -240,11 +240,6 @@
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
-	<extension point="org.eclipse.xtext.builder.participant">
-		<participant
-			class="org.boomslang.dsl.mapping.ui.MappingExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
-			fileExtensions="mapping"/>
-	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
 			category="org.boomslang.dsl.mapping.Mapping"
