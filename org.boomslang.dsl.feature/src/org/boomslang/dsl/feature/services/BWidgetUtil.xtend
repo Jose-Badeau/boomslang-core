@@ -21,5 +21,18 @@ class BWidgetUtil {
 		}
 		return result
 	}
+	
+	/**
+	 * Returns all property names that are not type boolean 
+	 */
+	def List<String> namesOfProperties(EObject model){
+		val result = <String>newArrayList
+		for (att : model.eClass.getEAllAttributes) {
+			if (att.getEAttributeType != EcorePackage$Literals.EBOOLEAN) {
+				result += att.name
+			}
+		}
+		return result
+	}
 
 }

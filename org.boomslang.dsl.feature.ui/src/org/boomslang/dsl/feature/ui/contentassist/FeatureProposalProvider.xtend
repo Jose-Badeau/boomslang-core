@@ -4,17 +4,21 @@
 package org.boomslang.dsl.feature.ui.contentassist
 
 import com.google.inject.Inject
+import com.wireframesketcher.model.BooleanSelectionSupport
 import com.wireframesketcher.model.ClickSupport
+import com.wireframesketcher.model.DoubleClickSupport
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.SelectionSupport
+import com.wireframesketcher.model.Table
 import com.wireframesketcher.model.TextInputSupport
 import java.util.List
 import org.boomslang.core.contentassist.CoreProposalProvider
 import org.boomslang.dsl.feature.feature.BBooleanPropertyAssertion
-import org.boomslang.dsl.feature.feature.BComponent
+import org.boomslang.dsl.feature.feature.BCommandComponent
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BTabAssertion
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
+import org.boomslang.dsl.feature.services.BActionUtil
 import org.boomslang.dsl.feature.services.BWidgetUtil
 import org.boomslang.dsl.feature.services.FeatureGrammarAccess
 import org.boomslang.dsl.feature.services.WidgetTypeRefUtil
@@ -40,10 +44,6 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import static org.boomslang.dsl.feature.feature.FeaturePackage.Literals.*
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.boomslang.dsl.feature.feature.BAction
-import com.wireframesketcher.model.Table
-import com.wireframesketcher.model.BooleanSelectionSupport
-import com.wireframesketcher.model.DoubleClickSupport
 
 /**
  * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
@@ -59,6 +59,8 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	@Inject IQualifiedNameConverter qualifiedNameConverter
 
 	@Inject extension BWidgetUtil
+	
+	@Inject extension BActionUtil
 
 	@Inject ImportReplacementTextApplier importReplacementTextApplier
 
@@ -74,6 +76,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 			}
 		}
 	}
+	
 
 	override completeBTabAssertion_BooleanPropertyName(EObject model, Assignment assignment,
 		ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
@@ -84,6 +87,20 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 				}
 			}
 		}
+	}
+	
+	override completeBPropertyAssertionAction_PropertyName(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+			for (suggestion : model.widgetBeforeOffset.namesOfProperties){
+				acceptor.accept(createCompletionProposal(suggestion, suggestion, null, context))
+			}
+	}
+	
+	override completeBBooleanAssertionAction_BooleanPropertyName(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+			for (suggestion : model.widgetBeforeOffset.namesOfBooleanAttributes){
+				acceptor.accept(createCompletionProposal(suggestion, suggestion, null, context))
+			}
 	}
 
 	override completeBStringOrParam_Text(EObject model, Assignment assignment, ContentAssistContext context,
@@ -195,7 +212,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	
 	override complete_CellWhere(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		if((model as BAction).widgetBeforeOffset instanceof Table){
+		if(model.widgetBeforeOffset instanceof Table){
 			cellWhereAccess.group.createKeywordProposal(context, acceptor)
 		}
 	}
@@ -207,16 +224,22 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	
 	override complete_IDoubleClick(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		if((model as BAction).widgetBeforeOffset instanceof DoubleClickSupport){
+		if(model.contextOfDoubleClickableWidget){
 			IDoubleClickAccess.group.createKeywordProposal(context, acceptor)
 			}
 	}
 	
 	override complete_ICheck(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-			if((model as BAction).widgetBeforeOffset instanceof BooleanSelectionSupport){
-		ICheckAccess.group.createKeywordProposal(context, acceptor)
+		if(model.isContextOfCCheckableWidget){
+			ICheckAccess.group.createKeywordProposal(context, acceptor)
 		
+		}
+	}
+	override complete_SelectedEntry(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		if(model.isContextOfSelectableWidget){
+		 	selectedEntryAccess.group.createKeywordProposal(context, acceptor)	
 		}
 	}
 	
@@ -230,45 +253,41 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		acceptor.accept(createCompletionProposal("column ", "column", null, context))
 	}
 	
+	override complete_Property(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("property ", "property", null, context))
+	}
+	
 	
 	override complete_BCompareOperator(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		acceptor.accept(createCompletionProposal("equals ", "equals", null, context))
 		acceptor.accept(createCompletionProposal("not equals ", "not equals", null, context))
 		acceptor.accept(createCompletionProposal("matches ", "matches", null, context))
 		acceptor.accept(createCompletionProposal("contains ", "contains", null, context))
-		acceptor.accept(createCompletionProposal("index equals ", "index equals", null, context))
+		if(model.isContextOfSelectableWidget){
+			acceptor.accept(createCompletionProposal("index equals ", "index equals", null, context))
+		}
 	}	
 
 	override complete_IClick(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		switch (model) {
-			BComponent: {
-				if (model.widget.widget instanceof ClickSupport) {
-					IClickAccess.group.createKeywordProposal(context, acceptor)
-				}
-			}
+		if (model.isContextOfClickableWidget) {
+			IClickAccess.group.createKeywordProposal(context, acceptor)
 		}
 	}
+		
 
 	override complete_ISelect(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		switch (model) {
-			BComponent: {
-				if (model.widget.widget instanceof SelectionSupport) {
-					ISelectAccess.group.createKeywordProposal(context, acceptor)
-				}
-			}
+		if (model.isContextOfSelectableWidget) {
+			ISelectAccess.group.createKeywordProposal(context, acceptor)
 		}
 	}
 
 	override complete_IType(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		switch (model) {
-			BComponent: {
-				if (model.widget.widget instanceof TextInputSupport) {
-					ITypeAccess.group.createKeywordProposal(context, acceptor)
-				}
-			}
+		if (model.isContextOfTypeableWidget) {
+			ITypeAccess.group.createKeywordProposal(context, acceptor)
 		}
 	}
 
@@ -357,10 +376,35 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		acceptor.accept(createCompletionProposal("header from the ", "header", null, context))
 	}
+	
+	override complete_Equals(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("equals ", "equals", null, context))
+	}
+	
+	override complete_NotEquals(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		notEqualsAccess.group.createKeywordProposal(context, acceptor)
+	}
 
 	override complete_Contains(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		acceptor.accept(createCompletionProposal("contains", context))
+		if(model.isAssertionActionContext){
+			acceptor.accept(createCompletionProposal("contains", context))
+		}
+	}
+	
+	override complete_Is(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("is ", "is", null, context))
+	}
+	override complete_Not(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("not ", "not", null, context))
+	}
+	override complete_Matches(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("matches ", "matches", null, context))
 	}
 
 	override completeBWidgetWrapper_Widget(EObject model, Assignment assignment, ContentAssistContext context,

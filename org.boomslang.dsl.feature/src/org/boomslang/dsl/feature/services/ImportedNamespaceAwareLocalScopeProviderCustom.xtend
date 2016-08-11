@@ -3,8 +3,9 @@ package org.boomslang.dsl.feature.services
 import com.google.inject.Inject
 import java.util.List
 import org.boomslang.core.BPackage
+import org.boomslang.dsl.feature.feature.BAssertionComponentActionParameter
 import org.boomslang.dsl.feature.feature.BComboWrapper
-import org.boomslang.dsl.feature.feature.BComponentActionParameter
+import org.boomslang.dsl.feature.feature.BCommandComponentActionParameter
 import org.boomslang.dsl.feature.feature.BTabItemWrapper
 import org.boomslang.dsl.feature.feature.BTableWrapper
 import org.boomslang.dsl.feature.feature.BTreeWrapper
@@ -31,7 +32,9 @@ class ImportedNamespaceAwareLocalScopeProviderCustom extends ImportedNamespaceAw
 		switch context {
 			BPackage:
 				addWildcardImportFromSameNamespace(context, importedNamespaceResolvers, ignoreCase)
-			BComponentActionParameter:
+			BCommandComponentActionParameter:
+				addNamespace(context, importedNamespaceResolvers, ignoreCase)
+			BAssertionComponentActionParameter:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
 			BWidgetWrapper:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)

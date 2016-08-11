@@ -1,9 +1,10 @@
 package org.boomslang.generator.util
 
-import org.boomslang.dsl.feature.feature.BAssertion
+import org.boomslang.dsl.feature.feature.BAssertionComponentActionParameter
 import org.boomslang.dsl.feature.feature.BCodeStatement
-import org.boomslang.dsl.feature.feature.BComponentActionParameter
+import org.boomslang.dsl.feature.feature.BCommandComponentActionParameter
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
+import org.eclipse.xtend.lib.Property
 
 import static org.boomslang.generator.util.BGeneratorWhenThenAnd.*
 
@@ -29,7 +30,7 @@ class CodeSectionStatemachine {
 	 */
 	def CharSequence computeSectionHeader(BCodeStatement currentStatement) {
 		switch (currentStatement) {
-			BAssertion: {
+			BAssertionComponentActionParameter: {
 				switch (getState) {
 					case COMMAND_SECTION_HEAD: state = ASSERTION_SECTION_HEAD
 					case COMMAND_SECTION_TAIL: state = ASSERTION_SECTION_HEAD
@@ -37,7 +38,7 @@ class CodeSectionStatemachine {
 					case ASSERTION_SECTION_TAIL: state = ASSERTION_SECTION_TAIL
 				}
 			}
-			BComponentActionParameter: {
+			BCommandComponentActionParameter: {
 				switch (getState) {
 					case COMMAND_SECTION_HEAD: state = COMMAND_SECTION_TAIL
 					case COMMAND_SECTION_TAIL: state = COMMAND_SECTION_TAIL

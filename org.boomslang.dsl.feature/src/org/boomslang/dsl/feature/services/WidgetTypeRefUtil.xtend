@@ -5,6 +5,7 @@ import com.wireframesketcher.model.ModelPackage
 import com.wireframesketcher.model.NameSupport
 import com.wireframesketcher.model.WidgetContainer
 import org.boomslang.dsl.feature.feature.BCodeStatement
+import org.boomslang.dsl.feature.feature.BCommandComponent
 import org.boomslang.dsl.feature.feature.BScenario
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
 import org.eclipse.emf.ecore.EAttribute
@@ -14,8 +15,12 @@ import org.eclipse.emf.ecore.EcorePackage
 import org.eclipse.xtend.lib.annotations.Data
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
-import org.boomslang.dsl.feature.feature.BAction
-import org.boomslang.dsl.feature.feature.BComponent
+import com.wireframesketcher.model.SelectionSupport
+import com.wireframesketcher.model.ClickSupport
+import com.wireframesketcher.model.DoubleClickSupport
+import com.wireframesketcher.model.TextInputSupport
+import com.wireframesketcher.model.BooleanSelectionSupport
+import org.boomslang.dsl.feature.feature.BAssertionComponent
 
 class WidgetTypeRefUtil {
 
@@ -128,10 +133,34 @@ class WidgetTypeRefUtil {
 		return new ContextInfo(bScenario.BToScreenSwitch?.screen)
 	}
 	
-	def getWidgetBeforeOffset(BAction action){
-		action.getContainerOfType(BComponent).widget.widget
+	def getWidgetBeforeOffset(EObject element){
+		if(element instanceof BCommandComponent){
+			return element.widget.widget
+		}
+		if(element.getContainerOfType(BCommandComponent)!=null){
+			return	element.getContainerOfType(BCommandComponent).widget.widget
+		}else{
+			return	element.getContainerOfType(BAssertionComponent).widget.widget
+		}
 		
 	}
+	
+	def isContextOfSelectableWidget(EObject model){
+		model.widgetBeforeOffset instanceof SelectionSupport
+	}
+	def isContextOfClickableWidget(EObject model){
+		model.widgetBeforeOffset instanceof ClickSupport
+	}
+	def isContextOfDoubleClickableWidget(EObject model){
+		model.widgetBeforeOffset instanceof DoubleClickSupport
+	}
+	def isContextOfTypeableWidget(EObject model){
+		model.widgetBeforeOffset instanceof TextInputSupport
+	}
+	def isContextOfCCheckableWidget(EObject model){
+		model.widgetBeforeOffset instanceof BooleanSelectionSupport
+	}
+	
 
 }
 

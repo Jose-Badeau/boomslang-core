@@ -3,7 +3,7 @@ grammar org.boomslang.dsl.feature.Feature hidden(WS, /* change for TextToEol NL,
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://wireframesketcher.com/1.0/model.ecore" as uid
 
-import "org.boomslang.core" as bcore
+import "org.boomslang.core" as bcore 
 
 generate feature "http://www.esgroup.ch/boomslang/dsl/feature/Feature"
 
@@ -74,16 +74,20 @@ BToFrameSwitch:
 ;
 
 BCodeStatement:
-	(AndI | WhenI ) BComponentActionParameter | 
-	(AndThe | ThenThe | ThenIt ) BAssertion | 
+	(AndI | WhenI ) BCommandComponentActionParameter | 
+	(AndThe | ThenThe | ThenIt ) BAssertionComponentActionParameter | 
 	(AndI | WhenI ) BToFrameSwitch |  
 	ThenIAmOnThe BToScreenSwitch |
 	{BCodeStatement} FinallyICloseIt
 ;
 
 
-BComponentActionParameter:
-	BComponent|BImplementationCommand
+BCommandComponentActionParameter:
+	BCommandComponent|BImplementationCommand
+;
+
+BAssertionComponentActionParameter:
+	BAssertionComponent|BImplementationAssertion
 ;
 
 
@@ -92,13 +96,15 @@ BComponentActionParameter:
 // Component   
 // ============================================================================
 
-BComponent:
-	FromThe widget=BWidgetWrapper action=BAction
+
+BCommandComponent:
+	FromThe widget=BWidgetWrapper action=BCommandAction
 ;
 
-BAction:
-	BCommandAction | BAssertionAction
+BAssertionComponent:
+	widget=BWidgetWrapper action=BAssertionAction
 ;
+
 
 // ============================================================================
 // Command Actions   
@@ -136,20 +142,31 @@ BCheckAction:
 // ============================================================================
 
 BAssertionAction:
-	 BPropertyAssertionAction|BBooleanAssertionAction |BSelectionAssertionAction
+	 BPropertyAssertionAction|BBooleanAssertionAction |BContainsAssertionAction| BSelectionAssertionAction | BMatchesAssertionAction | BEqualsAssertion
 ;
 
 BPropertyAssertionAction:
-	propertyName=ID operator=BCompareOperator value=BIntOrStringOrParam
+	Property propertyName=ID operator=BCompareOperator value=BIntOrStringOrParam
 ;
 
 BBooleanAssertionAction:
-	'is' booleanPropertyNotTrue?='not'? booleanPropertyName=ID 
+	Is booleanPropertyNotTrue?=Not ? booleanPropertyName=ID 
+;
+
+BContainsAssertionAction:
+	Contains value=BIntOrStringOrParam
 ;
 
 BSelectionAssertionAction:
-	{BSelectionAssertionAction} 	
-	Contains | SelectedEntryIs | SelectedIndexIs operator=BCompareOperator value =BIntOrStringOrParam
+	SelectedEntry operator=BCompareOperator value=BIntOrStringOrParam
+;
+
+BMatchesAssertionAction:
+	Matches value=BStringOrParam
+;
+
+BEqualsAssertion:
+	(Equals|NotEquals) value=BStringOrParam
 ;
 
 // ============================================================================
@@ -553,8 +570,8 @@ SelectTheEntry:
     'select' 'the' 'entry'
 ;
 
-SelectedEntryIs:
-	'selected' 'entry' 'is'
+SelectedEntry:
+	'selected' 'entry' 
 ;
 
 SelectedIndexIs:
@@ -623,6 +640,17 @@ IDoubleClick:
 
 ICheck:
 	'I' 'check'
+;
+
+Is:
+	'is'
+;
+Not:
+	'not'
+;
+
+Property:
+	'property'
 ;
 
 // ============================================================================

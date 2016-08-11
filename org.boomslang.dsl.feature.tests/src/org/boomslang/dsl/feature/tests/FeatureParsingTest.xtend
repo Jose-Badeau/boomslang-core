@@ -104,6 +104,13 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/Table.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
+		
+	@Test
+	def void testAssertionCommands(){
+		xtextResourceSet.loadScreen("screen/Simple.screen")
+		'feature/samples/AssertionActions.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
 	/**
 	 * Name with pending .screen
 	 */
