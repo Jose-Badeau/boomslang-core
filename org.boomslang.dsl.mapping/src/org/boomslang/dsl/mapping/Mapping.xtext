@@ -32,7 +32,7 @@ BVariable:
 
 BMapping:
     'Mapping' screen=[uid::Screen|QualifiedName]
-    ('navigator' ':' screenNavigator=QualifiedName)?
+    ('driver' ':' screenNavigator=QualifiedName)?
     bUrl=BUrl
     bLabel=BLabel
     (bId=BId)?
@@ -69,7 +69,7 @@ BTabItemMapping:
 BWidgetMapping:
     {BWidgetMapping}
     widget=[uid::Widget|QualifiedName] '{'
-        ('navigator' ':' widgetNavigator=QualifiedName)?
+        ('driver' ':' widgetNavigator=QualifiedName)?
         // customGenerator+=[types::JvmType|QualifiedName] 
         // JvmParameterizedTypeReference
         'locator' ':' locator=MExpression
@@ -222,6 +222,7 @@ Keyword:
     'comboTableLocator' |
     'de' |
     'DEV_ENV' |
+    'driver' |
     'else' |
     'en' |
     'fr' |
@@ -236,7 +237,6 @@ Keyword:
     'LIVE_ENV' |
     'locator' |
     'Mapping' |
-    'navigator' |
     'nls' |
     'package' |
     'path' |
