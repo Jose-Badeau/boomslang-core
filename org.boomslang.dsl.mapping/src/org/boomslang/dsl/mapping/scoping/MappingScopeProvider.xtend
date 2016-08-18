@@ -26,6 +26,8 @@ import com.wireframesketcher.model.Screen
  */
 class MappingScopeProvider extends AbstractDeclarativeScopeProvider {
 
+
+	
 	def IScope scope_BWidgetMapping_widget(BWidgetMapping ctx, EReference ref) {
 		allowElementsInItsBWidgetContainer(ctx, ref)
 	}
@@ -37,7 +39,7 @@ class MappingScopeProvider extends AbstractDeclarativeScopeProvider {
 	def IScope allowElementsInItsBWidgetContainer(EObject dslObject, EReference ref) {
 		val originalScope = delegateGetScope(dslObject, ref)
 
-		val allowedWidgetContainer = dslObject.getContainerOfType(BMapping)?.screen
+		val allowedWidgetContainer = dslObject.getContainerOfType(BMapping)?.screen.allReferencedScreens
 
 		if (allowedWidgetContainer == null) {
 			return IScope.NULLSCOPE
@@ -52,7 +54,7 @@ class MappingScopeProvider extends AbstractDeclarativeScopeProvider {
 						objectOrProxy
 					}
 				val candidateContainer = candidateEObject.getContainerOfType(Screen)
-				return candidateContainer == allowedWidgetContainer
+				return  allowedWidgetContainer.contains(candidateContainer)
 			])
 	}
 	
