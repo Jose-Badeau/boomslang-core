@@ -14,6 +14,8 @@ import org.boomslang.dsl.mapping.mapping.BWidgetMapping
 import org.boomslang.dsl.mapping.mapping.BMapping
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import com.wireframesketcher.model.Master
+import com.wireframesketcher.model.Screen
 
 /**
  * This class contains custom scoping description.
@@ -49,9 +51,19 @@ class MappingScopeProvider extends AbstractDeclarativeScopeProvider {
 					} else {
 						objectOrProxy
 					}
-				val candidateContainer = candidateEObject.getContainerOfType(WidgetContainer)
+				val candidateContainer = candidateEObject.getContainerOfType(Screen)
 				return candidateContainer == allowedWidgetContainer
 			])
+	}
+	
+		/**
+	 * Since a screen can refer to multiple different component screens. This method adds all screens to
+	 * the return set that are used by the referenced screen
+	 */
+	def getAllReferencedScreens(WidgetContainer container){
+		val retList= newArrayList(container);
+		container.widgets.filter[it instanceof Master].forEach[retList.add((it as Master).screen)]
+		return retList
 	}
 
 
