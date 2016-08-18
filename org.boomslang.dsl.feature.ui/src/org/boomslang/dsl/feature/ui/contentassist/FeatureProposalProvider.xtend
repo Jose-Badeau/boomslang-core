@@ -36,6 +36,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
 import static org.boomslang.dsl.feature.feature.FeaturePackage.Literals.*
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
+import com.wireframesketcher.model.WidgetGroup
 
 /**
  * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
@@ -176,6 +177,12 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		}
 	}
 	
+	override complete_Where(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if(model.widgetBeforeOffset instanceof WidgetGroup){
+			acceptor.accept(createCompletionProposal("where ", "where", null, context))
+		}		
+	}
+
 	override complete_InThe(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		inTheAccess.group.createKeywordProposal(context, acceptor)

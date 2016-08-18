@@ -109,7 +109,7 @@ BCommandAction:
 
 BClickAction:
 	{BClickAction}
-	IClick (bTableSelectParameter=BTableSelectParameter)?
+	IClick (bTableSelectParameter=BTableSelectParameter|bTileParameter=BTileParameter)?
 ;
 
 BSelectAction:
@@ -205,6 +205,14 @@ BTableCriteria:
 
 BCompareOperator:
 	Equals|NotEquals|Matches|Contains|IndexEquals
+;
+
+// ============================================================================
+// Tile Parameter   
+// ============================================================================
+
+BTileParameter:
+	Where (bPropertyAssertionAction=BPropertyAssertionAction|bBooleanAssertionAction=BBooleanAssertionAction|bAssertionComponent=BAssertionComponent)
 ;
 
 
@@ -316,6 +324,9 @@ FromThe:
 FinallyICloseIt:
     'finally' 'I' 'close' 'it'
 ;
+Where:
+	'where'
+;
 
 Contains:
     'contains'
@@ -340,6 +351,8 @@ NotEquals:
 IndexEquals:
 	'index' 'equals'
 ;
+
+
 
 IClick:
 	'I' 'click'

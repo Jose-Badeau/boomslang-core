@@ -16,6 +16,7 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.FilteringScope
+import com.wireframesketcher.model.WidgetGroup
 
 /**
  * This class contains custom scoping description.
@@ -56,6 +57,8 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 	def IScope scope_BTreeWrapper_tree(EObject ctx, EReference ref) {
 		allowElementsInItsBWidgetContainer(ctx, ref)
 	}
+	
+
 
 	/**
 	 * Elements in the DSL may 
