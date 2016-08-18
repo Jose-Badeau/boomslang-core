@@ -5,6 +5,7 @@ import org.boomslang.dsl.feature.feature.BStringOrParam
 import com.wireframesketcher.model.Item
 import com.wireframesketcher.model.Screen
 import com.wireframesketcher.model.Widget
+import org.boomslang.dsl.feature.feature.BIntOrStringOrParam
 
 /**
  * Common methods for the feature generators
@@ -20,6 +21,8 @@ class BGeneratorUtil {
     def compileStringOrParam(BStringOrParam it) '''«IF param != null»«param.name»«ELSE»"«it.text»"«ENDIF»'''
 
     def compileIntOrParam(BIntOrParam it) '''«IF param != null»«param.name»«ELSE»«it.int»«ENDIF»'''
+    
+    def compileIntOrStringOrParam(BIntOrStringOrParam it)'''«IF param!=null»«param.name»«ELSEIF it.text!=null»"«it.text»"«ELSE»«it.int»«ENDIF»'''
 
     def getScreenForWidget(Widget widget) {
         if (widget.container instanceof Screen) {
