@@ -10,16 +10,18 @@ Require-Bundle: org.boomslang.dsl.mapping,
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.xbase.junit,
  org.eclipse.xtext.xbase.lib,
- org.boomslang.dsl.mapping.ui,
+ org.boomslang.dsl.feature.ui,
  org.eclipse.core.runtime,
+ org.xpect.xtext.lib,
  org.eclipse.ui.workbench;resolution:=optional,
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ com.wireframesketcher.model.xtext;bundle-version="4.6.4"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.boomslang.dsl.mapping.tests
-Import-Package: org.hamcrest.core,
- org.junit;version="4.5.0",
- org.junit.runner;version="4.5.0",
+Import-Package: org.junit.runner;version="4.5.0",
  org.junit.runner.manipulation;version="4.5.0",
  org.junit.runner.notification;version="4.5.0",
  org.junit.runners;version="4.5.0",
- org.junit.runners.model;version="4.5.0"
+ org.junit.runners.model;version="4.5.0",
+ org.hamcrest.core,
+ org.junit;version="4.5.0"

@@ -1,0 +1,17 @@
+package org.boomslang.test.mappings
+import org.boomslang.test.screens.Simple
+
+Mapping Simple
+
+driver:SomePageDriver
+url {path:"#/Simple"}
+label {nls{de:"Simple Page"}}
+
+Adress {
+	locator:"#adress"
+}
+Name {
+	locator:"#name"
+} 
+Submit { locator : "#submit" }
+Title { locator : "#title" }

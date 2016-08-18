@@ -54,7 +54,6 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<configuration>
 					<testSourceDirectory>src</testSourceDirectory>
-					<failIfNoTests>false</failIfNoTests>
 				</configuration>
 			</plugin>
 		</plugins>

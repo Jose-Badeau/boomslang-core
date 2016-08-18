@@ -3,28 +3,43 @@
  */
 package org.boomslang.dsl.mapping.tests
 
-import org.boomslang.core.BPackage
 import com.google.inject.Inject
+import org.boomslang.core.BPackage
+import org.eclipse.emf.common.util.URI
+import org.eclipse.xtext.junit4.AbstractXtextTests
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.junit4.util.ParseHelper
-import org.junit.Assert
+import org.eclipse.xtext.resource.XtextResourceSet
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.eclipse.xtext.junit4.validation.ValidationTestHelper
 
 @RunWith(XtextRunner)
-@InjectWith(MappingInjectorProvider)
-class MappingParsingTest{
+@InjectWith(MappingInjectorProviderCustom)
+class MappingParsingTest extends AbstractXtextTests{
 
 	@Inject
-	ParseHelper<BPackage> parseHelper
+	extension ParseHelper<BPackage> parseHelper
 
-	@Test 
-	def void loadModel() {
-		val result = parseHelper.parse('''
-			Hello Xtext!
-		''')
-		Assert.assertNotNull(result)
+	@Inject
+	extension ValidationTestHelper
+
+	@Inject
+	XtextResourceSet xtextResourceSet
+
+	@Test
+	def void testFormsSimpleReferences(){
+		xtextResourceSet.loadScreen("org/boomslang/test/screens/Simple.screen")
+		'org/boomslang/test/mappings/Simple.mapping'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
+	/**
+	 * Name with pending .screen
+	 */
+	def loadScreen(XtextResourceSet xtextResourceSet, String name) {
+		xtextResourceSet.getResource(URI.createURI("classpath:/"+name), true).load(null)
 	}
 
 }
+	
