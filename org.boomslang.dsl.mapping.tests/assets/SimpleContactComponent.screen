@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="org.boomslang.test.screens.SimpleContactComponent">
+  <widgets xsi:type="model:WidgetGroup" id="1" x="128" y="249" measuredWidth="259" measuredHeight="160">
+    <widgets xsi:type="model:TextField" name="EMail" id="2" x="86" text="john.doe@gmail.com" measuredWidth="173" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:TextField" name="PhoneNumber" id="3" x="86" y="63" text="+41 2254 8484" measuredWidth="123" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="4" text="E-Mail:" measuredWidth="58" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="5" y="63" text="Phone:" measuredWidth="59" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Button" name="Validate" id="6" y="127" text="Validate" measuredWidth="82" measuredHeight="33">
+      <font/>
+    </widgets>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

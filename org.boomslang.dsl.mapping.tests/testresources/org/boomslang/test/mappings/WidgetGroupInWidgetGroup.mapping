@@ -1,0 +1,17 @@
+package org.boomslang.test.mappings
+import org.boomslang.test.screens.WidgetGroupInWidgetGroup
+
+Mapping WidgetGroupInWidgetGroup
+
+driver:SomePageDriver
+url {path:"#/UseSimpleComponent"}
+label {nls{de:"Use Simple Component"}}
+
+Clear{locator:"#clear"}
+No{locator:"#no"}
+Clear{locator:"Value"}
+Options { driver:org.boomslang.test.DropdownModule locator : "#option" }
+Password{locator:"#pw"}
+Submit{locator:"#submit"}
+UserName{driver:org.boomslang.test.TextFieldModule locator:"#username"}
+Yes{locator:"#yesLocator"}

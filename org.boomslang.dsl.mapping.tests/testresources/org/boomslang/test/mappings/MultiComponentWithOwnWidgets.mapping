@@ -1,0 +1,16 @@
+package org.boomslang.test.mappings
+import org.boomslang.test.screens.MultiComponentWithOwnWidgets
+
+Mapping MultiComponentWithOwnWidgets
+
+driver:SomePageDriver
+url {path:"#/UseSimpleComponent"}
+label {nls{de:"Use Simple Component"}}
+
+Password {locator:"#password"}
+UserName{locator:"#username"}
+
+PasswordLabel { locator : "#pw" }
+
+UserLabel { locator : "#un" }
+

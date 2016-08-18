@@ -34,6 +34,20 @@ class MappingParsingTest extends AbstractXtextTests{
 		'org/boomslang/test/mappings/Simple.mapping'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
+	@Test
+	def void testFormsInMultipleReusedComponentsWithOwnWidgetsReferences(){
+		xtextResourceSet.loadScreen("SimpleComponent.screen")
+		xtextResourceSet.loadScreen("SimpleContactComponent.screen")
+		xtextResourceSet.loadScreen("org/boomslang/test/screens/MultiComponentWithOwnWidgets.screen")
+		'org/boomslang/test/mappings/MultiComponentWithOwnWidgets.mapping'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
+	@Test
+	def void testFormsInRecursiveWidgetGroups(){
+		xtextResourceSet.loadScreen("org/boomslang/test/screens/WidgetGroupInWidgetGroup.screen")
+		'org/boomslang/test/mappings/WidgetGroupInWidgetGroup.mapping'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	
 	/**
 	 * Name with pending .screen
 	 */

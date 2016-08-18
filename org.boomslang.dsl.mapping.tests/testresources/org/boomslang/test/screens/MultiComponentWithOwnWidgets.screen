@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="org.boomslang.test.screens.MultiComponentWithOwnWidgets" theme="clean">
+  <widgets xsi:type="model:TextField" id="3" x="384" y="40" text="UserName" measuredWidth="66" measuredHeight="23" name="UserName">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="4" x="384" y="88" text="***************************" measuredWidth="56" measuredHeight="23" name="Password">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="5" x="294" y="40" text="User" measuredWidth="29" measuredHeight="23" name="UserLabel">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="6" x="294" y="88" text="Password" measuredWidth="56" measuredHeight="23" name="PasswordLabel">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="9" x="498" y="203" measuredWidth="332" measuredHeight="305">
+    <screen xsi:type="model:Screen" href="../../../../../assets/SimpleComponent.screen#/"/>
+  </widgets>
+  <widgets xsi:type="model:Master" id="10" x="115" y="215" measuredWidth="212" measuredHeight="152">
+    <screen xsi:type="model:Screen" href="../../../../../assets/SimpleContactComponent.screen#/"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

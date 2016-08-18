@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="org.boomslang.test.screens.SimpleComponent">
+  <widgets xsi:type="model:WidgetGroup" id="1" x="115" y="216" measuredWidth="456" measuredHeight="313">
+    <widgets xsi:type="model:Button" name="Submit" id="2" y="280" text="Submit" measuredWidth="74" measuredHeight="33">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Combo" name="Title" id="3" text="Title" measuredWidth="59" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:TextField" name="Name" id="4" y="64" text="Name" measuredWidth="57" measuredHeight="31">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Table" name="Adress" id="5" y="120" text="Street,No,City,(w:30). Primary Adress&#xA;Mainstreet,23,New York,[x]&#xA;Hollywood Boulevard,101,Los Angeles,[]&#xA;Riverstreet,1233,San Fransisco,[]&#xA;" measuredWidth="456" measuredHeight="135" alternative="#eeeeee">
+      <font/>
+    </widgets>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

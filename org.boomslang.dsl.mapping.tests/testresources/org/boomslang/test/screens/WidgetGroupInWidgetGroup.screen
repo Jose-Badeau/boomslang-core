@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="org.boomslang.test.screens.WidgetGroupInWidgetGroup" theme="clean">
+  <widgets xsi:type="model:WidgetGroup" id="11" x="261" y="181" measuredWidth="166" measuredHeight="263">
+    <widgets xsi:type="model:WidgetGroup" id="6" measuredWidth="166" measuredHeight="164">
+      <widgets xsi:type="model:WidgetGroup" id="3" measuredWidth="96" measuredHeight="98">
+        <widgets xsi:type="model:TextField" name="UserName" id="1" text="User Name" measuredWidth="96" measuredHeight="31">
+          <font/>
+        </widgets>
+        <widgets xsi:type="model:TextField" name="Password" id="2" y="67" text="******************" measuredWidth="59" measuredHeight="31">
+          <font/>
+        </widgets>
+      </widgets>
+      <widgets xsi:type="model:Button" name="Submit" id="4" y="131" text="Submit" measuredWidth="74" measuredHeight="33">
+        <font/>
+      </widgets>
+      <widgets xsi:type="model:Button" name="Clear" id="5" x="107" y="131" text="Clear" measuredWidth="59" measuredHeight="33">
+        <font/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:Button" name="Yes" id="8" y="230" text="Yes" measuredWidth="45" measuredHeight="33">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Button" name="No" id="9" x="107" y="230" text="No" measuredWidth="43" measuredHeight="33">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="10" y="187" text="Is this page helpful" measuredWidth="150" measuredHeight="31">
+      <font/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Combo" name="Options" id="12" x="261" y="480" text="Options" measuredWidth="87" measuredHeight="31">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
