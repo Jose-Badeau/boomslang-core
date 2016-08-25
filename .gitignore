@@ -1,13 +1,13 @@
 *.class
+.classpath
+.project
+.settings
 
 #Folder
 /src-gen/
 /xtend-gen/
 /target/
-
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+/model/
 
 # Package Files #
 *.jar
