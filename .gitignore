@@ -7,7 +7,7 @@
 /src-gen/
 /xtend-gen/
 /target/
-/model/
+/model/generated/
 
 # Package Files #
 *.jar

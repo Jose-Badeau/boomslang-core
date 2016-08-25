@@ -31,5 +31,6 @@ Export-Package: org.boomslang.core,
  org.boomslang.core.util,
  org.boomslang.core.validation
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ model/
 Bundle-Vendor: %providerName
