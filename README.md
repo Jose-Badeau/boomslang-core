@@ -24,3 +24,6 @@ future there might be a composite repository that can hold multiple versions.
 
 ## Installation
 boomslang-core can be installed using the update-site at: https://dl.bintray.com/jose-badeau/boomslang-core/
+
+## Further Information
+Please find further information in the projects wiki at: https://github.com/Jose-Badeau/boomslang-core/wiki
