@@ -7,6 +7,6 @@
       <package
             uri="org.boomslang.core"
             class="org.boomslang.core.CorePackage"
-            genModel="model/BCore.xcore"/>
+            genModel="model/BCore.genmodel"/>
    </extension>
 </plugin>
