@@ -4,10 +4,10 @@
 .settings
 
 #Folder
-/src-gen/
-/xtend-gen/
-/target/
-/model/generated/
+src-gen/
+xtend-gen/
+target/
+generated/
 
 # Package Files #
 *.jar
