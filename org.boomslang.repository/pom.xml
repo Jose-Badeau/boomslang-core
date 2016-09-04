@@ -10,7 +10,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>org.boomslang.repository.remote</artifactId>
+	<artifactId>org.boomslang.repository</artifactId>
 	<packaging>eclipse-repository</packaging>
 	<name>Boomslang Remote Repository</name>
 

@@ -26,7 +26,7 @@
 	</properties>
 
 	<modules>
-		<module>org.boomslang.targetplatform.remote</module>
+		<module>org.boomslang.targetplatform</module>
 		<module>org.boomslang.core</module>
 		<module>org.boomslang.core.ui</module>
 		<module>org.boomslang.dsl.feature</module>
@@ -41,7 +41,7 @@
 		<module>org.boomslang.dsl.mapping.feature</module>
 		<module>org.boomslang.generator.feature.extension</module>
 		<module>org.boomslang.feature</module>
-		<module>org.boomslang.repository.remote</module>
+		<module>org.boomslang.repository</module>
 		<!-- Uncomment to build a repository containing all transitive dependencies 
 			(~280MB) Dependencies are in remote build.mode by design. Use these modules 
 			to fetch deps. <module>org.boomslang.dependencies</module> <module>org.boomslang.dependencies.repository</module> -->
@@ -196,7 +196,7 @@
 						<target>
 							<artifact>
 								<groupId>org.boomslang</groupId>
-								<artifactId>boomslang-remote</artifactId>
+								<artifactId>org.boomslang.targetplatform</artifactId>
 								<version>${project.version}</version>
 							</artifact>
 						</target>

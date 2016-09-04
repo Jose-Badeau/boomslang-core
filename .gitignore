@@ -1,13 +1,13 @@
 *.class
 .classpath
 .project
-.settings
 
 #Folder
 src-gen/
 xtend-gen/
 target/
 generated/
+.settings/
 
 # Package Files #
 *.jar
