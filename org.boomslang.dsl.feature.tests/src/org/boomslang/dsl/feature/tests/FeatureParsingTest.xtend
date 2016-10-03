@@ -111,6 +111,21 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/AssertionActions.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	
+	
+	// Tests with tabbed panes and tabs
+	
+	@Test
+	def void testTabbedPaneActions(){
+		xtextResourceSet.loadScreen("TabbedPaneComp.screen")
+		xtextResourceSet.loadScreen("TabbedPaneComponent2.screen")
+		xtextResourceSet.loadScreen("screen/parts/simple/SimpleTab1.screen")
+		xtextResourceSet.loadScreen("screen/parts/simple/SimpleTab2.screen")
+		xtextResourceSet.loadScreen("screen/parts/simple2/SimpleTab1.screen")
+		xtextResourceSet.loadScreen("screen/parts/simple2/SimpleTab2.screen")
+		'feature/samples/TabbedPane.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	}
+	 	
+	
 	/**
 	 * Name with pending .screen
 	 */

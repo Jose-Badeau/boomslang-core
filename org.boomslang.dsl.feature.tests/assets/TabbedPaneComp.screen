@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="org.simpleA.TabbedPaneComp">
+  <widgets xsi:type="model:TabbedPane" name="TabbedPaneSimple" id="1" x="56" y="104" width="1201" height="697" text="Tab1,Tab2" measuredWidth="1201" measuredHeight="697" position="bottom">
+    <items link="../testresources/screen/parts/simple/SimpleTab1.screen" x="10" y="647" width="62" height="50" text="Tab1"/>
+    <items link="../testresources/screen/parts/simple/SimpleTab2.screen" x="72" y="647" width="62" height="50" text="Tab2"/>
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" name="SaveAll" id="2" x="1171" y="800" text="Save all" measuredWidth="86" measuredHeight="38">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" name="Cancel" id="3" x="1080" y="800" text="Cancel" measuredWidth="77" measuredHeight="38">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" name="ComponentTitle" id="4" x="56" y="48" text="Component with a Tabbed Pane" measuredWidth="368" measuredHeight="40">
+    <font size="24px" bold="true"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

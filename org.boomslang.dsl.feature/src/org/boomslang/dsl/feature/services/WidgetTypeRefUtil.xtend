@@ -21,6 +21,7 @@ import com.wireframesketcher.model.DoubleClickSupport
 import com.wireframesketcher.model.TextInputSupport
 import com.wireframesketcher.model.BooleanSelectionSupport
 import org.boomslang.dsl.feature.feature.BAssertionComponent
+import com.wireframesketcher.model.TabbedPane
 
 class WidgetTypeRefUtil {
 
@@ -110,6 +111,11 @@ class WidgetTypeRefUtil {
 			return null
 		}
 		val codeStatement = dslObject.getContainerOfType(BCodeStatement)
+		
+		if(codeStatement instanceof BToScreenSwitch){
+			return new ContextInfo(bScenario.BToScreenSwitch?.determineScreen, null)
+		}
+        
 		if (codeStatement != null) {
 
 			// take the latest switchToScreen or switchToFrame statement
@@ -124,13 +130,13 @@ class WidgetTypeRefUtil {
 			while (i > 0) {
 				val candidate = bScenario.codeStatements.get(i)
 				switch (candidate) {
-					BToScreenSwitch: return new ContextInfo(candidate.screen)
+					BToScreenSwitch: return new ContextInfo(candidate.screen, null)
 				}
 				i = i - 1
 			}
 		}
 		// no screen context found, use screen of BScenario
-		return new ContextInfo(bScenario.BToScreenSwitch?.screen)
+		return new ContextInfo(bScenario.BToScreenSwitch?.screen, null)
 	}
 	
 	def getWidgetBeforeOffset(EObject element){
@@ -146,7 +152,8 @@ class WidgetTypeRefUtil {
 	}
 	
 	def isContextOfSelectableWidget(EObject model){
-		model.widgetBeforeOffset instanceof SelectionSupport
+		model.widgetBeforeOffset instanceof SelectionSupport 
+			&& !(model.widgetBeforeOffset instanceof TabbedPane) // uses 'I select the' instead of 'I select'
 	}
 	def isContextOfClickableWidget(EObject model){
 		model.widgetBeforeOffset instanceof ClickSupport
@@ -161,6 +168,13 @@ class WidgetTypeRefUtil {
 		model.widgetBeforeOffset instanceof BooleanSelectionSupport
 	}
 	
+	def determineScreen(BToScreenSwitch it) {
+		if (componentPartScreen != null) {
+			return componentPartScreen
+		} else {
+			return screen
+		}
+	}
 
 }
 
@@ -173,4 +187,6 @@ class WidgetTypeRefUtil {
 @Data
 class ContextInfo {
 	WidgetContainer widgetContainer
+	// null if not in a frame  - from svn
+	String frameName
 }

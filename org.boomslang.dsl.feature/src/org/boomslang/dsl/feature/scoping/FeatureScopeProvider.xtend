@@ -16,7 +16,14 @@ import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.FilteringScope
-import com.wireframesketcher.model.WidgetGroup
+import com.wireframesketcher.model.WidgetContainer
+import com.wireframesketcher.model.xtext.IEObjectDescriptionUtil
+import java.util.ArrayList
+import org.boomslang.dsl.feature.feature.BToScreenSwitch
+import org.eclipse.xtext.resource.IEObjectDescription
+import com.wireframesketcher.model.Master
+import org.boomslang.dsl.feature.feature.BTabPaneSelectTabAction
+import org.boomslang.dsl.feature.feature.BTabAssertion
 
 /**
  * This class contains custom scoping description.
@@ -28,7 +35,9 @@ import com.wireframesketcher.model.WidgetGroup
 class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 
 	@Inject extension WidgetTypeRefUtil
-
+	
+	@Inject extension IEObjectDescriptionUtil
+	
 	def IScope scope_BStringOrParam_param(EObject ctx, EReference ref) {
 		allowParamOfParentScenario(ctx, ref)
 	}
@@ -58,8 +67,87 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 		allowElementsInItsBWidgetContainer(ctx, ref)
 	}
 	
+	def IScope scope_BTabbedPaneWrapper_tabbedPane(EObject ctx, EReference ref) {
+		allowElementsInItsBWidgetContainer(ctx, ref,EcoreUtil2.getContainerOfType(ctx, BScenario).BToScreenSwitch.screen)
+	}
+	
+	/**
+	 * This method is used in the tab select
+	 */
+	def IScope scope_BTabItemWrapper_tabItem(BTabPaneSelectTabAction ctx, EReference ref) {
+		allowElementsInItsBWidgetContainer(ctx, ref)
+	}
+
+	/**
+	 * This method is used for tab assertion
+	 */
+	def IScope scope_BTabItemWrapper_tabItem(BTabAssertion ctx, EReference ref) {
+		allowElementsInItsBWidgetContainer(ctx, ref)
+	}
+
+	def IScope scope_BToScreenSwitch_screen(BToScreenSwitch ctx, EReference ref) {
+	    val scope = delegateGetScope(ctx, ref)
+	    return scope
+	}
+	
+	def IScope scope_BToScreenSwitch_componentPartScreen(EObject ctx, EReference ref) {
+	    val originalScope = delegateGetScope(ctx, ref)
+	    //if the referenced screen/widget is a "Part" of another component(e.g. tab screen as part of tabbedpane)
+        //then the function isComponentPart returns true
+        
+        val screenSwitch = ctx as BToScreenSwitch
+        val component = screenSwitch.screen
+        
+        val scope = new FilteringScope(originalScope,[
+        	isComponentPart && isComponentPartOf(component)
+        ])
+        debugScope(scope)
+	    return scope
+	}
+	
+	def EObject getEObject(IEObjectDescription description, EObject ctx) {
+		val objectOrProxy = description.EObjectOrProxy
+		val EObject eObject = if (objectOrProxy.eIsProxy) {
+			EcoreUtil.resolve(objectOrProxy, ctx);
+		} else {
+			objectOrProxy
+		}
+		return eObject
+	}
+	
+	def boolean isComponentPartOf(IEObjectDescription candidatePartDesc, Screen componentScreen) {
+		val candidatePart = getEObject(candidatePartDesc, componentScreen) as Screen
+		candidatePart.widgets.filter(Master).exists[screen == componentScreen]
+	}
+	
+	def debugScope(IScope scope) {
+		val scopeAllElements = scope.allElements
+		println('Scope elements:\n' + scopeAllElements.join('\n')['- ' + name.toString])
+	}
 
 
+	def IScope scope_BToScreenSwitch_screen(EObject ctx, EReference ref) {
+        val originalScope = delegateGetScope(ctx, ref)
+        //if the referenced screen/widget is a "Part" of another component(e.g. tab screen as part of tabbedpane)
+        //then the function isComponentPart returns true
+        return new FilteringScope(originalScope,[!isComponentPart])
+    }
+    
+
+	
+	/**
+	 * Returns all elements that are available in the WidgetContainer of the current widget. 
+	 * 
+	 */
+	def IScope allowElementsInItsBWidgetContainer(EObject dslObject, EReference ref) {
+		allowElementsInItsBWidgetContainer(dslObject,ref,dslObject.widgetContainerOfNearestContext)
+	}
+
+	def IScope allowElementsInItsBWidgetContainer(EObject dslObject, EReference ref, WidgetContainer allowedWidgetContainer) {
+		val allowedWidgetContainers = newArrayList(allowedWidgetContainer)
+		allowElementsInItsBWidgetContainer(dslObject,ref,allowedWidgetContainers)
+	}
+		
 	/**
 	 * Elements in the DSL may 
 	 * 1) be contained inside of BWidgetContainers and 
@@ -74,11 +162,10 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * @param dslObject - an object in the DSL that is contained (directly or indirectly) in a BWidgetContainer
 	 * @param ref - the dslObject's reference to a wireframe model element
 	 */
-	def IScope allowElementsInItsBWidgetContainer(EObject dslObject, EReference ref) {
+	def IScope allowElementsInItsBWidgetContainer(EObject dslObject, EReference ref, ArrayList<WidgetContainer> allowedWidgetContainer) {
 		val originalScope = delegateGetScope(dslObject, ref)
-		
-		val allowedWidgetContainer = dslObject.widgetContainerOfNearestContext
 
+		//val allowedWidgetContainer = dslObject.widgetContainerOfNearestContext
 		if (allowedWidgetContainer == null) {
 			return IScope.NULLSCOPE
 		}

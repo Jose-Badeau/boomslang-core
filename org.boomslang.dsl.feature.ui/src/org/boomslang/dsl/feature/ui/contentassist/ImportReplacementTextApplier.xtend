@@ -21,14 +21,17 @@ class ImportReplacementTextApplier extends ReplacementTextApplier {
 
     override apply(IDocument document, ConfigurableCompletionProposal proposal) throws BadLocationException {
         val proposalAux = proposal;
-        super.apply(document, proposal);
         (document as IXtextDocument).modify(new IUnitOfWork.Void<XtextResource>() {
             override process(XtextResource resource) {
                 val qName = qualifiedNameImportStatement(proposalAux)
-                // qualifiedNameConverter.toString((
-                // proposalAux.getAdditionalData(ADDITIONAL_DATA_QNAME) as QualifiedName))
-                if (qName != null) {
-                    val bPackage = (resource.getContents().get(0) as BFeaturePackage);
+                val bPackage = resource.getContents().get(0) as BFeaturePackage
+		        val useQualifiedName = nameAlreadyUsed(bPackage, proposal, qName)
+		        
+		        // apply the proposal
+		        applyProposal(document, proposal, useQualifiedName)
+                
+                // add import statements if applicable
+                if (qName != null && !useQualifiedName) {
                     if (bPackage.BImports.filter[importedNamespace.startsWith(qName)].size < 1) {
                         // Get the last import statement if non import exists the package declaration is taken
                         val node = if(bPackage.BImports.size>0){
@@ -49,11 +52,43 @@ class ImportReplacementTextApplier extends ReplacementTextApplier {
             }
         })
     }
+    
+    /**
+     * Returns true if the the simple name is already imported for another qualified name
+     */
+    def boolean nameAlreadyUsed(BFeaturePackage bPackage, ConfigurableCompletionProposal proposal, String qName) {
+    	val simpleName = qName.lastSegment
+        bPackage.BImports.exists[
+        	importedNamespace.lastSegment == simpleName && !(importedNamespace == qName)
+        ]
+	}
+	
+	def lastSegment(String qualifiedName) {
+		qualifiedName.split("\\.").last
+	}
+    
+    /** 
+     * Custom variation of the super method applyProposal with an additional parameter 
+     */
+    def applyProposal(IDocument document, ConfigurableCompletionProposal proposal, boolean useQualifiedName) throws BadLocationException {
+        val replacementString = if (useQualifiedName) {
+           	getActualReplacementString(proposal)
+        } else {
+            proposal.replacementString
+        }
+		proposal.setCursorPosition(replacementString.length());
+		document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(), replacementString);
+	}    
+    
 
-    override getActualReplacementString(ConfigurableCompletionProposal proposal) {
+    /**
+     * Computes the actual replacement string only in case that the qualified name must be used
+     */
+    override getActualReplacementString(ConfigurableCompletionProposal proposal) {    	
         val qname = (proposal.getAdditionalData(ADDITIONAL_DATA_QNAME) as QualifiedName)
-        qualifiedNameConverter.toString(qname.skipFirst(qname.segmentCount - 1)) + " " +
-            proposal.additionalProposalInfo + " "
+        val simpleName = qualifiedNameConverter.toString(qname)
+        val actualString = simpleName + " " + proposal.additionalProposalInfo + " "
+        return actualString        
     }
 
     /**
@@ -67,7 +102,7 @@ class ImportReplacementTextApplier extends ReplacementTextApplier {
         //If proposed element is a widget container such as screen, don't skip the last segment
         //Otherwise the last segment contains the name of the widget and can be skipped because only the
         //container name (screen name) is important
-        if(!"screen".equals(proposal.additionalProposalInfo)){
+        if(!("screen".equals(proposal.additionalProposalInfo.trim)||"::".equals(proposal.additionalProposalInfo))){
             qNameInternal =qNameInternal.skipLast(1)
         }
         //Since a tab is a widget within another widget (tabbed pane) all parts of the tabbed pane need to be 

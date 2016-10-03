@@ -28,6 +28,9 @@ import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider
 import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 import org.eclipse.xtext.validation.Issue
+import org.boomslang.dsl.feature.validation.TypeCorrespondsToRefValidator
+import org.boomslang.dsl.feature.feature.BClickAction
+import org.boomslang.dsl.feature.feature.BTypeAction
 
 /**
  * Custom quickfixes.
@@ -42,7 +45,19 @@ class FeatureQuickfixProvider extends DefaultQuickfixProvider {
 
     @Inject IContainer.Manager containerManager;
 
-	
+	@Fix(TypeCorrespondsToRefValidator::WRONG_TYPENAME)
+	def capitalizeName(Issue issue, IssueResolutionAcceptor acceptor) {
+		val expected = issue.data.head
+		if (expected.nullOrEmpty) {
+			return
+		}
+		val msg = "Change to '" + expected + "'"
+		acceptor.accept(issue, msg, msg, null) [ EObject element, IModificationContext context |
+			switch (element) {
+				BWidgetWrapper: element.widgetType = expected
+			}
+		]
+	}
 
 	/**
 	 * Renames the package declaration so it matches the name of the project it is in,
@@ -133,7 +148,7 @@ class FeatureQuickfixProvider extends DefaultQuickfixProvider {
         acceptor.accept(issue, "Create missing mapping for " + splitted.get(0),
             "Create missing mapping for " + splitted.get(0) + " " + splitted.get(1), null, [ element, context |
                 //val mapping = element.getContainerOfType((typeof(BMapping)))
-                    println(element)
+                    println("element: " + element)
                     val wrapper=element as BWidgetWrapper
                     val index = resourceDescriptionsProvider.getResourceDescriptions(wrapper.eResource());
                     val resourceDescription = index.getResourceDescription(wrapper.eResource().getURI());

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="SimpleTree">
+  <widgets xsi:type="model:Tree" name="Tree1" id="1" x="200" y="176" width="505" text="Folder One&#xA;-Folder Two&#xA;--File One&#xA;--File Two&#xA;v Collapse Arrow&#xA;-[>] Closed Folder&#xA;-[v] Open Folder&#xA;> Expand Arrow&#xA;[-] Collapse&#xA;-[+] Expand&#xA;[] You can have&#xA;[x] Checkboxes&#xA;() And even radio buttons&#xA;{attachment} Or just any other icon&#xA;[_] And no icon too" measuredWidth="505" measuredHeight="580" selection="2">
+    <items x="0" y="5" width="505" height="38" text="Folder One"/>
+    <items x="0" y="43" width="505" height="38" text="-Folder Two"/>
+    <items x="0" y="81" width="505" height="38" text="--File One"/>
+    <items x="0" y="119" width="505" height="38" text="--File Two"/>
+    <items x="0" y="157" width="505" height="38" text="v Collapse Arrow"/>
+    <items x="0" y="195" width="505" height="38" text="-[>] Closed Folder"/>
+    <items x="0" y="233" width="505" height="38" text="-[v] Open Folder"/>
+    <items x="0" y="271" width="505" height="38" text="> Expand Arrow"/>
+    <items x="0" y="309" width="505" height="38" text="[-] Collapse"/>
+    <items x="0" y="347" width="505" height="38" text="-[+] Expand"/>
+    <items x="0" y="385" width="505" height="38" text="[] You can have"/>
+    <items x="0" y="423" width="505" height="38" text="[x] Checkboxes"/>
+    <items x="0" y="461" width="505" height="38" text="() And even radio buttons"/>
+    <items x="0" y="499" width="505" height="38" text="{attachment} Or just any other icon"/>
+    <items x="0" y="537" width="505" height="38" text="[_] And no icon too"/>
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" name="TreeTitle" id="2" x="200" y="104" text="Some Hierarchy" measuredWidth="175" measuredHeight="40">
+    <font size="24px"/>
+  </widgets>
+  <widgets xsi:type="model:Button" name="Refresh" id="3" x="624" y="105" text="Refresh" measuredWidth="83" measuredHeight="38">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>
