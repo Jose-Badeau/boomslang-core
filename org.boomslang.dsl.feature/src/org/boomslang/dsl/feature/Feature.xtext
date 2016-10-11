@@ -125,7 +125,8 @@ BTypeAction:
 ;
 
 BDoubleClickAction:
-	IDoubleClick bTableSelectParameter=BTableSelectParameter
+	{BDoubleClickAction}
+	IDoubleClick (bTableSelectParameter=BTableSelectParameter|bTileParameter=BTileParameter)?
 ;
 
 BCheckAction:
@@ -228,7 +229,7 @@ BSelectValuesParameter:
 
 
 BSelectIndicesParameter:
-	'indices' parameters+=BIntOrParam (',' parameters+=BIntOrStringOrParam)*
+	'indices' parameters+=BIntOrParam (',' parameters+=BIntOrParam)*
 ;
 
 // ============================================================================
@@ -241,7 +242,7 @@ BTableSelectParameter:
 
 
 BTableCriteria:
-	(Column| Row) operator=BCompareOperator value=BIntOrStringOrParam
+	(column?=Column| Row) operator=BCompareOperator value=BIntOrStringOrParam
 ;
 
 BCompareOperator:

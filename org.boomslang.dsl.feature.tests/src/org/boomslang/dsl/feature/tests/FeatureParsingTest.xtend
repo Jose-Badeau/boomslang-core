@@ -125,6 +125,14 @@ class FeatureParsingTest extends AbstractXtextTests{
 		'feature/samples/TabbedPane.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
 	}
 	 	
+	@Test
+	def void testTabbedPaneInWidgetGroupActions(){
+		xtextResourceSet.loadScreen("TabbedPaneInWidgetGroupComp.screen")
+		xtextResourceSet.loadScreen("screen/parts/tabbedpaneingroup/FirstTab.screen")
+		xtextResourceSet.loadScreen("screen/parts/tabbedpaneingroup/SecondTab.screen")
+		'feature/samples/TabbedPaneInWidgetGroup.feature'.readFileIntoString().parse(xtextResourceSet).assertNoErrors
+	} 
+
 	
 	/**
 	 * Name with pending .screen

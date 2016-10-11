@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="org.simple.TabbedPaneInWidgetGroupComp" theme="clean">
+  <widgets xsi:type="model:WidgetGroup" id="6" x="104" y="56" measuredWidth="493" measuredHeight="475">
+    <widgets xsi:type="model:TabbedPane" name="TabbedPane3" id="1" y="72" width="489" height="377" text="First Tab,Second Tab" measuredWidth="489" measuredHeight="377" selection="0" position="bottom">
+      <items link="../testresources/screen/parts/tabbedpaneingroup/FirstTab.screen" x="10" y="347" width="71" height="30" text="First Tab"/>
+      <items link="../testresources/screen/parts/tabbedpaneingroup/SecondTab.screen" x="81" y="347" width="90" height="30" text="Second Tab"/>
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" id="2" text="Tabbed Pane inside a Widget Group" measuredWidth="346" measuredHeight="36">
+      <font size="20px" bold="true"/>
+    </widgets>
+    <widgets xsi:type="model:Button" name="Toggle" id="3" x="432" y="448" text="Toggle" measuredWidth="61" measuredHeight="27">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Tabs" name="MainTabs" id="5" y="43" text="Main Tab,Other Tab" measuredWidth="158" measuredHeight="30" selection="0">
+      <items x="1" y="0" width="76" height="30" text="Main Tab"/>
+      <items x="77" y="0" width="80" height="30" text="Other Tab"/>
+      <font/>
+    </widgets>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

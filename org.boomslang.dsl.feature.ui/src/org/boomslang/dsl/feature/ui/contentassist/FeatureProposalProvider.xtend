@@ -397,7 +397,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		val widgetTypeERef = GrammarUtil.getReference(assignment.getTerminal() as CrossReference)
 		
 		val List<QualifiedName> prefixQNames = 
-			if ("tabbedPane".equals(widgetTypeERef.name) || "tabItemX".equals(widgetTypeERef.name)) {
+			if ("tabbedPane".equals(widgetTypeERef.name) || "tabItem".equals(widgetTypeERef.name)) {
 				if (EcoreUtil2.getContainerOfType(model, BScenario).BToScreenSwitch.determineScreen.isComponentPart) {
 					newArrayList( // attila: making a list
 						EcoreUtil2.getContainerOfType(model, BScenario).BToScreenSwitch.screen?.fullyQualifiedName

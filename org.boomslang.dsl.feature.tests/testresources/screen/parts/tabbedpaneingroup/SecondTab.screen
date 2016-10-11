@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="screen.parts.tabbedpaneingroup.SecondTab">
+  <widgets xsi:type="model:Master" id="1" x="104" y="104" measuredWidth="493" measuredHeight="475" dimmed="true">
+    <screen xsi:type="model:Screen" href="../../../../assets/TabbedPaneInWidgetGroupComp.screen#org.simple.TabbedPaneInWidgetGroupComp"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="2" x="152" y="200" text="Content of Second Tab" measuredWidth="140" measuredHeight="25">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

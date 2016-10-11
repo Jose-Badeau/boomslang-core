@@ -24,6 +24,9 @@ import org.eclipse.xtext.resource.IEObjectDescription
 import com.wireframesketcher.model.Master
 import org.boomslang.dsl.feature.feature.BTabPaneSelectTabAction
 import org.boomslang.dsl.feature.feature.BTabAssertion
+import org.boomslang.dsl.feature.feature.BCommandComponent
+import com.wireframesketcher.model.TabbedPane
+import org.eclipse.xtext.scoping.Scopes
 
 /**
  * This class contains custom scoping description.
@@ -75,7 +78,11 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * This method is used in the tab select
 	 */
 	def IScope scope_BTabItemWrapper_tabItem(BTabPaneSelectTabAction ctx, EReference ref) {
-		allowElementsInItsBWidgetContainer(ctx, ref)
+		val cmd = ctx.eContainer as BCommandComponent
+		val tabbedPane = cmd.widget.widget as TabbedPane
+		val tabItems = tabbedPane.items
+		val scope = Scopes.scopeFor(tabItems)
+		return scope
 	}
 
 	/**
