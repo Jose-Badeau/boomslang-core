@@ -41,6 +41,8 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 	
 	@Inject extension IEObjectDescriptionUtil
 	
+	@Inject extension FeatureQualifiedNameProvider
+	
 	def IScope scope_BStringOrParam_param(EObject ctx, EReference ref) {
 		allowParamOfParentScenario(ctx, ref)
 	}
@@ -78,11 +80,7 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * This method is used in the tab select
 	 */
 	def IScope scope_BTabItemWrapper_tabItem(BTabPaneSelectTabAction ctx, EReference ref) {
-		val cmd = ctx.eContainer as BCommandComponent
-		val tabbedPane = cmd.widget.widget as TabbedPane
-		val tabItems = tabbedPane.items
-		val scope = Scopes.scopeFor(tabItems)
-		return scope
+		allowElementsInItsBWidgetContainer(ctx, ref)
 	}
 
 	/**
