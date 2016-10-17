@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="parts.simple.SimpleTab2">
+  <widgets xsi:type="model:Master" id="1" x="88" y="48" measuredWidth="1201" measuredHeight="790" dimmed="true">
+    <screen xsi:type="model:Screen" href="../../../../assets/TabbedPaneComp.screen#org.simpleA.TabbedPaneComp"/>
+    <overrides>
+      <widgets ref="1">
+        <attributes key="selection" value="1"/>
+      </widgets>
+    </overrides>
+  </widgets>
+  <widgets xsi:type="model:Label" name="Title2" id="2" x="144" y="152" text="Tab 2" measuredWidth="76" measuredHeight="46">
+    <font size="28px" bold="true"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

@@ -9,6 +9,7 @@ import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.scoping.impl.ImportNormalizer
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider
+import org.boomslang.dsl.feature.feature.BTabItemWrapper
 
 /**
  * This customizes imports so that  
@@ -34,6 +35,8 @@ class ImportedNamespaceAwareLocalScopeProviderCustom extends ImportedNamespaceAw
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
 			BWidgetWrapper:
 				addNamespace(context, importedNamespaceResolvers, ignoreCase)
+			BTabItemWrapper:
+				addNamespace(context, importedNamespaceResolvers, ignoreCase)			
 		}
 		return importedNamespaceResolvers
 	}

@@ -62,7 +62,8 @@ BScreenContext:
 ;
 
 BToScreenSwitch:
-	screen=[uid::Screen|QualifiedName] 'screen'
+	{BToScreenSwitch}
+	screen=[uid::Screen|QualifiedName]  ('::' componentPartScreen=[uid::Screen|QualifiedName])? 'screen'
 ;
 
 BCodeStatement:
@@ -105,6 +106,9 @@ BAssertionComponent:
 
 BCommandAction:
 	BClickAction | BSelectAction | BTypeAction | BDoubleClickAction | BCheckAction
+	| BTabPaneSelectTabAction
+	| BTreeAction
+	| BCloseAction
 ;
 
 BClickAction:
@@ -121,11 +125,45 @@ BTypeAction:
 ;
 
 BDoubleClickAction:
-	IDoubleClick bTableSelectParameter=BTableSelectParameter
+	{BDoubleClickAction}
+	IDoubleClick (bTableSelectParameter=BTableSelectParameter|bTileParameter=BTileParameter)?
 ;
 
 BCheckAction:
 	ICheck bTableSelectParameter=BTableSelectParameter
+;
+
+BTabPaneSelectTabAction:
+	{BTabPaneSelectTabAction}
+	ISelectThe bTabItemWrapper=BTabItemWrapper
+;
+
+BTabItemWrapper:
+	tabItem=[uid::Item|QualifiedName] 'tab'
+;
+
+BTableAction:
+	{BTableAction}
+	ActivateTheCell 
+	(columnIndex=INT|columnName=BStringOrParam)','(row=INT|rowValue=BStringOrParam)
+;
+
+BTreeAction:
+	{BTreeAction}
+	IActivateTheNode nodeQName=NodeQName
+;
+
+BContextMenuAction:
+	SelectTheEntry nodeQName=NodeQName
+;
+
+BAccordionCommand:
+	{BAccordionCommand}
+	ActivateTheArea (row=BIntOrStringOrParam)
+;
+
+BCloseAction:
+	CloseIt
 ;
 
 // ============================================================================
@@ -134,6 +172,7 @@ BCheckAction:
 
 BAssertionAction:
 	 BPropertyAssertionAction|BBooleanAssertionAction |BContainsAssertionAction| BSelectionAssertionAction | BMatchesAssertionAction | BEqualsAssertion
+	 | BTabAssertion
 ;
 
 BPropertyAssertionAction:
@@ -160,7 +199,10 @@ BEqualsAssertion:
 	(Equals|NotEquals) value=BStringOrParam
 ;
 
-//BTableAssertion --> For table cell and header
+BTabAssertion:
+	SelectedTabIs bTabItemWrapper=BTabItemWrapper
+;
+
 
 // ============================================================================
 // Parameter   
@@ -170,7 +212,7 @@ BEqualsAssertion:
 
 //SelectParameter for List widget (Combo, List)
 BSelectParameter:
-	BListSelectParameter //|BTableSelectParameters
+	BListSelectParameter
 ;
 BListSelectParameter:
 	BSelectNamesParameter|BSelectValuesParameter|BSelectIndicesParameter
@@ -187,7 +229,7 @@ BSelectValuesParameter:
 
 
 BSelectIndicesParameter:
-	'indices' parameters+=BIntOrParam (',' parameters+=BIntOrStringOrParam)*
+	'indices' parameters+=BIntOrParam (',' parameters+=BIntOrParam)*
 ;
 
 // ============================================================================
@@ -200,7 +242,7 @@ BTableSelectParameter:
 
 
 BTableCriteria:
-	(Column| Row) operator=BCompareOperator value=BIntOrStringOrParam
+	(column?=Column| Row) operator=BCompareOperator value=BIntOrStringOrParam
 ;
 
 BCompareOperator:
@@ -271,6 +313,10 @@ QualifiedNameWithWildCard:
 	QualifiedName '.*'?
 ;
 
+NodeQName:
+	segment+=BIntOrStringOrParam ('>' segment+=BIntOrStringOrParam)*
+;
+
 // ============================================================================
 // Keyword sequences (datatype rules), content assist will be offered  
 // ============================================================================
@@ -332,8 +378,32 @@ Contains:
     'contains'
 ;
 
+IActivateTheNode:
+	'I' 'activate' 'the' 'node'
+;
+
+ActivateTheCell:
+	'activate' 'the' 'cell'
+;
+
+ActivateTheArea:
+	'activate' 'the' 'area'
+;
+
+SelectTheEntry:
+	'select' 'the' 'entry' 
+;
+
+SwitchToThe:
+	'switch' 'to' 'the'
+;
+
 SelectedEntry:
 	'selected' 'entry' 
+;
+
+SelectedTabIs:
+	'selected' 'tab' 'is'
 ;
 
 Matches:
@@ -362,8 +432,16 @@ ISelect:
 	'I' 'select'
 ;
 
+ISelectThe:
+	'I' 'select' 'the'
+;
+
 IType:
 	'I' 'type'
+;
+
+CloseIt:
+	'close' 'it'
 ;
 
 CellWhere:
@@ -465,6 +543,7 @@ StringOrId:
 Keyword:
 	',' |
 	'a' |
+	'activate' |
 	'am' |
 	'and' |
 	'are' |
@@ -473,6 +552,7 @@ Keyword:
 	'capture' |
 	'cell' |
 	'click' |
+	'close' |
 	'column' |
 	'contains' |
 	'dataProvider' |
@@ -493,6 +573,7 @@ Keyword:
 	'indices' |
 	'into' |
 	'is' |
+	'it' |
 	'like' |
 	'looks' |
 	'names' |
@@ -509,6 +590,7 @@ Keyword:
 	'select' |
 	'selected' |
 	'tagScreen' |
+	'tab' |
 	'tabbedPane' |
 	'the' |
 	'then' |
@@ -517,7 +599,8 @@ Keyword:
 	'type' |
 	'values' |
 	'want' |
-	'when'
+	'when' |
+	'where'
 ;
 
 

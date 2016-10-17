@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore" name="parts.simple2.SimpleTab1">
+  <widgets xsi:type="model:Master" id="2" x="96" y="40" measuredWidth="1201" measuredHeight="790">
+    <screen xsi:type="model:Screen" href="../../../../assets/TabbedPaneComponent2.screen#org.simpleB.TabbedPaneComp"/>
+  </widgets>
+  <widgets xsi:type="model:Label" name="CustIdLbl" id="3" x="136" y="224" text="Customer ID:" measuredWidth="118" measuredHeight="36">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:SearchField" name="CustId" id="4" x="264" y="224" width="217" text="enter customer ID" measuredWidth="217" measuredHeight="36">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" name="Search" id="5" x="504" y="223" text="Search" measuredWidth="78" measuredHeight="38">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" name="Title1" id="6" x="136" y="128" text="Tab 1 (with same name)" measuredWidth="319" measuredHeight="46">
+    <font size="28px" bold="true"/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font size="12px"/>
+</model:Screen>

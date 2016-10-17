@@ -37,6 +37,16 @@ import static org.boomslang.dsl.feature.feature.FeaturePackage.Literals.*
 
 import static extension org.eclipse.xtext.EcoreUtil2.*
 import com.wireframesketcher.model.WidgetGroup
+import com.wireframesketcher.model.TabbedPane
+import com.wireframesketcher.model.Tree
+import com.wireframesketcher.model.xtext.ScreenResourceDescriptionStrategyUtil
+import com.wireframesketcher.model.xtext.IEObjectDescriptionUtil
+import org.boomslang.dsl.feature.feature.NodeQName
+import org.eclipse.xtext.scoping.impl.FilteringScope
+import org.apache.commons.lang.StringUtils
+import org.boomslang.dsl.feature.feature.BTabAssertion
+import com.wireframesketcher.model.Accordion
+import org.boomslang.dsl.feature.feature.BFeaturePackage
 
 /**
  * see http://www.eclipse.org/Xtext/documentation.html#contentAssist on how to customize content assistant
@@ -59,6 +69,10 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 
 	@Inject extension CoreProposalProvider
 	
+	@Inject extension IEObjectDescriptionUtil 
+	
+	@Inject extension ScreenResourceDescriptionStrategyUtil
+	
 	override completeBPropertyAssertionAction_PropertyName(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 			for (suggestion : model.widgetBeforeOffset.namesOfProperties){
@@ -72,6 +86,18 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 				acceptor.accept(createCompletionProposal(suggestion, suggestion, null, context))
 			}
 	}
+
+	// attila: TODO
+//    override completeBTabAssertion_BooleanPropertyName(EObject model, Assignment assignment,
+//        ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+//        switch (model) {
+//            BTabAssertion: {
+//                for (suggestion : model.BTabItemWrapper.tabItem.namesOfBooleanAttributes) {
+//                    acceptor.accept(createCompletionProposal(suggestion, suggestion, null, context))
+//                }
+//            }
+//        }
+//    }
 
 	override completeBStringOrParam_Text(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
@@ -177,6 +203,18 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		}
 	}
 	
+	override complete_ISelectThe(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if(model.widgetBeforeOffset instanceof TabbedPane){
+			ISelectTheAccess.group.createKeywordProposal(context, acceptor)
+		}
+	}
+	
+	override complete_IActivateTheNode(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if(model.widgetBeforeOffset instanceof Tree) {
+			IActivateTheNodeAccess.group.createKeywordProposal(context, acceptor)
+		}
+	}
+	
 	override complete_Where(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if(model.widgetBeforeOffset instanceof WidgetGroup){
 			acceptor.accept(createCompletionProposal("where ", "where", null, context))
@@ -206,6 +244,12 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		if(model.isContextOfSelectableWidget){
 		 	selectedEntryAccess.group.createKeywordProposal(context, acceptor)	
+		}
+	}
+
+	override complete_SelectedTabIs(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if(model.widgetBeforeOffset instanceof TabbedPane){
+			selectedTabIsAccess.group.createKeywordProposal(context, acceptor)
 		}
 	}
 	
@@ -294,6 +338,11 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		acceptor.accept(createCompletionProposal("matches ", "matches", null, context))
 	}
 
+    override completeBTabItemWrapper_TabItem(EObject model, Assignment assignment, ContentAssistContext context,
+        ICompletionProposalAcceptor acceptor) {
+        createTypeProposal(model, assignment, context, acceptor)
+    }
+    
 	override completeBWidgetWrapper_Widget(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		createTypeProposal(model, assignment, context, acceptor)
@@ -309,6 +358,16 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		ICompletionProposalAcceptor acceptor) {
 		createTypeProposal(model, assignment, context, acceptor)
 	}
+	
+	override completeBToScreenSwitch_ComponentPartScreen(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		//super.completeBToScreenSwitch_ComponentPartScreen(model, assignment, context, acceptor)
+		createTypeProposal(model, assignment, context, acceptor)		
+	}
+	
+    override complete_FinallyICloseIt(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		finallyICloseItAccess.group.createKeywordProposal(context, acceptor)
+	}
+	
 
 	/**
 	 * create a proposal for the reference to a wireframe widget
@@ -332,21 +391,50 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	 */
 	def createTypeProposal(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
+		println("type proposal:  " + assignment.feature)
+		
 		// Definition of variables for getting the initial scope and Qualified Name
 		val widgetTypeERef = GrammarUtil.getReference(assignment.getTerminal() as CrossReference)
-		val List<QualifiedName> prefixQNames = model.getPrefixQName(context)
-		val IScope scope = model.getScope(widgetTypeERef, context)
+		
+		val List<QualifiedName> prefixQNames = 
+			if ("tabbedPane".equals(widgetTypeERef.name) || "tabItem".equals(widgetTypeERef.name)) {
+				if (EcoreUtil2.getContainerOfType(model, BScenario).BToScreenSwitch.determineScreen.isComponentPart) {
+					newArrayList( // attila: making a list
+						EcoreUtil2.getContainerOfType(model, BScenario).BToScreenSwitch.screen?.fullyQualifiedName
+					)
+				}
+			} else if (context.isGivenIAmOnThe) {
+				emptyList // null
+			} else {
+				model.getPrefixQName(context)
+			}		
+		
+		val IScope scope = if (!context.isGivenIAmOnThe) { 
+			model.getScope(widgetTypeERef, context)	
+		} else {
+			new FilteringScope(model.getScope(widgetTypeERef, context),[!isComponent])
+		}
+		
 		// Filtering the scope to only propose widget types valid in the current context
-		for (IEObjectDescription description : scope.allElements) {
+		val scopeAllElements = scope.allElements
+		
+		for (IEObjectDescription description : scopeAllElements) {
 			val qname = description.qualifiedName
 			val String typeName = if ('item'.equals(description.EClass.name.toLowerCase)) {
 					'tab'
+				} else if (description.isComponent) { // attila
+					'::'
 				} else {
 					description.EClass.name.toLowerCase
 				}
+
 			if (!(!prefixQNames.nullOrEmpty && !qname.qNameInPrefixNames(prefixQNames) && !typeName.equals("screen"))) {
-				val displayString = qualifiedNameConverter.toString(qname.skipFirst(qname.segmentCount - 1))
-				val proposal = (createCompletionProposal(displayString + " " + typeName, displayString + " " + typeName,
+
+				val simpleName = qualifiedNameConverter.toString(qname.skipFirst(qname.segmentCount - 1))
+				val parentQName = qualifiedNameConverter.toString(qname.skipLast(1))
+				var proposalName = simpleName 
+				
+				val proposal = (createCompletionProposal(proposalName + " " + typeName, simpleName + " " + typeName + "  - " + parentQName,
 					null, context) as ConfigurableCompletionProposal)
 				proposal.setAdditionalData(ImportReplacementTextApplier::ADDITIONAL_DATA_QNAME, qname)
 				proposal.setAdditionalProposalInfo(typeName)
@@ -356,8 +444,16 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		}
 	}
 
+	def isGivenIAmOnThe(ContentAssistContext context){
+		var parent = context.lastCompleteNode?.parent?.grammarElement
+		switch(parent){
+		RuleCall:{
+				return thenIAmOnTheRule.name.equals(parent.getRule().name)
+		}}
+	}
+
 	def qNameInPrefixNames(QualifiedName qname, List<QualifiedName> prefixNames) {
-		prefixNames.filter[qname.startsWith(it)].size > 0
+		prefixNames.filter[it != null && qname.startsWith(it)].size > 0
 	}
 
 	/**
@@ -388,7 +484,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	}
 
 	/**
-	 * True if there are more than one BToScreeSwitch objects in the scenario
+	 * True if there is exactly one BToScreeSwitch objects in the scenario
 	 */
 	def isSingleScreenSwitch(EObject model) {
 		if (model.getAllContentsOfType(BToScreenSwitch) == null) {
@@ -403,15 +499,27 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	 */
 	def getScreenBeforeOffset(EObject model, ContentAssistContext context) {
 		var Screen screen = null
-		for (BToScreenSwitch screenSwitch : model.getAllContentsOfType(BToScreenSwitch)) {
-			if (screenSwitch.screen != null && context.offset > NodeModelUtils.getNode(screenSwitch).offset) {
-				screen = screenSwitch.screen
-			}
-		}
-		return screen
+        for (BToScreenSwitch screenSwitch : model.getContainerOfType(BScenario).getAllContentsOfType(BToScreenSwitch)) {
+            if (screenSwitch.determineScreen != null && context.offset > NodeModelUtils.getNode(screenSwitch).offset) {
+                screen = screenSwitch.determineScreen
+            }
+        }
+        return screen
+		
 	}
 
 	/**
+     * Returns true if the last screen before the offset has a table
+     */
+    def fromThePossible(EObject model, ContentAssistContext context) {
+        switch model {
+            BScenario: if(model.getScreenBeforeOffset(context)?.widgets.filter(Table).size > 0 ||
+                model.getScreenBeforeOffset(context)?.widgets.filter(Tree).size > 0 ||
+                model.getScreenBeforeOffset(context)?.widgets.filter(Accordion).size > 0) return true
+        }
+    }
+
+    /**
 	 * create a proposal for the name of a type (DSL has requirements for 
 	 * redundant type name mentioning of referenced wireframe widgets) 
 	 * 
@@ -463,5 +571,99 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		acceptor.accept(createCompletionProposal(packageName, packageName, null, context))
 
 	}
+
+    /**
+     * Proposes the root node of a tree widget
+     */
+    def proposeTreeRoot(String rawProposal, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        val proposal = if (rawProposal.indexOf("}") > 0) {
+                rawProposal.substring(rawProposal.indexOf("}") + 1)
+            } else {
+                rawProposal
+            }
+        acceptor.accept(createCompletionProposal('"' + proposal.trim + '"', proposal, null, context))
+    }
+
+    /**
+     * Propose all treenodes underneath the given path in the tree
+     * Consider the following tree where the number of '-' determines the level in the tree.
+     * <br>
+     * <br>Root A
+     * <br>-Node B
+     * <br>-Node C
+     * <br>--Node D
+     * <br>--Node E
+     * <br>---Node F
+     * <br>--Node G
+     * <br>-Node H
+     * <br>
+     * 
+     * <br>If the model is a NodeQName like '"Root A"'  then Node B, C, and H will be proposed
+     * <br>If the model is a NodeQName like '"Root A" > "Node C"' then Node D, E, and G will be proposed
+     * <br>If the model is a NodeQName like '"Root A" > "Node C > "Node E"' then Node F will be proposed
+     * <br>If the model is a NodeQName like '"Root A" > "Node C > "Node E"> "Node F"' then no node will be proposed
+     */
+    def proposeTreeNode(EObject model, String treeStructure, ContentAssistContext context,
+        ICompletionProposalAcceptor acceptor) {
+        switch (model) {
+            NodeQName: {
+                val remainingText = newArrayList(treeStructure)
+                model.findCurrentPositionInTree(remainingText)
+                if (model.segment.size() > 0) {
+                    model.proposeChildren(remainingText, context, acceptor)
+                }
+            }
+        }
+    }
+
+    /**
+     * Based on the path included in the DSL the position in the underlying tree is retrieved.
+     * This position is the basis for the context specific proposals
+     */
+    def findCurrentPositionInTree(NodeQName model, List<String> remainingText) {
+        model.segment.forEach [
+            val value = if (it.getText != null && !it.getText.equals("")) {
+                    it.getText
+                } else if (it.param != null && !it.getParam.equals("")) {
+                    it.param.name
+                } else {
+                    it.int
+                }
+            switch value {
+                String: {
+                    // Always written at the first position of the array
+                    remainingText.add(0,
+                        remainingText.get(0).substring(remainingText.get(0).indexOf(value) + value.length + 1))
+                }
+            }
+        ]
+    }
+
+    /**
+     * Create a proposal for all children of the current Node
+     */
+    def proposeChildren(NodeQName model, List<String> remainingText, ContentAssistContext context,
+        ICompletionProposalAcceptor acceptor) {
+        var pattern = StringUtils.repeat("-", model.segment.size)
+        val wrongpattern = pattern + "-"
+        for (String s : remainingText.get(0).split("\\n")) {
+            if (s.startsWith(wrongpattern)) {
+                // To deep in tree
+                println("ignore: " + s)
+            } else if (s.startsWith(pattern)) {
+                // The one we are looking for
+                var proposal = s
+                proposal = if (proposal.indexOf("}") > 0) {
+                    proposal.substring(proposal.indexOf("}") + 1)
+                } else {
+                    proposal.substring(proposal.indexOf(pattern) + pattern.length + 1)
+                }
+                acceptor.accept(createCompletionProposal('"' + proposal.trim + '"', proposal, null, context))
+            } else if (pattern.length > 1 && s.startsWith(pattern.substring(0, pattern.length - 1))) {
+                // Higher level one, so now we got all children visited
+                return
+            }
+        }
+    }
 
 }
