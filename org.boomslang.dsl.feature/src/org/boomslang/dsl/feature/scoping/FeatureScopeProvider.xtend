@@ -27,6 +27,8 @@ import org.boomslang.dsl.feature.feature.BTabAssertion
 import org.boomslang.dsl.feature.feature.BCommandComponent
 import com.wireframesketcher.model.TabbedPane
 import org.eclipse.xtext.scoping.Scopes
+import com.wireframesketcher.model.Item
+import org.boomslang.dsl.feature.feature.BAssertionComponent
 
 /**
  * This class contains custom scoping description.
@@ -80,14 +82,22 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 	 * This method is used in the tab select
 	 */
 	def IScope scope_BTabItemWrapper_tabItem(BTabPaneSelectTabAction ctx, EReference ref) {
-		allowElementsInItsBWidgetContainer(ctx, ref)
+		val cmd = ctx.eContainer as BCommandComponent
+		val tabbedPane = cmd.widget.widget as TabbedPane
+		val tabItems = tabbedPane.items as Iterable<Item>
+		val scope = Scopes.scopeFor(tabItems, [item|item.simpleName], IScope.NULLSCOPE)
+		return scope
 	}
 
 	/**
 	 * This method is used for tab assertion
 	 */
 	def IScope scope_BTabItemWrapper_tabItem(BTabAssertion ctx, EReference ref) {
-		allowElementsInItsBWidgetContainer(ctx, ref)
+		val cmd = ctx.eContainer as BAssertionComponent
+		val tabbedPane = cmd.widget.widget as TabbedPane
+		val tabItems = tabbedPane.items as Iterable<Item>
+		val scope = Scopes.scopeFor(tabItems, [item|item.simpleName], IScope.NULLSCOPE)
+		return scope
 	}
 
 	def IScope scope_BToScreenSwitch_screen(BToScreenSwitch ctx, EReference ref) {
