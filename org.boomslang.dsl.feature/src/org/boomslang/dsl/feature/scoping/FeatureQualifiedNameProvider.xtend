@@ -5,6 +5,7 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider
 import org.eclipse.xtext.naming.QualifiedName
 import org.boomslang.dsl.feature.feature.BScenario
+import com.wireframesketcher.model.Item
 
 class FeatureQualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvider {
 	
@@ -31,6 +32,21 @@ class FeatureQualifiedNameProvider extends DefaultDeclarativeQualifiedNameProvid
 			replaceAll('''"$''',""))
 		return qName.prefixWithParentName(bScenario);
 	}
+	
+	/**
+	 * Returns the simple name of a tab, or - if not set - a name derived from the tab items display text.
+	 * This avoids importing qualified names for tabs. Tabs are used only in the context of a tabbed pane.
+	 * Using the item text property allows leaving the name null, as the default WFS screen editor does not support editing the name.
+	 */
+	def QualifiedName simpleName(Item tabItem) {
+		var itemName = tabItem.name
+		if (itemName == null) {
+			itemName = tabItem.text.replaceAll("\\s", "_").replaceAll('''^"''', "").replaceAll('''"$''',"")
+		}
+		val qName = QualifiedName.create(itemName)
+		return qName;
+	}
+	
 	
 	/**
 	 * Prefixes the given qualifiedName with the fully qualified name of the

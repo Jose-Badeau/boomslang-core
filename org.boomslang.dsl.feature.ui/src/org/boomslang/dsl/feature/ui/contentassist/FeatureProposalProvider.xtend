@@ -391,7 +391,6 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	 */
 	def createTypeProposal(EObject model, Assignment assignment, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
-		println("type proposal:  " + assignment.feature)
 		
 		// Definition of variables for getting the initial scope and Qualified Name
 		val widgetTypeERef = GrammarUtil.getReference(assignment.getTerminal() as CrossReference)
@@ -428,7 +427,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 					description.EClass.name.toLowerCase
 				}
 
-			if (!(!prefixQNames.nullOrEmpty && !qname.qNameInPrefixNames(prefixQNames) && !typeName.equals("screen"))) {
+			if (!(!prefixQNames.nullOrEmpty && !qname.qNameInPrefixNames(prefixQNames) && !typeName.equals("screen") && !typeName.equals("tab"))) {
 
 				val simpleName = qualifiedNameConverter.toString(qname.skipFirst(qname.segmentCount - 1))
 				val parentQName = qualifiedNameConverter.toString(qname.skipLast(1))
