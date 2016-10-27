@@ -10,7 +10,7 @@ Feature Simple
 	In order to "Verify the grammar"
 	
 	Scenario "Hit all elements on the screen"
-		Given I am on the Simple screen 
+		Given I am on the screen Simple
 			when I from the Name textfield I type "asdasd"
 			and I from the Title combo I select indices 1
 			and I from the Title combo I select names "Mueller", "Meier", "Schmidt"

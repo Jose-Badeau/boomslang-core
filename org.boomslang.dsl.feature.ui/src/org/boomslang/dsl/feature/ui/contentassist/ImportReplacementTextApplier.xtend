@@ -74,7 +74,8 @@ class ImportReplacementTextApplier extends ReplacementTextApplier {
         val replacementString = if (useQualifiedName) {
            	getActualReplacementString(proposal)
         } else {
-            proposal.replacementString
+        	val proposalRepString = proposal.replacementString
+        	if (proposalRepString.endsWith("::")) proposalRepString else proposalRepString
         }
 		proposal.setCursorPosition(replacementString.length());
 		document.replace(proposal.getReplacementOffset(), proposal.getReplacementLength(), replacementString);
@@ -87,7 +88,9 @@ class ImportReplacementTextApplier extends ReplacementTextApplier {
     override getActualReplacementString(ConfigurableCompletionProposal proposal) {    	
         val qname = (proposal.getAdditionalData(ADDITIONAL_DATA_QNAME) as QualifiedName)
         val simpleName = qualifiedNameConverter.toString(qname)
-        val actualString = simpleName + " " + proposal.additionalProposalInfo + " "
+        // proposal additional info: type name or ::
+        val proposalInfo = proposal.additionalProposalInfo
+        val actualString = simpleName + (if ("::".equals(proposalInfo)) proposalInfo else " " + proposalInfo + " ")
         return actualString        
     }
 

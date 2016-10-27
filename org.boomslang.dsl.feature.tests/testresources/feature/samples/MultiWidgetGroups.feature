@@ -9,7 +9,7 @@ Feature MultiWidgetGroups
 	In order to "verify the language works as expected"
 	
 	Scenario "Test Use Of Multiple"
-	Given I am on the MultiWidgetGroups screen 
+	Given I am on the screen MultiWidgetGroups 
 	when I from the Login textfield I type "Login Credentials"
 	and I  from the Password textfield I type "MySecretPassword"
 	and I from the PasswordForgotten button I click 

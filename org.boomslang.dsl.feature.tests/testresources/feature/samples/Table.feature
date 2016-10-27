@@ -9,7 +9,7 @@ Feature Table
 	In order to "verify that the grammar is correct"
 	
 	Scenario "Click Table Handling"
-	Given I am on the Simple screen 
+	Given I am on the screen Simple 
 	
 	when I from the Adress table I click cell where row equals "Test", 
 												and column matches "some name",
@@ -18,7 +18,7 @@ Feature Table
 												and row index equals 1
 	
 	Scenario "Select Table Handling"
-	Given I am on the Simple screen 
+	Given I am on the screen Simple 
 	
 	when I from the Adress table I select cell where row equals "Test", 
 												and column matches "some name",
@@ -27,7 +27,7 @@ Feature Table
 												and row index equals 1
 												
 	Scenario "Type Table Handling"
-	Given I am on the Simple screen 
+	Given I am on the screen Simple 
 	
 	when I from the Adress table I type "Foo" in the  cell where row equals "Test", 
 														and column matches "some name",
@@ -36,7 +36,7 @@ Feature Table
 														and row index equals 1
 														
 	Scenario "DoubleClick Table Handling"
-	Given I am on the Simple screen 
+	Given I am on the screen Simple
 	
 	when I from the Adress table I double click cell where row equals "Test", 
 														and column matches "some name",
@@ -45,7 +45,7 @@ Feature Table
 														and row index equals 1
 														
 	Scenario "Check Table Handling"
-	Given I am on the Simple screen 
+	Given I am on the screen Simple
 	
 	when I from the Adress table I check cell where row equals "Test", 
 														and column matches "some name",

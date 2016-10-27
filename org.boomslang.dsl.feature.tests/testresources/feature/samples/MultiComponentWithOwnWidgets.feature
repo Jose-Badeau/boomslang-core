@@ -12,7 +12,7 @@ Feature MultiComponentWithOwnWidgets
 	In order to "verify the language works as expected"
 	
 	Scenario "Test Use Of Multiple"
-	Given I am on the MultiComponentWithOwnWidgets screen 
+	Given I am on the screen MultiComponentWithOwnWidgets 
 	when I from the EMail textfield  I type "john.doe@test.com"
 	and I from the Name textfield I type "John Doe"
 	and I from the PhoneNumber textfield I type "+ 41 225587"

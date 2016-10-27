@@ -42,11 +42,11 @@
 <repository location="http://dist.springsource.org/snapshot/GRECLIPSE/e4.4"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="com.wireframesketcher.feature.group" version="4.6.4"/>
+<unit id="com.wireframesketcher.feature.group" version="4.7.0"/>
 <repository location="http://wireframesketcher.com/updates/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="com.wireframesketcher.feature.group" version="4.6.4"/>
+<unit id="com.wireframesketcher.feature.group" version="4.7.0"/>
 <unit id="com.wireframesketcher.model.xtext.ui" version="0.0.0"/>
 <unit id="com.wireframesketcher.model.patch.feature.group" version="0.0.0"/>
 <unit id="com.wireframesketcher.model.xtext" version="0.0.0"/>

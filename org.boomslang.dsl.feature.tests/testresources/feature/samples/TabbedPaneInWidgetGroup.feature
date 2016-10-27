@@ -14,10 +14,10 @@ Feature TabbedPaneInWidgetGroup
 
 
 	Scenario "Select a tab in a tabbed pane that is inside a widget group"
-		Given I am on the TabbedPaneInWidgetGroupComp ::FirstTab screen
+		Given I am on the tab TabbedPaneInWidgetGroupComp::FirstTab
 		when I from the TabbedPane3 tabbedpane I select the Second_Tab tab
 		and I from the Toggle button I click
-		then I am on the SecondTab screen 
+		then I am on the tab TabbedPaneInWidgetGroupComp::SecondTab 
 		then the TabbedPane3 tabbedpane selected tab is Second_Tab tab
 		
 	

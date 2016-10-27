@@ -63,7 +63,8 @@ BScreenContext:
 
 BToScreenSwitch:
 	{BToScreenSwitch}
-	screen=[uid::Screen|QualifiedName]  ('::' componentPartScreen=[uid::Screen|QualifiedName])? 'screen'
+	//screen=[uid::Screen|QualifiedName]  ('::' componentPartScreen=[uid::Screen|QualifiedName])? 'screen'
+	(OnTab componentScreen=[uid::Screen|QualifiedName] '::' | OnScreen) screen=[uid::Screen|QualifiedName] 
 ;
 
 BCodeStatement:
@@ -323,6 +324,14 @@ NodeQName:
 
 GivenIamOnThe:
   'Given' 'I' 'am' 'on' 'the' 
+;
+
+OnScreen:
+  'screen'
+;
+
+OnTab:
+  'tab'
 ;
 
 AndI:

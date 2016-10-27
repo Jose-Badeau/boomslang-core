@@ -113,7 +113,7 @@ class WidgetTypeRefUtil {
 		val codeStatement = dslObject.getContainerOfType(BCodeStatement)
 		
 		if(codeStatement instanceof BToScreenSwitch){
-			return new ContextInfo(bScenario.BToScreenSwitch?.determineScreen, null)
+			return new ContextInfo(bScenario.BToScreenSwitch?.screen, null)
 		}
         
 		if (codeStatement != null) {
@@ -168,13 +168,13 @@ class WidgetTypeRefUtil {
 		model.widgetBeforeOffset instanceof BooleanSelectionSupport
 	}
 	
-	def determineScreen(BToScreenSwitch it) {
-		if (componentPartScreen != null) {
-			return componentPartScreen
-		} else {
-			return screen
-		}
-	}
+//	def determineScreen(BToScreenSwitch it) {
+//		if (componentPartScreen != null) {
+//			return componentPartScreen
+//		} else {
+//			return screen
+//		}
+//	}
 
 }
 

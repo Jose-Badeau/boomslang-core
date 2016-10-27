@@ -10,7 +10,7 @@ Feature Table
 	In order to "verify that the grammar is correct"
 	
 	Scenario "Assertion Handling"
-	Given I am on the Simple screen 
+	Given I am on the screen Simple 
 	
 	when I from the Submit button I click 
 	then the Name textfield not equals ""

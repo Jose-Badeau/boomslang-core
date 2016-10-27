@@ -170,6 +170,16 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		givenIamOnTheAccess.group.createKeywordProposal(context, acceptor)
 	}
 
+	override complete_OnScreen(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("screen ", "screen", null, context))
+	}
+	
+	override complete_OnTab(EObject model, RuleCall ruleCall, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("tab ", "tab", null, context))
+	}
+	
 	override complete_AndI(EObject model, RuleCall ruleCall, ContentAssistContext context,
 		ICompletionProposalAcceptor acceptor) {
 		andIAccess.group.createKeywordProposal(context, acceptor)
@@ -340,7 +350,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 
     override completeBTabItemWrapper_TabItem(EObject model, Assignment assignment, ContentAssistContext context,
         ICompletionProposalAcceptor acceptor) {
-        createTypeProposal(model, assignment, context, acceptor)
+        createTabItemProposal(model, assignment, context, acceptor)
     }
     
 	override completeBWidgetWrapper_Widget(EObject model, Assignment assignment, ContentAssistContext context,
@@ -359,8 +369,7 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		createTypeProposal(model, assignment, context, acceptor)
 	}
 	
-	override completeBToScreenSwitch_ComponentPartScreen(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		//super.completeBToScreenSwitch_ComponentPartScreen(model, assignment, context, acceptor)
+	override completeBToScreenSwitch_ComponentScreen(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		createTypeProposal(model, assignment, context, acceptor)		
 	}
 	
@@ -395,9 +404,11 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		// Definition of variables for getting the initial scope and Qualified Name
 		val widgetTypeERef = GrammarUtil.getReference(assignment.getTerminal() as CrossReference)
 		
-		val List<QualifiedName> prefixQNames = 
-			if ("tabbedPane".equals(widgetTypeERef.name) || "tabItem".equals(widgetTypeERef.name)) {
-				if (EcoreUtil2.getContainerOfType(model, BScenario).BToScreenSwitch.determineScreen.isComponentPart) {
+		val List<QualifiedName> prefixQNames =
+			if ("componentScreen".equals(widgetTypeERef.name)) {
+				emptyList // null
+			} else if ("tabbedPane".equals(widgetTypeERef.name) || "tabItem".equals(widgetTypeERef.name)) {
+				if (EcoreUtil2.getContainerOfType(model, BScenario).BToScreenSwitch.screen.isComponentPart) {
 					newArrayList( // attila: making a list
 						EcoreUtil2.getContainerOfType(model, BScenario).BToScreenSwitch.screen?.fullyQualifiedName
 					)
@@ -419,21 +430,19 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		
 		for (IEObjectDescription description : scopeAllElements) {
 			val qname = description.qualifiedName
-			val String typeName = if ('item'.equals(description.EClass.name.toLowerCase)) {
-					'tab'
-				} else if (description.isComponent) { // attila
+			val String typeName = if (description.isComponent && "componentScreen".equals(widgetTypeERef.name)) {
 					'::'
 				} else {
 					description.EClass.name.toLowerCase
 				}
 
-			if (!(!prefixQNames.nullOrEmpty && !qname.qNameInPrefixNames(prefixQNames) && !typeName.equals("screen") && !typeName.equals("tab"))) {
+			if (!(!prefixQNames.nullOrEmpty && !qname.qNameInPrefixNames(prefixQNames) && !typeName.equals("screen"))) {
 
 				val simpleName = qualifiedNameConverter.toString(qname.skipFirst(qname.segmentCount - 1))
 				val parentQName = qualifiedNameConverter.toString(qname.skipLast(1))
-				var proposalName = simpleName 
+				var proposalString = simpleName + (if (typeName.equals("::")) typeName else if (typeName.equals("screen")) " " else " " + typeName + " ")
 				
-				val proposal = (createCompletionProposal(proposalName + " " + typeName, simpleName + " " + typeName + "  - " + parentQName,
+				val proposal = (createCompletionProposal(proposalString, proposalString + " - " + parentQName,
 					null, context) as ConfigurableCompletionProposal)
 				proposal.setAdditionalData(ImportReplacementTextApplier::ADDITIONAL_DATA_QNAME, qname)
 				proposal.setAdditionalProposalInfo(typeName)
@@ -443,6 +452,20 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 		}
 	}
 
+	def createTabItemProposal(EObject model, Assignment assignment, ContentAssistContext context,
+		ICompletionProposalAcceptor acceptor) {
+		val widgetTypeERef = GrammarUtil.getReference(assignment.getTerminal() as CrossReference)
+		val IScope scope = model.getScope(widgetTypeERef, context)
+		val scopeAllElements = scope.allElements
+
+		for (IEObjectDescription description : scopeAllElements) {
+			val proposalName = description.qualifiedName
+			val proposal = (createCompletionProposal(proposalName + " tab", proposalName + " tab",
+				null, context) as ConfigurableCompletionProposal)
+			acceptor.accept(proposal)
+		}
+	}
+	
 	def isGivenIAmOnThe(ContentAssistContext context){
 		var parent = context.lastCompleteNode?.parent?.grammarElement
 		switch(parent){
@@ -499,8 +522,8 @@ class FeatureProposalProvider extends AbstractFeatureProposalProvider {
 	def getScreenBeforeOffset(EObject model, ContentAssistContext context) {
 		var Screen screen = null
         for (BToScreenSwitch screenSwitch : model.getContainerOfType(BScenario).getAllContentsOfType(BToScreenSwitch)) {
-            if (screenSwitch.determineScreen != null && context.offset > NodeModelUtils.getNode(screenSwitch).offset) {
-                screen = screenSwitch.determineScreen
+            if (screenSwitch.screen != null && context.offset > NodeModelUtils.getNode(screenSwitch).offset) {
+                screen = screenSwitch.screen
             }
         }
         return screen

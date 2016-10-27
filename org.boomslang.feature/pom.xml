@@ -20,7 +20,7 @@
 	</description>
 
 	<properties>
-		<wfs.version>4.6.4-SNAPSHOT</wfs.version><!-- keep up to date! -->
+		<wfs.version>4.7.0-SNAPSHOT</wfs.version><!-- keep up to date! -->
 	</properties>
 
 	<dependencies>
