@@ -9,7 +9,7 @@ I want to "Make sure that the grammar works with component screens that are used
 In order to "Ensure that the language is ok"
 
 Scenario "ReUse components from asset folder"
-	Given I am on the UseSimpleComponent screen 
+	Given I am on the screen UseSimpleComponent
 	when I from the Name textfield I type "sda"
 	and I from the Submit button I click 
 	and I from the Title combo I select indices 1

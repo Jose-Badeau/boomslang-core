@@ -9,7 +9,7 @@ Feature WidgetGroupInWidgetGroup
 	In order to "Verify the grammar"
 	
 	Scenario "Hit all elements on the screen"
-		Given I am on the WidgetGroupInWidgetGroup screen
+		Given I am on the screen WidgetGroupInWidgetGroup
 		when I from the Yes button I click 
 		and I from the No button I click  
 		and I from the Clear button I click 

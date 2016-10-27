@@ -8,7 +8,7 @@ I want to "Make sure that the grammar works with component screens"
 In order to "Ensure that the language is ok"
 
 Scenario "Reference Elements inside a component"
-	Given I am on the SimpleComponent screen 
+	Given I am on the screen SimpleComponent
 	when I from the Name textfield I type "BlaBlub"
 	when I from the Title combo I select indices 1
 	when I from the Title combo I select names "Meier", "Mueller"

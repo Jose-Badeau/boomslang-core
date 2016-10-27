@@ -100,23 +100,30 @@ class FeatureScopeProvider extends AbstractDeclarativeScopeProvider {
 		return scope
 	}
 
-	def IScope scope_BToScreenSwitch_screen(BToScreenSwitch ctx, EReference ref) {
-	    val scope = delegateGetScope(ctx, ref)
+	def IScope scope_BToScreenSwitch_componentScreen(BToScreenSwitch ctx, EReference ref) {
+	    val originalScope = delegateGetScope(ctx, ref)
+        val scope = new FilteringScope(originalScope,[
+        	isComponent
+        ])
+        //debugScope(scope)
 	    return scope
 	}
-	
-	def IScope scope_BToScreenSwitch_componentPartScreen(EObject ctx, EReference ref) {
+
+	def IScope scope_BToScreenSwitch_screen(BToScreenSwitch ctx, EReference ref) {
+        val componentScreen = ctx.componentScreen
 	    val originalScope = delegateGetScope(ctx, ref)
-	    //if the referenced screen/widget is a "Part" of another component(e.g. tab screen as part of tabbedpane)
-        //then the function isComponentPart returns true
-        
-        val screenSwitch = ctx as BToScreenSwitch
-        val component = screenSwitch.screen
-        
-        val scope = new FilteringScope(originalScope,[
-        	isComponentPart && isComponentPartOf(component)
-        ])
-        debugScope(scope)
+        val scope = if (componentScreen != null) {
+        	// component part (tab) of a component screen
+	        new FilteringScope(originalScope,[
+	        	isComponentPart && isComponentPartOf(componentScreen)
+	        ])
+        } else {
+        	// not a component part (tab)
+        	new FilteringScope(originalScope,[
+	        	!isComponentPart
+	        ])
+        }        
+        //debugScope(scope)
 	    return scope
 	}
 	
