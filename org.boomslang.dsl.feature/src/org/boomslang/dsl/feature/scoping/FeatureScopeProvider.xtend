@@ -17,7 +17,7 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider
 import org.eclipse.xtext.scoping.impl.FilteringScope
 import com.wireframesketcher.model.WidgetContainer
-import com.wireframesketcher.model.xtext.IEObjectDescriptionUtil
+import org.boomslang.wireframesketcher.model.xtext.IEObjectDescriptionUtil
 import java.util.ArrayList
 import org.boomslang.dsl.feature.feature.BToScreenSwitch
 import org.eclipse.xtext.resource.IEObjectDescription

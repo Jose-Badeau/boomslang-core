@@ -2,10 +2,10 @@ package org.boomslang.dsl.feature.tests
 
 import org.boomslang.dsl.feature.tests.FeatureInjectorProvider
 import com.google.inject.Injector
-import com.wireframesketcher.model.xtext.BoomslangWFSModelResourceFactory
-import com.wireframesketcher.model.xtext.ScreenEmfSupport
+import org.boomslang.wireframesketcher.model.xtext.BoomslangWFSModelResourceFactory
+import org.boomslang.wireframesketcher.model.xtext.ScreenEmfSupport
 import org.eclipse.emf.ecore.resource.Resource
-import com.wireframesketcher.model.xtext.ScreenStandaloneSetupGenerated
+import org.boomslang.wireframesketcher.model.xtext.ScreenStandaloneSetupGenerated
 
 class FeatureInjectorProviderCustom extends FeatureInjectorProvider {
 

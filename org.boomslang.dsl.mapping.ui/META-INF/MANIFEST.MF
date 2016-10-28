@@ -18,7 +18,7 @@ Require-Bundle: org.boomslang.dsl.mapping,
  org.eclipse.xtext.builder,
  org.eclipse.xtext.xbase.lib,
  org.boomslang.core.ui,
- com.wireframesketcher.model.xtext,
+ org.boomslang.wireframesketcher.model.xtext,
  org.apache.commons.lang;bundle-version="2.6.0"
 Import-Package: org.boomslang.core.contentassist,
  org.boomslang.dsl.mapping.services,

@@ -5,15 +5,10 @@ package org.boomslang.dsl.feature.validation
 
 import org.boomslang.core.validation.PackageFolderStructureValidator
 import org.boomslang.dsl.feature.feature.BScenario
-import org.boomslang.dsl.feature.feature.BWidgetWrapper
 import org.boomslang.dsl.feature.feature.FeaturePackage
-//import org.boomslang.dsl.mapping.mapping.BMappingPackage
-//import org.boomslang.dsl.mapping.mapping.MappingPackage
 import com.google.inject.Inject
-import com.wireframesketcher.model.Screen
 import java.util.List
 import org.eclipse.xtext.resource.IContainer
-import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.ComposedChecks
@@ -71,15 +66,15 @@ class FeatureValidator extends AbstractFeatureValidator {
 		}
 		if (!nextScenarioInChain.params.nullOrEmpty || nextScenarioInChain.dataProvider != null) {
 			error(
-				'''Only unparameterized scenarios may be used as dependencies, but «nextScenarioInChain.name» is parameterized (chain: «scenarioChain.
-					map[name].join(" -> ")» -> «nextScenarioInChain.name»)''', scenarioChain.head,
+				'''Only unparameterized scenarios may be used as dependencies, but ï¿½nextScenarioInChain.nameï¿½ is parameterized (chain: ï¿½scenarioChain.
+					map[name].join(" -> ")ï¿½ -> ï¿½nextScenarioInChain.nameï¿½)''', scenarioChain.head,
 				FeaturePackage.Literals.BSCENARIO__PRE_SCENARIO, REFERENCED_PARAMETERIZED_SCENARIO)
 			return
 		}
 		if (scenarioChain.contains(nextScenarioInChain)) {
 			error(
-				'''Recursive dependencies, the chain is: «scenarioChain.map[name].join(" -> ")» -> «scenarioChain.head.
-					name»''', scenarioChain.head, FeaturePackage.Literals.BSCENARIO__PRE_SCENARIO, SCENARIO_DEPENDENCY_LOOP)
+				'''Recursive dependencies, the chain is: ï¿½scenarioChain.map[name].join(" -> ")ï¿½ -> ï¿½scenarioChain.head.
+					nameï¿½''', scenarioChain.head, FeaturePackage.Literals.BSCENARIO__PRE_SCENARIO, SCENARIO_DEPENDENCY_LOOP)
 			return
 		}
 		scenarioChain.add(nextScenarioInChain)

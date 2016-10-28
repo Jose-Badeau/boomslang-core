@@ -29,8 +29,6 @@ import org.eclipse.xtext.ui.editor.quickfix.Fix
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionAcceptor
 import org.eclipse.xtext.validation.Issue
 import org.boomslang.dsl.feature.validation.TypeCorrespondsToRefValidator
-import org.boomslang.dsl.feature.feature.BClickAction
-import org.boomslang.dsl.feature.feature.BTypeAction
 
 /**
  * Custom quickfixes.
