@@ -54,7 +54,7 @@
 		</dependency>
 		<dependency>
 			<groupId>com.wireframesketcher</groupId>
-			<artifactId>com.wireframesketcher.model.xtext</artifactId>
+			<artifactId>org.boomslang.wireframesketcher.model.xtext</artifactId>
 			<version>${wfs.version}</version>
 		</dependency> -->
 		<dependency>

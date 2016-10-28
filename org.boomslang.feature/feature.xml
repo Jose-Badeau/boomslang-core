@@ -28,7 +28,7 @@
          version="0.0.0"/>
 
    <includes
-         id="com.wireframesketcher.model.patch"
+         id="org.boomslang.wireframesketcher.model.patch"
          version="0.0.0"/>
 
    <includes
@@ -54,7 +54,7 @@
       <import plugin="com.google.guava"/>
       <import plugin="org.eclipse.xtext.ui"/>
       <import plugin="org.eclipse.xtext"/>
-      <import plugin="com.wireframesketcher.model.xtext"/>
+      <import plugin="org.boomslang.wireframesketcher.model.xtext"/>
       <import plugin="org.eclipse.xtext.util"/>
       <import plugin="org.eclipse.emf.common"/>
       <import plugin="org.antlr.runtime"/>
@@ -67,7 +67,7 @@
       <import plugin="org.eclipse.xtext.common.types.ui"/>
       <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
       <import plugin="org.eclipse.compare"/>
-      <import plugin="com.wireframesketcher.model.xtext.ui"/>
+      <import plugin="org.boomslang.wireframesketcher.model.xtext.ui"/>
       <import plugin="com.wireframesketcher.model"/>
       <import plugin="org.eclipse.xtext.xbase.ui"/>
       <import plugin="org.apache.commons.lang"/>

@@ -39,8 +39,8 @@ import static extension org.eclipse.xtext.EcoreUtil2.*
 import com.wireframesketcher.model.WidgetGroup
 import com.wireframesketcher.model.TabbedPane
 import com.wireframesketcher.model.Tree
-import com.wireframesketcher.model.xtext.ScreenResourceDescriptionStrategyUtil
-import com.wireframesketcher.model.xtext.IEObjectDescriptionUtil
+import org.boomslang.wireframesketcher.model.xtext.ScreenResourceDescriptionStrategyUtil
+import org.boomslang.wireframesketcher.model.xtext.IEObjectDescriptionUtil
 import org.boomslang.dsl.feature.feature.NodeQName
 import org.eclipse.xtext.scoping.impl.FilteringScope
 import org.apache.commons.lang.StringUtils
