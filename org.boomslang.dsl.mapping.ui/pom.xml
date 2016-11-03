@@ -5,7 +5,7 @@
 		<groupId>org.boomslang</groupId>
 		<artifactId>org.boomslang</artifactId>
 		<!-- You should change this and the MANIFEST.MF to your versioning scheme -->
-		<version>0.1.0-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	<artifactId>org.boomslang.dsl.mapping.ui</artifactId>

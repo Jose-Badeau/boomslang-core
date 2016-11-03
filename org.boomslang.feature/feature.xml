@@ -2,7 +2,7 @@
 <feature
       id="org.boomslang.feature"
       label="Boomslang Test Generator"
-      version="0.1.0.qualifier"
+      version="1.0.1.qualifier"
       provider-name="ESGroup AG">
 
    <description>
