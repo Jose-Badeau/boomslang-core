@@ -6,7 +6,7 @@
 
 	<groupId>org.boomslang</groupId>
 	<artifactId>org.boomslang</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Boomslang</name>
 	<description>The Boomslang project.</description>
 	<packaging>pom</packaging>
@@ -23,6 +23,8 @@
 		<selenium.version>2.47.1</selenium.version>
 		<!-- https://jbadeau@bitbucket.org/szolgacs/birdseye_compare.git -->
 		<birdseye.version>1.0.0-SNAPSHOT</birdseye.version>
+		<maven.repo.id>bintray-repo-maven</maven.repo.id>
+		<maven.repo>https://api.bintray.com/maven/jose-badeau/boomslang-maven-repo/boomslang-core/;publish=1</maven.repo>
 	</properties>
 
 	<modules>
@@ -47,6 +49,13 @@
 			to fetch deps. <module>org.boomslang.dependencies</module> <module>org.boomslang.dependencies.repository</module> -->
 
 	</modules>
+
+	<distributionManagement>
+		<repository>
+			<id>${maven.repo.id}</id>
+			<url>${maven.repo}</url>
+		</repository>
+	</distributionManagement>
 
 	<repositories>
 		<repository>

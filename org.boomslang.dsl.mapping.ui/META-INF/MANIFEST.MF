@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Boomslang Mapping DSL UI
 Bundle-Vendor: ESGroup AG
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.0
 Bundle-SymbolicName: org.boomslang.dsl.mapping.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.boomslang.dsl.mapping,
