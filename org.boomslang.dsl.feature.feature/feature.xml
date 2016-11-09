@@ -2,7 +2,7 @@
 <feature
       id="org.boomslang.dsl.feature.feature"
       label="Boomslang Feature Feature"
-      version="1.0.0">
+      version="1.0.0.qualifier">
 
    <plugin
          id="org.boomslang.dsl.feature"
