@@ -6,7 +6,7 @@
 
 	<groupId>org.boomslang</groupId>
 	<artifactId>org.boomslang</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>Boomslang</name>
 	<description>The Boomslang project.</description>
 	<packaging>pom</packaging>
