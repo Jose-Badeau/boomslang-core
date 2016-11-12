@@ -43,7 +43,7 @@
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.wireframesketcher.feature.group" version="4.7.0"/>
-<repository location="http://wireframesketcher.com/updates/"/>
+<repository location="https://dl.bintray.com/jose-badeau/wfs-repo/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
 <unit id="com.wireframesketcher.feature.group" version="4.7.0"/>
