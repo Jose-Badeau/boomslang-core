@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.boomslang.dsl.feature.ui.tests
 Bundle-Vendor: %providerName
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: org.boomslang.dsl.feature.ui.tests; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.boomslang.dsl.feature.ui,

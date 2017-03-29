@@ -1,19 +1,50 @@
+notifications:
+   email: false
+
 language: java
-sudo: true
-jdk:
-  - oraclejdk8
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
-script:
-- mvn clean install
-after_success: 
-   - java -jar DirectoryCleaner.jar $BT_USER $BT_APIKEY jose-badeau boomslang-core updates
-   - bash -e ./deleteExistingP2Content.sh
-   - bash -e ./build.sh $BT_USER $BT_APIKEY jose-badeau boomslang-core updates 1.0.0 org.boomslang.repository/target/repository
+
 env:
   global:
   - secure: hpmgIID85NVJjsuLsgodETrufORkxcYAgqT0vDxDDBZKWkBWusxz45AjtrqK2XN66P6sogd5iahaAHUA285IvlxaKoN8edJmGZquOsL9pmkjEutj4ug4Z5g59QI9gn/Zjz0R+6eZMGRxd7EJuVkHUv93U447IIf5Quiv5Xyv/ByWLzq6CYgBENETC8Bozr/1tVEZE1HD21hAFC2CCaN4WhEmojY+Av0cgbQYYxn9l4vbFjSSup2RWfaq88sGlm/aZkPagWCxN0RSu3w8in43jjnnAU8rD2lJhVqp1yHOJvY34CFlesbrPwL0owu7at+kOTUHxu5jHoegpiNHqxJOjFdFmfyK+Ct2oLp2/NpRWo66AgeOUB/Qw8m2JvqOmIilK+RUP41GZiW6yvXtlSMxBqmKexjKlrKGOTEm9cUskbIcJ1daQ9OIzfXcpoGOiC1nImmHutRRS/s2xiVZsfH37Ecm2fHPVApn4W2VosE1jASW9cSwZdZfJO4SLrC6fHsZ/ciYuVi4CxNYs7pr7wUKEBotC0tKYSNzwvFiTplvTToYBeckJ0OuMHbuTJ8l/IAUm+GVv5fHA9ZJIr/ncLRD7juPluJ9qXFu6n4UCF0swQYhT5doh1UNdnLOKcwXJNL9yr36WOMqilpY1cIImEB9U6F0oQmWouX1RObSnGfkHrQ=
   - secure: hJXnc4MWtx/POF0TK8HqrICpyiTmA0OhhHkYeq/BQWmArEUIyRVJMz86UPNCoMPl2k6tM2dcQxx5Q2sNv9fly9VuOMCvZRHyLXZ9qKrzrEFK/fF3jjiNFmbYDDSg20s0YvqIvxu0o3g6WfT1aS72kreSPuIPsWrxJ0lcL0kVp7oPPGIBvGui+16mFywCaGQ+fMDJ+aLdbtl7r3WxAPXEh+z+OGyiEGmTxwWojMFOerR9BpjmOGNCBSpRoF6vNPc2ruQn6SJuRanPdFLkBclHBtf7enyv0o5HOnByss3QMpLXpQ0++t7sJ6nCncFhbJQx7kbkKcTN6NS0nkhDwsrKeqsrWXFEX2oXbi9rTVehQkvno9tm99zAnpFSncgfr6gxLUK12Ep44BpYcIQEXfhTJs1RcFqgfPuxF4VrYNY6Xx+Q3n2HNk3nRlmB8zAOlLZaE/DHPfe9kwS4EKjCMZzWlpQ9wzlbKrrw1tS1ZqZZSE1hdwfd4FBdO24BpGQTjuMBdQ9YE2m9x9G4z84YSI6ECs8cMGdU8LwAanLpfvznE5BrwUYX1wZGDm1F3P8GYzzbvZT1f7mr00v8l8UBbz9egu69BfSZ4mHEb1T4OmHvOJYxTTs0Wk9LFGdigShEgxd16Ba4f6EGwpOVusTEs+8uABMUXUvTf81s/CTspNDZxe8=
   
+sudo: true
+
+jdk:
+  - oraclejdk8
+
+addons:
+  apt:
+    packages:
+      - oracle-java8-installer
+
+cache:
+  directories:
+  - "$HOME/.m2"
+
+before_install:
+  - chmod +x $TRAVIS_BUILD_DIR/mvnw
+  - export PATH=$PATH:$TRAVIS_BUILD_DIR
+
+install:
+  - java -version
+  - mvnw -version
+
+script:
+  - mvnw clean install
+
+# disabled for the moment...
+#before_deploy:
+#  - cd $TRAVIS_BUILD_DIR && chmod +x ./releng/scripts/build_products.sh
+#   - java -jar DirectoryCleaner.jar $BT_USER $BT_APIKEY jose-badeau boomslang-core updates
+#   - bash -e ./deleteExistingP2Content.sh
+#   - bash -e ./build.sh $BT_USER $BT_APIKEY jose-badeau boomslang-core updates 1.0.0 org.boomslang.repository/target/repository
+#
+#deploy:
+#  - provider: script
+#    skip_cleanup: true
+#    script: ./releng/scripts/build_products.sh $TRAVIS_BUILD_DIR $TRAVIS_TAG
+#    on:
+#       tags: true
+#       branch: /^release.*$/
+#       condition: "$TRAVIS_TAG =~ ^release.*$"
