@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Jose-Badeau/boomslang-core.svg?branch=master)](https://travis-ci.org/Jose-Badeau/boomslang-core)
+
 # boomslang-core
 ## Overview
 boomslang-core provides the grammar and all the technical infrastructure for the feature and mapping DSL that
