@@ -3,5 +3,4 @@
 <plugin>
    <extension-point id="org.boomslang.generator.feature.support" name="Boomslang Feature Generator" schema="schema/featuregeneratorsupport.exsd"/>
    <extension-point id="org.boomslang.generator.mapping.support" name="Boomslang Mapping Generator" schema="schema/mappinggeneratorsupport.exsd"/>
-
 </plugin>

@@ -80,9 +80,9 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="org.boomslang.dsl.feature.ui.FeatureExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            class="org.boomslang.dsl.feature.ui.FeatureExecutableExtensionFactory:org.boomslang.dsl.feature.ui.preference.FeaturePreferencePage"
             id="org.boomslang.dsl.feature.Feature"
-            name="Feature">
+            name="Boomslang Feature">
             <keywordReference id="org.boomslang.dsl.feature.ui.keyword_Feature"/>
         </page>
         <page
@@ -246,6 +246,28 @@
 	    <super type="org.eclipse.xtext.ui.check.expensive"/>
 	    <persistent value="true"/>
 	</extension>
+	<extension point="org.eclipse.ui.preferencePages">
+		<page
+			category="org.boomslang.dsl.feature.Feature"
+			class="org.boomslang.dsl.feature.ui.FeatureExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="org.boomslang.dsl.feature.Feature.compiler.preferencePage"
+			name="Compiler">
+			<keywordReference id="org.boomslang.dsl.feature.ui.keyword_Feature"/>
+		</page>
+	</extension>
+	<extension point="org.eclipse.ui.propertyPages">
+		<page
+			category="org.boomslang.dsl.feature.Feature"
+			class="org.boomslang.dsl.feature.ui.FeatureExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="org.boomslang.dsl.feature.Feature.compiler.propertyPage"
+			name="Compiler">
+			<keywordReference id="org.boomslang.dsl.feature.ui.keyword_Feature"/>
+			<enabledWhen>
+				<adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+			<filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+		</page>
+	</extension>
 
 	<!-- Quick Outline -->
 	<extension
@@ -334,15 +356,14 @@
       </menuContribution>
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
-	    <page
-	        category="org.boomslang.dsl.feature.Feature"
-	        class="org.boomslang.dsl.feature.ui.FeatureExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="org.boomslang.dsl.feature.Feature.refactoring"
-	        name="Refactoring">
-	        <keywordReference id="org.boomslang.dsl.feature.ui.keyword_Feature"/>
-	    </page>
-	</extension>
-
+    <page
+        category="org.boomslang.dsl.feature.Feature"
+        class="org.boomslang.dsl.feature.ui.FeatureExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+        id="org.boomslang.dsl.feature.Feature.refactoring"
+        name="Refactoring">
+        <keywordReference id="org.boomslang.dsl.feature.ui.keyword_Feature"/>
+    </page>
+  </extension>
   <extension point="org.eclipse.compare.contentViewers">
     <viewer id="org.boomslang.dsl.feature.Feature.compare.contentViewers"
             class="org.boomslang.dsl.feature.ui.FeatureExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"

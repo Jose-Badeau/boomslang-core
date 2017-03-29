@@ -21,7 +21,8 @@ Require-Bundle: org.boomslang.dsl.feature,
  org.boomslang.dsl.mapping,
  org.boomslang.core.ui,
  org.boomslang.wireframesketcher.model.xtext,
- org.apache.commons.lang
+ org.apache.commons.lang,
+ org.boomslang.generator.feature.extension
 Import-Package: org.boomslang.dsl.mapping.mapping,
  org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7

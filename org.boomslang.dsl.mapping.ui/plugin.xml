@@ -80,7 +80,7 @@
 		<page
 			class="org.boomslang.dsl.mapping.ui.MappingExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="org.boomslang.dsl.mapping.Mapping"
-			name="Mapping">
+			name="Boomslang Mapping">
 			<keywordReference id="org.boomslang.dsl.mapping.ui.keyword_Mapping"/>
 		</page>
 		<page
@@ -103,7 +103,7 @@
 		<page
 			class="org.boomslang.dsl.mapping.ui.MappingExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
 			id="org.boomslang.dsl.mapping.Mapping"
-			name="Mapping">
+			name="Boomslang Mapping">
 			<keywordReference id="org.boomslang.dsl.mapping.ui.keyword_Mapping"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
