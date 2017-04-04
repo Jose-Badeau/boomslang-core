@@ -12,8 +12,7 @@ public class BFeatureGeneratorModule extends AbstractGenericModule {
 	 * Custom generator
 	 */
 	public Class<? extends org.eclipse.xtext.generator.IGenerator> bindIGenerator() {
-		Class<? extends IBoomGenerator> candidate = new BGeneratorContributionHandler()
-				.getCustomFeatureGeneratorOrNull();
+		Class<? extends IBoomGenerator> candidate = new BGeneratorContributionHandler().getCustomFeatureGeneratorOrNull();
 		if (candidate != null) {
 			return candidate;
 		}
