@@ -12,6 +12,10 @@
 	<packaging>pom</packaging>
 
 	<properties>
+		<!-- use an alternative target platform name to switch between internet and enterprise build setup: 
+			remote: with internet access inhouse: enterprise setup -->
+		<target.platform.postfix></target.platform.postfix>
+		<target.platform.relativepath></target.platform.relativepath>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
@@ -28,7 +32,7 @@
 	</properties>
 
 	<modules>
-		<module>org.boomslang.targetplatform</module>
+		<module>${target.platform.relativepath}org.boomslang.targetplatform${target.platform.postfix}</module>
 		<module>org.boomslang.core</module>
 		<module>org.boomslang.core.ui</module>
 		<module>org.boomslang.dsl.feature</module>
@@ -43,7 +47,7 @@
 		<module>org.boomslang.dsl.mapping.feature</module>
 		<module>org.boomslang.generator.feature.extension</module>
 		<module>org.boomslang.feature</module>
-		<module>org.boomslang.repository</module>
+		<module>${target.platform.relativepath}org.boomslang.repository${target.platform.postfix}</module>
 		<!-- Uncomment to build a repository containing all transitive dependencies 
 			(~280MB) Dependencies are in remote build.mode by design. Use these modules 
 			to fetch deps. <module>org.boomslang.dependencies</module> <module>org.boomslang.dependencies.repository</module> -->
@@ -58,11 +62,13 @@
 	</distributionManagement>
 
 	<repositories>
+		<!-- 
 		<repository>
 			<id>boomslang-wfs</id>
 			<url>http://dl.bintray.com/jose-badeau/boomslang-wireframesketcher/</url>
 			<layout>p2</layout>
 		</repository>
+		 -->
 	</repositories>
 	
 	<build>
@@ -205,7 +211,7 @@
 						<target>
 							<artifact>
 								<groupId>org.boomslang</groupId>
-								<artifactId>org.boomslang.targetplatform</artifactId>
+								<artifactId>org.boomslang.targetplatform${target.platform.postfix}</artifactId>
 								<version>${project.version}</version>
 							</artifact>
 						</target>
